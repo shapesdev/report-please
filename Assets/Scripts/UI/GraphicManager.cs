@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,22 +11,14 @@ public class GraphicManager : MonoBehaviour, IManager
     EventSystem eventSystem;
 
     private GameObject selectedGO;
+    private Card card;
+
     private bool selected = false;
     private bool offsetSet = false;
-
     private Vector3 offset;
 
-    public RectTransform leftPanel;
-    public RectTransform rightPanel;
-
-    public float sizeChangeOffsetRight;
-    public float sizeChangeOffsetLeft;
-
-    private Vector2 employeePaperRight = new Vector2(300, 200);
-    private Vector2 employeePaperLeft = new Vector2(100, 50);
-
-    private Vector2 reportPaperRight = new Vector2(500, 650);
-    private Vector2 reportPaperLeft = new Vector2(100, 150);
+    [SerializeField]
+    private RectTransform leftPanel;
 
     public void Initialize()
     {
@@ -48,7 +39,6 @@ public class GraphicManager : MonoBehaviour, IManager
 
             if(results.Count > 0)
             {
-                Debug.Log("Hit " + results[0].gameObject.name);
                 BringGraphicToFront(results[0].gameObject);
             }
         }
@@ -84,41 +74,16 @@ public class GraphicManager : MonoBehaviour, IManager
     selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
             }
-            ChangeGraphicSize();
+            card.Check(leftPanel.rect.width);
         }
     }
-
-    private void ChangeGraphicSize()
-    {
-        if(selectedGO.transform.localPosition.x >= -Screen.width / 2 + leftPanel.rect.width + sizeChangeOffsetRight)
-        {
-            if(selectedGO.gameObject.tag == "Report")
-            {
-                selectedGO.gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperRight;
-            }
-            else if(selectedGO.gameObject.tag == "Employee")
-            {
-                selectedGO.gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperRight;
-            }
-        }
-        else if (selectedGO.transform.localPosition.x <= Screen.width / 2 - leftPanel.rect.width - sizeChangeOffsetLeft)
-        {
-            if (selectedGO.gameObject.tag == "Report")
-            {
-                selectedGO.gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperLeft;
-            }
-            else if (selectedGO.gameObject.tag == "Employee")
-            {
-                selectedGO.gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperLeft;
-            }
-        }
-    }
-
 
     private void BringGraphicToFront(GameObject go)
     {
         selectedGO = go;
         selectedGO.transform.SetSiblingIndex(transform.childCount - 2);
+
+        card = selectedGO.gameObject.GetComponent<Card>();
         selected = true;
     }
 }
