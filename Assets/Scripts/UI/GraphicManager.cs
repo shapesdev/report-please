@@ -19,6 +19,7 @@ public class GraphicManager : MonoBehaviour, IManager
     private Card card;
 
     private GameObject stamp;
+    public GameObject stampPanel;
 
     private bool selected = false;
     private bool offsetSet = false;
@@ -118,6 +119,22 @@ public class GraphicManager : MonoBehaviour, IManager
             stamp.transform.position = currentButton.transform.position;
             stamp.transform.localScale = Vector3.one;
             stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+        }
+    }
+
+    public void ActivateStampPanel()
+    {
+        // ADD ANIMATION FOR THE STAMP PANEL
+        foreach(Transform child in stampPanel.transform)
+        {
+            if(child.gameObject.activeInHierarchy)
+            {
+                child.gameObject.SetActive(false);
+            }
+            else
+            {
+                child.gameObject.SetActive(true);
+            }
         }
     }
 }
