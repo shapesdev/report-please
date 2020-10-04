@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum Stamp
+{
+    SIREN, PLUS
+}
+
 public class GraphicManager : MonoBehaviour, IManager
 {
     GraphicRaycaster graphicRaycaster;
@@ -12,6 +17,8 @@ public class GraphicManager : MonoBehaviour, IManager
 
     private GameObject selectedGO;
     private Card card;
+
+    private GameObject stamp;
 
     private bool selected = false;
     private bool offsetSet = false;
@@ -37,7 +44,7 @@ public class GraphicManager : MonoBehaviour, IManager
 
             graphicRaycaster.Raycast(pointerEvent, results);
 
-            if(results.Count > 0)
+            if(results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
             {
                 BringGraphicToFront(results[0].gameObject);
             }
@@ -85,5 +92,32 @@ public class GraphicManager : MonoBehaviour, IManager
 
         card = selectedGO.gameObject.GetComponent<Card>();
         selected = true;
+    }
+
+    public void StampEffect(Sprite sprite)
+    {
+        var currentButton = EventSystem.current.currentSelectedGameObject;
+
+        if (stamp == null && selectedGO.transform.childCount > 1)
+        {
+            stamp = new GameObject("Stamp");
+            stamp.AddComponent<Image>();
+
+            var stampImage = stamp.GetComponent<Image>();
+            stampImage.sprite = sprite;
+            stampImage.raycastTarget = false;
+
+            for(int i = 0; i < selectedGO.transform.childCount; i++)
+            {
+                if(selectedGO.transform.GetChild(i).gameObject.activeInHierarchy)
+                {
+                    stamp.transform.SetParent(selectedGO.transform.GetChild(i).transform);
+                }
+            }
+
+            stamp.transform.position = currentButton.transform.position;
+            stamp.transform.localScale = Vector3.one;
+            stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+        }
     }
 }
