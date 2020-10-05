@@ -74,7 +74,8 @@ public class GraphicManager : MonoBehaviour, IManager
     selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
             }
-            card.Check(leftPanel.rect.width);
+            card.Check(leftPanel.rect.width, ReportType.PackageBug);
+            // SOME SCENARIOMANAGER SHOULD TAKE CARE FROM HERE
         }
     }
 

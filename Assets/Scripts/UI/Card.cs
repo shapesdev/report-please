@@ -17,18 +17,18 @@ public abstract class Card : MonoBehaviour
     [HideInInspector]
     public bool changeSize = false;
 
-    public abstract void ChangeSizeToRight();
-    public abstract void ChangeSizeToLeft();
+    public abstract void ChangeSizeToRight(ReportType type);
+    public abstract void ChangeSizeToLeft(ReportType type);
 
-    public void Check(float panelWidth)
+    public void Check(float panelWidth, ReportType type)
     {
         if (transform.localPosition.x >= -Screen.width / 2 + panelWidth + sizeChangeOffsetRight)
         {
-            ChangeSizeToRight();
+            ChangeSizeToRight(type);
         }
         else if (transform.localPosition.x <= Screen.width / 2 - panelWidth - sizeChangeOffsetLeft)
         {
-            ChangeSizeToLeft();
+            ChangeSizeToLeft(type);
         }
     }
 }
