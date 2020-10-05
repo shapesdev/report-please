@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EmployeeIdCard : Card
 {
-    public override void ChangeSizeToLeft()
+    public override void ChangeSizeToLeft(ReportType type)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperLeft;
         changeSize = !changeSize;
@@ -15,7 +15,7 @@ public class EmployeeIdCard : Card
         }
     }
 
-    public override void ChangeSizeToRight()
+    public override void ChangeSizeToRight(ReportType type)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperRight;
         changeSize = !changeSize;

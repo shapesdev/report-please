@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ReportType
+{
+    Response, EditorBug, PackageBug
+}
+
 public class ReportCard : Card
 {
     [SerializeField]
@@ -11,25 +16,41 @@ public class ReportCard : Card
     [SerializeField]
     private GameObject packageBug;
 
-    public override void ChangeSizeToLeft()
+    public override void ChangeSizeToLeft(ReportType reportType)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperLeft;
         changeSize = !changeSize;
 
-        if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+        if(reportType == ReportType.Response)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            response.SetActive(false);
+        }
+        else if(reportType == ReportType.EditorBug)
+        {
+            editorBug.SetActive(false);
+        }
+        else if(reportType == ReportType.PackageBug)
+        {
+            packageBug.SetActive(false);
         }
     }
 
-    public override void ChangeSizeToRight()
+    public override void ChangeSizeToRight(ReportType reportType)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperRight;
         changeSize = !changeSize;
 
-        if (transform.GetChild(0).gameObject.activeInHierarchy == false)
+        if (reportType == ReportType.Response)
         {
-            transform.GetChild(0).gameObject.SetActive(true);
+            response.SetActive(true);
+        }
+        else if (reportType == ReportType.EditorBug)
+        {
+            editorBug.SetActive(true);
+        }
+        else if (reportType == ReportType.PackageBug)
+        {
+            packageBug.SetActive(true);
         }
     }
 }
