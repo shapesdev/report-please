@@ -90,7 +90,7 @@ public class GraphicManager : MonoBehaviour, IManager
     private void BringGraphicToFront(GameObject go)
     {
         selectedGO = go;
-        selectedGO.transform.SetSiblingIndex(transform.childCount - 2);
+        selectedGO.transform.SetSiblingIndex(transform.childCount - 3);
 
         card = selectedGO.gameObject.GetComponent<Card>();
         selected = true;
@@ -100,27 +100,56 @@ public class GraphicManager : MonoBehaviour, IManager
     {
         var currentButton = EventSystem.current.currentSelectedGameObject;
 
-        if (stamp == null && selectedGO.transform.childCount > 1)
+        if(StampCanBePlaced(currentButton.transform.position) == true)
         {
-            stamp = new GameObject("Stamp");
-            stamp.AddComponent<Image>();
-
-            var stampImage = stamp.GetComponent<Image>();
-            stampImage.sprite = sprite;
-            stampImage.raycastTarget = false;
-
-            for(int i = 0; i < selectedGO.transform.childCount; i++)
+            if (stamp == null && selectedGO.transform.childCount > 1)
             {
-                if(selectedGO.transform.GetChild(i).gameObject.activeInHierarchy)
+                stamp = new GameObject("Stamp");
+                stamp.AddComponent<Image>();
+
+                var stampImage = stamp.GetComponent<Image>();
+                stampImage.sprite = sprite;
+                stampImage.raycastTarget = false;
+
+                for (int i = 0; i < selectedGO.transform.childCount; i++)
                 {
-                    stamp.transform.SetParent(selectedGO.transform.GetChild(i).transform);
+                    if (selectedGO.transform.GetChild(i).gameObject.activeInHierarchy)
+                    {
+                        stamp.transform.SetParent(selectedGO.transform.GetChild(i).transform);
+                    }
+                }
+
+                stamp.transform.position = currentButton.transform.position;
+                stamp.transform.localScale = Vector3.one;
+                stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+            }
+        }
+    }
+
+    private bool StampCanBePlaced(Vector3 pos)
+    {
+        if(selectedGO != null)
+        {
+            for (int i = 0; i < selectedGO.transform.childCount; i++)
+            {
+                for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
+                {
+                    if (selectedGO.transform.GetChild(i).transform.GetChild(j).tag == "StampArea")
+                    {
+                        var child = selectedGO.transform.GetChild(i).transform.GetChild(j);
+
+                        Vector3[] v = new Vector3[4];
+                        child.GetComponent<RectTransform>().GetWorldCorners(v);
+
+                        if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
-
-            stamp.transform.position = currentButton.transform.position;
-            stamp.transform.localScale = Vector3.one;
-            stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
         }
+        return false;
     }
 
     public void ActivateStampPanel()
