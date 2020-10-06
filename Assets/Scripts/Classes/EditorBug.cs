@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class EditorBug : Bug
 {
     public EditorBug(string title, int caseID, string tester, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
@@ -24,5 +25,10 @@ public class EditorBug : Bug
         this.severity = severity;
         this.platformImportance = platform;
         this.userPrevalence = user;
+    }
+
+    public EditorBug()
+    {
+
     }
 }

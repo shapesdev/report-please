@@ -5,7 +5,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [System.Serializable]
+    public struct daysStruct
+    {
+        public Scenario[] scenarios;
+    }
+
     private List<IManager> IManagers;
+
+    public daysStruct[] days;
 
     private void Awake()
     {

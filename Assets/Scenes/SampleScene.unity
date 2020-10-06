@@ -8014,6 +8014,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc67440c42ac2d4da6d351b9c27aded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  days:
+  - scenarios: []
+  - scenarios: []
+  - scenarios: []
+  - scenarios: []
+  - scenarios: []
 --- !u!1 &2084094244
 GameObject:
   m_ObjectHideFlags: 0
