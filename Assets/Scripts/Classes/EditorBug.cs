@@ -2,33 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class EditorBug : Bug
 {
-    public EditorBug(string title, int caseID, string tester, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
-        bool regression, string FAV, bool publicField, int severity, int platform, int user)
+    public EditorBug(string title, int caseID, string testerName, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
+        bool regression, string FAV, bool publicField, int severity, int platform, int user, Tester tester)
     {
         this.title = title;
         this.caseID = caseID;
-        this.tester = tester;
+        this.testerName = testerName;
         this.grabbag = grabbag;
         this.area = area;
 
         this.reproSteps = reproSteps;
-        this.expectedActualResults = expectActual;
-        this.reproNoReproWith = reproWith;
+        expectedActualResults = expectActual;
+        reproNoReproWith = reproWith;
 
         this.regression = regression;
         this.FAV = FAV;
         this.publicField = publicField;
 
         this.severity = severity;
-        this.platformImportance = platform;
-        this.userPrevalence = user;
+        platformImportance = platform;
+        userPrevalence = user;
+
+        this.tester = tester;
     }
 
-    public EditorBug()
+    public override ReportType GetReportType()
     {
-
+        return ReportType.EditorBug;
     }
 }

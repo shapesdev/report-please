@@ -2,27 +2,105 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Bug : IScenario
+public abstract class Bug : IScenario
 {
-    public string title;
-    public int caseID;
-    public string tester;
-    public string grabbag;
-    public string area;
+    protected string title;
+    protected int caseID;
+    protected string testerName;
+    protected string grabbag;
+    protected string area;
 
-    public string reproSteps;
-    public string expectedActualResults;
-    public string reproNoReproWith;
+    protected string reproSteps;
+    protected string expectedActualResults;
+    protected string reproNoReproWith;
 
-    public bool regression;
-    public string FAV;
-    public bool publicField;
+    protected bool regression;
+    protected string FAV;
+    protected bool publicField;
 
     [Range(0, 4)]
-    public int severity;
+    protected int severity;
     [Range(0, 4)]
-    public int platformImportance;
+    protected int platformImportance;
     [Range(0, 4)]
-    public int userPrevalence;
+    protected int userPrevalence;
+
+    protected Tester tester;
+
+    public abstract ReportType GetReportType();
+
+    public string GetTitle()
+    {
+        return title;
+    }
+
+    public int GetCaseID()
+    {
+        return caseID;
+    }
+
+    public string GetTesterName()
+    {
+        return testerName;
+    }
+
+    public string GetGrabbag()
+    {
+        return grabbag;
+    }
+
+    public string GetArea()
+    {
+        return area;
+    }
+
+    public string GetReproSteps()
+    {
+        return reproSteps;
+    }
+
+    public string GetExpectedActualResults()
+    {
+        return expectedActualResults;
+    }
+
+    public string GetReproNoReproWith()
+    {
+        return reproNoReproWith;
+    }
+
+    public bool IsRegression()
+    {
+        return regression;
+    }
+
+    public string GetFirstAffected()
+    {
+        return FAV;
+    }
+
+    public bool isPublic()
+    {
+        return publicField;
+    }
+
+    public int GetUserPrevalence()
+    {
+        return userPrevalence;
+    }
+
+    public int GetPlatformImportance()
+    {
+        return platformImportance;
+    }
+
+    public int GetSeverity()
+    {
+        return severity;
+    }
+
+    public Tester GetTester()
+    {
+        return tester;
+    }
 }
