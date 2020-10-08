@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum Stamp
+{
+    SIREN, PLUS
+}
+
 public class GraphicManager : MonoBehaviour, IManager
 {
     GraphicRaycaster graphicRaycaster;
@@ -12,6 +17,9 @@ public class GraphicManager : MonoBehaviour, IManager
 
     private GameObject selectedGO;
     private Card card;
+
+    private GameObject stamp;
+    public GameObject stampPanel;
 
     private bool selected = false;
     private bool offsetSet = false;
@@ -37,7 +45,7 @@ public class GraphicManager : MonoBehaviour, IManager
 
             graphicRaycaster.Raycast(pointerEvent, results);
 
-            if(results.Count > 0)
+            if(results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
             {
                 BringGraphicToFront(results[0].gameObject);
             }
@@ -82,9 +90,81 @@ public class GraphicManager : MonoBehaviour, IManager
     private void BringGraphicToFront(GameObject go)
     {
         selectedGO = go;
-        selectedGO.transform.SetSiblingIndex(transform.childCount - 2);
+        selectedGO.transform.SetSiblingIndex(transform.childCount - 3);
 
         card = selectedGO.gameObject.GetComponent<Card>();
         selected = true;
+    }
+
+    public void StampEffect(Sprite sprite)
+    {
+        var currentButton = EventSystem.current.currentSelectedGameObject;
+
+        if(StampCanBePlaced(currentButton.transform.position) == true)
+        {
+            if (stamp == null && selectedGO.transform.childCount > 1)
+            {
+                stamp = new GameObject("Stamp");
+                stamp.AddComponent<Image>();
+
+                var stampImage = stamp.GetComponent<Image>();
+                stampImage.sprite = sprite;
+                stampImage.raycastTarget = false;
+
+                for (int i = 0; i < selectedGO.transform.childCount; i++)
+                {
+                    if (selectedGO.transform.GetChild(i).gameObject.activeInHierarchy)
+                    {
+                        stamp.transform.SetParent(selectedGO.transform.GetChild(i).transform);
+                    }
+                }
+
+                stamp.transform.position = currentButton.transform.position;
+                stamp.transform.localScale = Vector3.one;
+                stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+            }
+        }
+    }
+
+    private bool StampCanBePlaced(Vector3 pos)
+    {
+        if(selectedGO != null)
+        {
+            for (int i = 0; i < selectedGO.transform.childCount; i++)
+            {
+                for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
+                {
+                    if (selectedGO.transform.GetChild(i).transform.GetChild(j).tag == "StampArea")
+                    {
+                        var child = selectedGO.transform.GetChild(i).transform.GetChild(j);
+
+                        Vector3[] v = new Vector3[4];
+                        child.GetComponent<RectTransform>().GetWorldCorners(v);
+
+                        if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void ActivateStampPanel()
+    {
+        // ADD ANIMATION FOR THE STAMP PANEL
+        foreach(Transform child in stampPanel.transform)
+        {
+            if(child.gameObject.activeInHierarchy)
+            {
+                child.gameObject.SetActive(false);
+            }
+            else
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
     }
 }
