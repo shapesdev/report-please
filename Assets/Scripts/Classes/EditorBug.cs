@@ -4,32 +4,25 @@ using UnityEngine;
 
 public class EditorBug : Bug
 {
-    public EditorBug(string title, int caseID, string testerName, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
-        bool regression, string FAV, bool publicField, int severity, int platform, int user, Tester tester)
+    public EditorBug(string title, int caseID, string tester, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
+        bool regression, string FAV, bool publicField, int severity, int platform, int user)
     {
         this.title = title;
         this.caseID = caseID;
-        this.testerName = testerName;
+        this.tester = tester;
         this.grabbag = grabbag;
         this.area = area;
 
         this.reproSteps = reproSteps;
-        expectedActualResults = expectActual;
-        reproNoReproWith = reproWith;
+        this.expectedActualResults = expectActual;
+        this.reproNoReproWith = reproWith;
 
         this.regression = regression;
         this.FAV = FAV;
         this.publicField = publicField;
 
         this.severity = severity;
-        platformImportance = platform;
-        userPrevalence = user;
-
-        this.tester = tester;
-    }
-
-    public override ReportType GetReportType()
-    {
-        return ReportType.EditorBug;
+        this.platformImportance = platform;
+        this.userPrevalence = user;
     }
 }
