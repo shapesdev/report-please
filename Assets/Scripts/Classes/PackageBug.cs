@@ -7,28 +7,44 @@ public class PackageBug : Bug
     private string package;
     private string packageVersion;
 
-    public PackageBug(string title, int caseID, string tester, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
-    bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion)
+    public PackageBug(string title, int caseID, string testerName, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
+    bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion, Tester tester)
     {
         this.title = title;
         this.caseID = caseID;
-        this.tester = tester;
+        this.testerName = testerName;
         this.grabbag = grabbag;
         this.area = area;
 
         this.reproSteps = reproSteps;
-        this.expectedActualResults = expectActual;
-        this.reproNoReproWith = reproWith;
+        expectedActualResults = expectActual;
+        reproNoReproWith = reproWith;
 
         this.regression = regression;
         this.FAV = FAV;
         this.publicField = publicField;
 
         this.severity = severity;
-        this.platformImportance = platform;
-        this.userPrevalence = user;
+        platformImportance = platform;
+        userPrevalence = user;
 
         this.package = package;
         this.packageVersion = packageVersion;
+        this.tester = tester;
+    }
+
+    public override ReportType GetReportType()
+    {
+        return ReportType.PackageBug;
+    }
+
+    public string GetPackage()
+    {
+        return package;
+    }
+
+    public string GetPackageVersion()
+    {
+        return packageVersion;
     }
 }
