@@ -6,54 +6,17 @@ using UnityEngine;
 public class Response : IScenario
 {
     private int caseID;
-    private DateTime lastUserReply;
+    private DateTime lastReply;
     private DateTime dateSent;
     private string emailSentFrom;
     private string email;
-    private Tester tester;
 
-    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester)
+    public Response(int id, DateTime reply, DateTime sent, string emailFrom, string email)
     {
         caseID = id;
-        lastUserReply = userReply;
-        dateSent = testerSent;
+        lastReply = reply;
+        dateSent = sent;
         emailSentFrom = emailFrom;
         this.email = email;
-        this.tester = tester;
-    }
-
-    public ReportType GetReportType()
-    {
-        return ReportType.Response;
-    }
-
-    public int GetCaseID()
-    {
-        return caseID;
-    }
-
-    public DateTime GetLastReplyDate()
-    {
-        return lastUserReply;
-    }
-
-    public DateTime GetDateSent()
-    {
-        return dateSent;
-    }
-
-    public string GetEmail()
-    {
-        return email;
-    }
-
-    public string GetEmailSentFrom()
-    {
-        return emailSentFrom;
-    }
-
-    public Tester GetTester()
-    {
-        return tester;
     }
 }
