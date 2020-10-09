@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class EditorBug : Bug
 {
-    public EditorBug(string title, int caseID, string testerName, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
+    public EditorBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps, string expectActual, string reproWith,
         bool regression, string FAV, bool publicField, int severity, int platform, int user, Tester tester)
     {
         this.title = title;
         this.caseID = caseID;
         this.testerName = testerName;
-        this.grabbag = grabbag;
         this.area = area;
 
         this.reproSteps = reproSteps;

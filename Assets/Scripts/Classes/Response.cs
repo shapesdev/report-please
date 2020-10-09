@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CloseType
+{
+    NotQualified, Responded, Duplicate
+}
+
 public class Response : IScenario
 {
     private int caseID;
@@ -11,6 +16,8 @@ public class Response : IScenario
     private string emailSentFrom;
     private string email;
     private Tester tester;
+    private CloseType correctCloseType;
+    private CloseType testerClosedType;
 
     public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester)
     {
@@ -20,6 +27,18 @@ public class Response : IScenario
         emailSentFrom = emailFrom;
         this.email = email;
         this.tester = tester;
+    }
+
+    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, CloseType testerClose, CloseType correctCloseType)
+    {
+        caseID = id;
+        lastUserReply = userReply;
+        dateSent = testerSent;
+        emailSentFrom = emailFrom;
+        this.email = email;
+        this.tester = tester;
+        this.correctCloseType = correctCloseType;
+        testerClosedType = testerClose;
     }
 
     public ReportType GetReportType()
@@ -55,5 +74,10 @@ public class Response : IScenario
     public Tester GetTester()
     {
         return tester;
+    }
+
+    public bool WasItClosedCorrectly()
+    {
+        return correctCloseType == testerClosedType;
     }
 }

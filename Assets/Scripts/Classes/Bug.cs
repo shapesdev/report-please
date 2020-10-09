@@ -7,8 +7,6 @@ public abstract class Bug : IScenario
     protected string title;
     protected int caseID;
     protected string testerName;
-    protected string grabbag;
-    protected string area;
 
     protected string reproSteps;
     protected string expectedActualResults;
@@ -25,6 +23,7 @@ public abstract class Bug : IScenario
     [Range(0, 4)]
     protected int userPrevalence;
 
+    protected AreasNGrabbags area;
     protected Tester tester;
 
     public abstract ReportType GetReportType();
@@ -44,12 +43,7 @@ public abstract class Bug : IScenario
         return testerName;
     }
 
-    public string GetGrabbag()
-    {
-        return grabbag;
-    }
-
-    public string GetArea()
+    public AreasNGrabbags GetArea()
     {
         return area;
     }

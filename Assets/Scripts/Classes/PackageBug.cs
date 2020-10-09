@@ -7,13 +7,12 @@ public class PackageBug : Bug
     private string package;
     private string packageVersion;
 
-    public PackageBug(string title, int caseID, string testerName, string grabbag, string area, string reproSteps, string expectActual, string reproWith,
+    public PackageBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps, string expectActual, string reproWith,
     bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion, Tester tester)
     {
         this.title = title;
         this.caseID = caseID;
         this.testerName = testerName;
-        this.grabbag = grabbag;
         this.area = area;
 
         this.reproSteps = reproSteps;
