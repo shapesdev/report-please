@@ -80,4 +80,9 @@ public class Response : IScenario
     {
         return correctCloseType == testerClosedType;
     }
+
+    public CloseType GetCloseType()
+    {
+        return testerClosedType;
+    }
 }

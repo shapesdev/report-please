@@ -26,8 +26,10 @@ public class DataLoadManager : MonoBehaviour, IManager
         InitializeDayOne(1);
         InitializeDayTwo(2);
         InitializeDayThree(3);
+        InitializeDayFour(4);
 
-        //DayChecker(1);
+        //ResponseChecker(2); // Suitable for 1st and 2nd day
+        BugChecker(4); // Suitable for 3rd and 4th day
     }
 
     public void FixedManagerUpdate()
@@ -40,28 +42,11 @@ public class DataLoadManager : MonoBehaviour, IManager
 
     }
 
-    /*    private void EmailChecker()
+    private void ResponseChecker(int day)
+    {
+        for(int i = 0; i < days[day].Count; i++)
         {
-            var value = days[1][2];
-            Debug.Log(value);
-            if (value.GetReportType() == ReportType.Response)
-            {
-                var response = (Response)value;
-
-                if(response.GetEmail() == response.GetTester().GetEmail())
-                {
-                    Debug.Log("Its correct");
-                }
-                else
-                {
-                    Debug.Log("It's not");
-                }
-            }
-        }*/
-
-    /*    private void SpacesChecker(int resp)
-        {
-            var value = days[1][resp - 1];
+            var value = days[day][i];
 
             if(value.GetReportType() == ReportType.Response)
             {
@@ -69,39 +54,195 @@ public class DataLoadManager : MonoBehaviour, IManager
 
                 var chars = response.GetEmail().ToCharArray();
 
-                int count = 0;
+                int spacesCount = 0;
 
-                foreach(var ch in chars)
+                foreach (var ch in chars)
                 {
-                    if(ch == ' ')
+                    if (ch == ' ')
                     {
-                        count++;
+                        spacesCount++;
                     }
                     else
                     {
-                        count = 0;
+                        spacesCount = 0;
                     }
 
-                    if(count >= 2)
+                    if (spacesCount >= 2)
                     {
-                        Debug.Log("There are double spaces in day:" + resp);
                         break;
                     }
                 }
-            }
-        }*/
 
-    /*    private void CloseChecker(int resp)
+                if(response.GetEmail().Contains("\n\n\n") || response.GetEmail().Contains("\n\n\n\n"))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has two empty lines instead of 1");
+                    continue;
+                }
+
+                if(spacesCount >= 2)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has double spaces between letters");
+                    continue;
+                }
+
+                if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "have bad email");
+                    continue;
+                }
+                if(response.GetCloseType() == CloseType.NotQualified && (response.GetDateSent().Day - response.GetLastReplyDate().Day) >= 7)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Bad close, didn't wait 7 days");
+                    continue;
+                }
+                if(response.WasItClosedCorrectly() == false)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "was closed incorrectly");
+                    continue;
+                }
+                if(!response.GetEmail().Contains(response.GetTester().GetName()))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has a bad tester name");
+                    continue;
+                }
+                if(response.GetEmail().Contains("issuetracker") && !response.GetEmail().Contains(response.GetCaseID().ToString()))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has a bad issue tracker link");
+                    continue;
+                }
+                if(response.GetTester().GetExpiryDate() < response.GetDateSent())
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Tester's ID is expired");
+                    continue;
+                }
+                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
+            }
+        }
+    }
+
+    private void BugChecker(int day)
+    {
+        for (int i = 0; i < days[day].Count; i++)
         {
-            var value = days[2][resp - 1];
+            var value = days[day][i];
 
-            if(value.GetReportType() == ReportType.Response)
+            if(value.GetReportType() == ReportType.EditorBug)
             {
-                var response = (Response)value;
+                var bug = (EditorBug)value;
 
-                Debug.Log(response.WasItClosedCorrectly());
+                bool hasCorrectBoth = false;
+                bool hasVersionsWhenNoRegression = false;
+                bool hasNoVersionButIsRegression = false;
+
+                foreach(var area in areas)
+                {
+                    if(area.area == bug.GetArea().area && area.grabbag == bug.GetArea().grabbag)
+                    {
+                        hasCorrectBoth = true;
+                        break;
+                    }
+                }
+
+                var stringWithoutFAV = bug.GetFirstAffected().Substring(5, bug.GetFirstAffected().Length - 5);
+                var strings = stringWithoutFAV.Split(',');
+
+                foreach (var str in strings)
+                {
+                    if (str.Length > 8 && bug.IsRegression() == false)
+                    {
+                        hasVersionsWhenNoRegression = true;
+                    }
+                    else if(str.Length < 8 && bug.IsRegression() == true)
+                    {
+                        hasNoVersionButIsRegression = true;
+                    }
+                }
+
+                if(hasVersionsWhenNoRegression)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "FAV has a specified version, but no regression");
+                    continue;
+                }
+                if(hasNoVersionButIsRegression)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Regression if specified but no regression found");
+                    continue;
+                }
+                if (hasCorrectBoth == false)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect Area/Grabbag");
+                    continue;
+                }
+
+                if(bug.GetReproSteps().Contains("Actual") || bug.GetReproSteps().Contains("Reproducible"))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect report order");
+                    continue;
+                }
+                if(bug.isPublic() == false)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "should be public not private");
+                    continue;
+                }
+                if((bug.GetTitle().Contains("WebGL") && bug.GetPlatformImportance() != 1) || (bug.GetTitle().Contains("Player")) &&
+                    bug.GetPlatformImportance() != 2)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Bad Platform Importance selected");
+                    continue;
+                }
+                if(bug.GetSeverity() == 1 && !bug.GetExpectedActualResults().Contains("crash"))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Wrong severity is selected");
+                    continue;
+                }
+                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
             }
-        }*/
+
+            if (value.GetReportType() == ReportType.PackageBug)
+            {
+                var bug = (PackageBug)value;
+
+                bool hasCorrectBoth = false;
+
+                foreach (var area in areas)
+                {
+                    if (area.area == bug.GetArea().area && area.grabbag == bug.GetArea().grabbag)
+                    {
+                        hasCorrectBoth = true;
+                        break;
+                    }
+                }
+
+                if (hasCorrectBoth == false)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect Area/Grabbag");
+                    continue;
+                }
+                if (bug.GetReproSteps().Contains("Actual") || bug.GetReproSteps().Contains("Reproducible"))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect report order");
+                    continue;
+                }
+                if (bug.isPublic() == false)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "should be public not private");
+                    continue;
+                }
+                if ((bug.GetTitle().Contains("WebGL") && bug.GetPlatformImportance() != 1) || (bug.GetTitle().Contains("Player")) &&
+                    bug.GetPlatformImportance() != 2)
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Bad Platform Importance selected");
+                    continue;
+                }
+                if (bug.GetSeverity() == 1 && !bug.GetExpectedActualResults().Contains("crash"))
+                {
+                    Debug.Log("Day " + day + " Scenario number " + i + "Wrong severity is selected");
+                    continue;
+                }
+                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
+            }
+        }
+    }
 
     private void InitializeAreasAndGrabbags()
     {
@@ -117,12 +258,14 @@ public class DataLoadManager : MonoBehaviour, IManager
         AreasNGrabbags physics2d = new AreasNGrabbags { area = "Physics2D", grabbag = "John the 2D Guy" };
         AreasNGrabbags assetImport = new AreasNGrabbags { area = "Asset Import Pipeline", grabbag = "Asset Pipeline V2 Grabbag" };
 
-        AreasNGrabbags shader = new AreasNGrabbags { area = "Shader Graph", grabbag = "ShaderGraph Grabbag" };
+        AreasNGrabbags shader = new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" };
         AreasNGrabbags uiToolkit = new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" };
         AreasNGrabbags addressables = new AreasNGrabbags { area = "Addressables Assets", grabbag = "Addressables Grabbag" };
         AreasNGrabbags windows = new AreasNGrabbags { area = "Windows", grabbag = "Desktop Grabbag" };
         AreasNGrabbags text = new AreasNGrabbags { area = "Text", grabbag = "John the Text Guy" };
         AreasNGrabbags scripting = new AreasNGrabbags { area = "Scripting", grabbag = "Scripting Grabbag" };
+        AreasNGrabbags il2cpp = new AreasNGrabbags { area = "IL2CPP", grabbag = "VM-IL2CPP Grabbag" };
+        AreasNGrabbags scene = new AreasNGrabbags { area = "Scene Management", grabbag = "Scene Management Grabbag" };
 
         areas.Add(webgl);
         areas.Add(terrain);
@@ -139,6 +282,8 @@ public class DataLoadManager : MonoBehaviour, IManager
         areas.Add(windows);
         areas.Add(text);
         areas.Add(scripting);
+        areas.Add(il2cpp);
+        areas.Add(scene);
     }
 
     private void InitializeDayOne(int day)
@@ -179,7 +324,7 @@ public class DataLoadManager : MonoBehaviour, IManager
         Response response4 = new Response(1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Unity should look in the future.\n\n" +
         "Unfortunately, feature requests are no longer being handled via bug reports.Now our primary feedback channel is Unity Forums, https://forum.unity.com/. The forums are a great place for discussion, ideation, and inspiration between community members and Unity team members.\n\n" +
-        "If you have any further questions, feel free to contact our team.\n\n" +
+        "If you have any further questions, feel free to contact our team.\n\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
         "\nCustomer QA Team", tester1.GetEmail(), tester1);
@@ -193,7 +338,7 @@ public class DataLoadManager : MonoBehaviour, IManager
 
         Response response6 = new Response(1244581, new DateTime(2020, 11, 5), new DateTime(2020, 11, 10), "Hi ,  \n\n" +
         "Thank  you  for  contacting Unity  about  your  issue.\n" +
-        "Unfortunately, we are not able to reproduce it.Are you still experiencing this problem or was it a one time issue ?" +
+        "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue ?" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?" +
         "Thanks," +
         tester2.GetName() +
@@ -208,7 +353,7 @@ public class DataLoadManager : MonoBehaviour, IManager
 
         Response response8 = new Response(1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Unity about your issue.\n\n" +
-        "Unfortunately, we are not able to reproduce it.Are you still experiencing this problem or was it a one time issue ?\n\n" +
+        "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue ?\n\n" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n" +
         "Thanks,\n" +
         tester2.GetName() +
@@ -301,18 +446,18 @@ public class DataLoadManager : MonoBehaviour, IManager
         scenarios = new List<IScenario>();
 
         Tester tester1 = new Tester("Donny", "Vaichio", "d.vaichio@unity3d.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9));
-        Tester tester2 = new Tester("Kazys", "Binkis", "k.binkis@unity3d.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
+        Tester tester2 = new Tester("Nicholas", "Creator", "n.creator@unity3d.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
 
         EditorBug editor1 = new EditorBug("Particles are not visible in WebGL Build", 1230101, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
         "How to reproduce:" +
-        "1.Open the attached " + "repro.zip" + " project" +
+        "1.Open the attached 'repro.zip' project" +
         "2.Go to File->Build And Run" +
         "3.Observe the application in the browser",
         "Expected result: Particles are visible in the browser" +
         "Actual result: Particles are not visible in the browser",
         "Reproducible with: 2019.2.0a7, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3" +
         "Not reproducible with: 2018.4.27f1, 2019.2.0a6", true, "FAV: 2019.2.0a7, 2019.4, 2020.1, 2020.2",
-        true, 5, 2, 2, tester1);
+        true, 2, 1, 2, tester1);
 
         EditorBug editor2 = new EditorBug("Terrain's 'Pixel Error' value has no effect when Camera's Z position is set to 0",
         1540012, tester1.GetName(), new AreasNGrabbags { area = "Terrain", grabbag = "Terrain Grabbag" },
@@ -366,7 +511,7 @@ public class DataLoadManager : MonoBehaviour, IManager
         "Actual result: Objects are not illuminated the same as in the Editor, the lighting on the objects is distorted",
         "Reproducible with: 4.3.0-preview.6 (2019.4.2f1), 4.3.1 (2020.1.6f1), 4.4.0-preview.1 (2020.2.0b3)" +
         "Not reproducible with: 4.2.3(2018.4.24f1), 4.3.0 - preview.4(2019.4.2f1)",
-        true, "FAV: 2019.4, 2020.2", false, 2, 2, 2, "Shader Graph", "4.3.0-preview.6", tester1);
+        true, "FAV: 2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.3.0-preview.6", tester1);
 
         EditorBug editor5 = new EditorBug("Keyboard input is not detected in the Input Field when built on WebGL",
         1467154, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
@@ -437,12 +582,175 @@ public class DataLoadManager : MonoBehaviour, IManager
         scenarios.Add(editor2);
         scenarios.Add(editor3);
         scenarios.Add(editor4);
+        scenarios.Add(package1);
         scenarios.Add(editor5);
         scenarios.Add(editor6);
         scenarios.Add(editor7);
         scenarios.Add(editor8);
         scenarios.Add(editor9);
+
+        days.Add(day, scenarios);
+    }
+
+    private void InitializeDayFour(int day)
+    {
+        scenarios = new List<IScenario>();
+
+        Tester tester1 = new Tester("Joachim", "Creator", "j.creator@unity3d.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27));
+        Tester tester2 = new Tester("David", "Creator", "d.creator@unity3d.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10));
+
+        EditorBug editor1 = new EditorBug("Build fails with an Exception when IL2CPP Scripting Backend is selected", 1679012, tester1.GetName(), new AreasNGrabbags { area = "IL2CPP", grabbag = "VM-IL2CPP Grabbag" },
+        "How to reproduce:" +
+        "1.Open the user's attached '2011Bug.zip' project" +
+        "2.Go to File->Build Settings" +
+        "3.Press Build",
+        "Expected result: Project builds successfully" +
+        "Actual result: Exceptions are thrown in the Console log",
+        "Reproducible with: 2020.1.0a19, 2020.1.6f1" +
+        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a18, 2020.2.0b3",
+        true, "FAV: 2020.1.0a19", true, 2, 3, 2, tester1);
+
+        EditorBug editor2 = new EditorBug("Multi-selecting and overwriting Prefab instances with changes does not apply changes to their outside Prefab assets", 1791012, tester1.GetName(),
+         new AreasNGrabbags { area = "Scene Management", grabbag = "Scene Management Grabbag" },
+        "How to reproduce:" +
+        "1.Open the user's attached 'Bug Project.zip' project" +
+        "2.Type 't:boxcollider' in the Hierarchy window's search bar" +
+        "3.Select all GameObjects in the Hierarchy window" +
+        "4.Remove the Box Collider Component in the Inspector" +
+        "5.Select all parent GameObjects in the Hierarchy window" +
+        "6.Press Overrides->Apply All in the Inspector window" +
+        "7.Observe the GameObjects in the Scene view",
+        "Expected result: Box Collider Component was removed from all Prefab instances and from the original Prefab" +
+        "Actual result: On some Prefab instances and on the original Prefab, the Box Collider Component was not removed",
+        "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1",
+        false, "FAV: 2018.4, 2020.1", true, 3, 3, 2, tester1);
+
+        EditorBug editor3 = new EditorBug("Multiple ListView's TextField items inherit the selected TextField's text when scrolling down/up in the window", 1874123, tester1.GetName(),
+         new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" },
+        "How to reproduce:" +
+        "1.Open the attached 'Listview.zip' project" +
+        "2.Go to Window->ListViewExampleWindow" +
+        "3.Select any TextField" +
+        "4.Enter 'text' in the TextField's Input Field" +
+        "5.Scroll down with the mouse wheel or the scrollbar in the right side of the window" +
+        "6.Observe the window",
+        "Expected result: The selected TextField item with 'text' text stays in the top when scrolling down" +
+        "Actual result: The selected TextField item with 'text' text keeps appearing in the window when scrolling down",
+        "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3" +
+        "Could not test with: 2018.4.27f1(UIElements are not supported)",
+        false, "FAV: 2019.4, 2020.2", true, 3, 3, 2, tester1);
+
+        PackageBug package1 = new PackageBug("Shader breaks when a % is added to an Enum keyword Entry's display name", 1781245, tester1.GetName(),
+          new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" },
+         "How to reproduce:" +
+         "1.Open the user's attached 'Enum2020.zip' project" +
+         "2.Press the plus sign->Keyword->Enum in the left window of the Shader Editor" +
+         "3.Select the newly created Enum keyword" +
+         "4.Add a plus symbol in one of the Entries display names in the Graph Inspector and press Enter" +
+         "5.Click 'Save Asset' in the Shader Editor" +
+         "6.Observe the Inspector",
+         "Expected result: No warning message is thrown in the Inspector window when a symbol is added to an Enum keyword Entry's display name" +
+         "Actual result: 'shader is not supported on this GPU (none of the subshaders/fallbacks are suitable)' warning message is thrown in the Inspector window when a symbol is added to an Enum keyword",
+         "Reproducible with: 7.3.1 (2019.4.11f1), 8.2.0 (2020.1.6f1), 10.0.0-preview.27 (2020.2.0b3)" +
+         "Could not test with: 4.10.0-preview (2018.4.26f1) - Enum keyword not supported",
+         false, "FAV: 2019.4, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0-preview.27", tester1);
+
+        EditorBug editor4 = new EditorBug("Tooltip and certain buttons in the Editor cause loss of focus on top level windows when VS or VS Code", 1578978, tester1.GetName(),
+         new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" },
+        "How to reproduce:" +
+        "1.Open the attached 'repro.zip' project" +
+        "2.Open the 'Example.cs' script with Visual Studio" +
+        "3.Make sure 'Attach to Unity' is selected in the Visual Studio's toolbar" +
+        "4.Press Run in the Visual Studio" +
+        "5.Go back to the Unity Editor" +
+        "6.Select any GameObject in the Hierarchy window" +
+        "7.Open another application, so Unity Editor would be out of focus" +
+        "8.Hover on one of the selected GameObject's properties in the Inspector window",
+        "Expected result: No tooltip is shown since Unity Editor is not in focus" +
+        "Actual result: Tooltip appears, the opened application loses focus and now the Unity Editor is in focus",
+        "Reproducible with: 2020.1.0a23, 2020.1.6f1, 2020.2.0b3" +
+        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a22",
+        true, "FAV: 2020.1.0a23, 2020.2", true, 3, 3, 2, tester1);
+
+        EditorBug editor5 = new EditorBug("One extra item is added to the ListView when a ListView is bound to a SerializeReference List", 1679412, tester2.GetName(),
+         new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" },
+        "How to reproduce:" +
+        "1.Open the user's attached 'bug-uielements-list-binding.zip' project" +
+        "2.Open the 'scene' Scene" +
+        "3.Select the 'Tests' GameObject in the Hierarchy window" +
+        "4.Observe the Inspector",
+        "Expected result: ListView and the bound SerializeReference List have the same amount of items" +
+        "Actual result: ListView has 3 items while the bound SerializeRefence List has only 2 items",
+        "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3" +
+        "Could not test with: 2018.4.27f1(UIElements are not supported)",
+        true, "FAV: 2019.4, 2020.2", true, 3, 3, 2, tester2);
+
+        PackageBug package2 = new PackageBug("InvalidCastException is thrown when a project is built with Windows/Mac Player and Development Build checked", 1785354, tester2.GetName(),
+          new AreasNGrabbags { area = "Addressables Assets", grabbag = "Addressables Grabbag" },
+         "How to reproduce:" +
+         "1.Open the user's attached 'AddressablesBugReport.zip' project" +
+         "2.Go to File->Build Settings" +
+         "3.Make sure 'Development Build' is checked" +
+         "4.Press 'Build And Run' in the Build Settings" +
+         "5.Observe the Development Console when the application opens",
+         "Expected result: No error messages are thrown in the Development Console" +
+         "Actual result: 'InvalidCastException: Specified cast is not valid.' error message is thrown in the Development Console",
+         "Reproducible with: 1.14.2 (2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3)" +
+         "Not reproducible with: 1.13.1(2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3)",
+         true, "FAV: 2018.4, 2020.2", true, 4, 2, 2, "Addressables", "1.14.2", tester2);
+
+        EditorBug editor6 = new EditorBug("Turning off VSync in Windows Player in the Application.focusChanged callback causes another callback with focus equal to true", 1456564, tester2.GetName(),
+         new AreasNGrabbags { area = "Windows", grabbag = "Desktop Grabbag" },
+        "How to reproduce:" +
+        "1.Open the user's attached 'repro-focus-error.zip' project" +
+        "2.Open the 'SampleScene' Scene" +
+        "3.Go to File->Build And Run" +
+        "4.When the application opens, make sure 'Toggle VSync' is checked" +
+        "5.Click outside the application to make it out of focus",
+        "Expected result: 'Focused' and 'VSync' text disappears and framerate text changes to 20" +
+        "Actual result: 'Focused' and 'VSync' text doesn't disappear and framerate text doesn't change to 20 instead stays equal to the monitor's Hz",
+        "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
+        false, "FAV: 2018.4, 2020.2", true, 3, 2, 2, tester2);
+
+        PackageBug package3 = new PackageBug("Hide Mobile Input value is true even when unchecked in the TMPro Input Field's Control Settings", 1864123, tester2.GetName(),
+          new AreasNGrabbags { area = "Text", grabbag = "John the Text Guy" },
+         "How to reproduce:" +
+         "1.Open the user's attached 'TMPReport.zip' project" +
+         "2.Expand the 'Canvas' GameObject in the Hierarchy window" +
+         "3.Select the 'InputField (TMP)' GameObject" +
+         "4.Observe the TextMeshPro Input Field Component's Control Settings values in the Inspector window" +
+         "5.Right - click on the TextMesh Pro Input Field Component" +
+         "6.Press the 'Debug ShouldHide Fields' menu item" +
+         "7.Observe the Console log",
+         "Expected result: 'Hide Mobile Input' value is false" +
+         "Actual result: 'Hide Mobile Input' value is true",
+         "Reproducible with: 2.1.1 (2019.4.11f1), 3.0.1 (2020.1.6f1, 2020.2.0b3)" +
+         "Not reproducible with: 1.4.0-preview.1b (2018.4.27f1)",
+         true, "FAV: 2019.4, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.1", tester2);
+
+        EditorBug editor7 = new EditorBug("OnApplicationQuit method is called before Application.wantsToQuit event is raised", 1785123, tester2.GetName(),
+         new AreasNGrabbags { area = "Scripting", grabbag = "Scripting Grabbag" },
+        "How to reproduce:" +
+        "1.Open user's attached 'quit_test.zip' project" +
+        "2.Open 'SampleScene' Scene" +
+        "3.Enter Play Mode" +
+        "4.Exit Play Mode" +
+        "5.Observe the Console log",
+        "Expected result: Application.wantsToQuit event is raised before OnApplicationQuit" +
+        "Actual result: OnApplicationQuit is called before Application.wantsToQuit event is raised.",
+        "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
+        false, "FAV: 2018.4, 2020.2", true, 3, 3, 2, tester2);
+
+        scenarios.Add(editor1);
+        scenarios.Add(editor2);
+        scenarios.Add(editor3);
         scenarios.Add(package1);
+        scenarios.Add(editor4);
+        scenarios.Add(editor5);
+        scenarios.Add(package2);
+        scenarios.Add(editor6);
+        scenarios.Add(package3);
+        scenarios.Add(editor7);
 
         days.Add(day, scenarios);
     }
