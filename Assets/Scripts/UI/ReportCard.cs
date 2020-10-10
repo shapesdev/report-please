@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ReportType
-{
-    Response, EditorBug, PackageBug
-}
-
 public class ReportCard : Card
 {
     [SerializeField]
@@ -23,15 +18,15 @@ public class ReportCard : Card
 
         if(reportType == ReportType.Response)
         {
-            response.SetActive(false);
+            ShowLeftResponse();
         }
         else if(reportType == ReportType.EditorBug)
         {
-            editorBug.SetActive(false);
+            ShowLeftEditorBug();
         }
         else if(reportType == ReportType.PackageBug)
         {
-            packageBug.SetActive(false);
+            ShowLeftPackageBug();
         }
     }
 
@@ -42,15 +37,45 @@ public class ReportCard : Card
 
         if (reportType == ReportType.Response)
         {
-            response.SetActive(true);
+            ShowRightResponse();
         }
         else if (reportType == ReportType.EditorBug)
         {
-            editorBug.SetActive(true);
+            ShowRightEditorBug();
         }
         else if (reportType == ReportType.PackageBug)
         {
-            packageBug.SetActive(true);
+            ShowRightPackageBug();
         }
+    }
+
+    private void ShowRightResponse()
+    {
+        response.SetActive(true);
+    }
+
+    private void ShowRightEditorBug()
+    {
+        editorBug.SetActive(true);
+    }
+
+    private void ShowRightPackageBug()
+    {
+        packageBug.SetActive(true);
+    }
+
+    private void ShowLeftResponse()
+    {
+        response.SetActive(false);
+    }
+
+    private void ShowLeftEditorBug()
+    {
+        editorBug.SetActive(false);
+    }
+
+    private void ShowLeftPackageBug()
+    {
+        packageBug.SetActive(false);
     }
 }
