@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,14 +10,13 @@ public enum Stamp
     SIREN, PLUS
 }
 
-public class GraphicManager : MonoBehaviour, IManager
+public class GraphicManager : MonoBehaviour, IManager, IGraphic
 {
     GraphicRaycaster graphicRaycaster;
     PointerEventData pointerEvent;
     EventSystem eventSystem;
 
     private GameObject selectedGO;
-    private Card card;
 
     private GameObject stamp;
     public GameObject stampPanel;
@@ -27,6 +27,8 @@ public class GraphicManager : MonoBehaviour, IManager
 
     [SerializeField]
     private RectTransform leftPanel;
+
+    public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
 
     public void Initialize()
     {
@@ -82,8 +84,8 @@ public class GraphicManager : MonoBehaviour, IManager
     selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
             }
-            card.Check(leftPanel.rect.width, ReportType.PackageBug);
-            // SOME SCENARIOMANAGER SHOULD TAKE CARE FROM HERE
+            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
+            OnDragRight(this, eventArgs);
         }
     }
 
@@ -92,7 +94,6 @@ public class GraphicManager : MonoBehaviour, IManager
         selectedGO = go;
         selectedGO.transform.SetSiblingIndex(transform.childCount - 3);
 
-        card = selectedGO.gameObject.GetComponent<Card>();
         selected = true;
     }
 

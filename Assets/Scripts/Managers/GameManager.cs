@@ -1,38 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IManager
 {
-    private List<IManager> IManagers;
+    private DataLoadManager loadManager;
+    private Tuple<List<AreasNGrabbags>, Dictionary<int, List<IScenario>>> scenarioData;
 
-    private void Awake()
+    public GraphicManager graphicManager;
+
+    private Card currentCard;
+    private float currentPanelWidth;
+
+    public void Initialize()
     {
-        IManagers = new List<IManager>();
+        loadManager = new DataLoadManager();
+        scenarioData = loadManager.GetAreaAndDayData();
 
-        var managers = FindObjectsOfType<MonoBehaviour>().OfType<IManager>();
-
-        foreach(var a in managers)
-        {
-            IManagers.Add(a);
-            a.Initialize();
-        }
+        graphicManager.OnDragRight += GraphicManager_OnDragRight;
     }
 
-    private void Update()
+    private void GraphicManager_OnDragRight(object sender, DragRightEventArgs e)
     {
-        foreach (var manager in IManagers)
-        {
-            manager.ManagerUpdate();
-        }
+        currentCard = e.card;
+        currentPanelWidth = e.panelWidth;
+
+        currentCard.Check(currentPanelWidth, scenarioData.Item2[10][0].GetReportType());
     }
 
-    private void FixedUpdate()
+    public void FixedManagerUpdate()
     {
-        foreach (var manager in IManagers)
-        {
-            manager.FixedManagerUpdate();
-        }
+
+    }
+
+    public void ManagerUpdate()
+    {
+
     }
 }

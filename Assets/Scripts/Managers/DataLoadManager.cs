@@ -9,7 +9,12 @@ public struct AreasNGrabbags
     public string grabbag;
 }
 
-public class DataLoadManager : MonoBehaviour, IManager
+public enum ReportType
+{
+    Response, EditorBug, PackageBug
+}
+
+public class DataLoadManager
 {
     private Dictionary<int, List<IScenario>> days;
 
@@ -17,231 +22,25 @@ public class DataLoadManager : MonoBehaviour, IManager
 
     private List<AreasNGrabbags> areas;
 
-    public void Initialize()
+    public DataLoadManager()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
     {
         days = new Dictionary<int, List<IScenario>>();
 
         InitializeAreasAndGrabbags();
-
-        InitializeDayOne(1);
-        InitializeDayTwo(2);
-        InitializeDayThree(3);
-        InitializeDayFour(4);
-
-        //ResponseChecker(2); // Suitable for 1st and 2nd day
-        BugChecker(4); // Suitable for 3rd and 4th day
+        InitializeDayOne(10);
+        InitializeDayTwo(11);
+        InitializeDayThree(12);
+        InitializeDayFour(13);
     }
 
-    public void FixedManagerUpdate()
+    public Tuple<List<AreasNGrabbags>, Dictionary<int, List<IScenario>>> GetAreaAndDayData()
     {
-
-    }
-
-    public void ManagerUpdate()
-    {
-
-    }
-
-    private void ResponseChecker(int day)
-    {
-        for(int i = 0; i < days[day].Count; i++)
-        {
-            var value = days[day][i];
-
-            if(value.GetReportType() == ReportType.Response)
-            {
-                var response = (Response)value;
-
-                var chars = response.GetEmail().ToCharArray();
-
-                int spacesCount = 0;
-
-                foreach (var ch in chars)
-                {
-                    if (ch == ' ')
-                    {
-                        spacesCount++;
-                    }
-                    else
-                    {
-                        spacesCount = 0;
-                    }
-
-                    if (spacesCount >= 2)
-                    {
-                        break;
-                    }
-                }
-
-                if(response.GetEmail().Contains("\n\n\n") || response.GetEmail().Contains("\n\n\n\n"))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has two empty lines instead of 1");
-                    continue;
-                }
-
-                if(spacesCount >= 2)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has double spaces between letters");
-                    continue;
-                }
-
-                if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "have bad email");
-                    continue;
-                }
-                if(response.GetCloseType() == CloseType.NotQualified && (response.GetDateSent().Day - response.GetLastReplyDate().Day) >= 7)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Bad close, didn't wait 7 days");
-                    continue;
-                }
-                if(response.WasItClosedCorrectly() == false)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "was closed incorrectly");
-                    continue;
-                }
-                if(!response.GetEmail().Contains(response.GetTester().GetName()))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has a bad tester name");
-                    continue;
-                }
-                if(response.GetEmail().Contains("issuetracker") && !response.GetEmail().Contains(response.GetCaseID().ToString()))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has a bad issue tracker link");
-                    continue;
-                }
-                if(response.GetTester().GetExpiryDate() < response.GetDateSent())
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Tester's ID is expired");
-                    continue;
-                }
-                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
-            }
-        }
-    }
-
-    private void BugChecker(int day)
-    {
-        for (int i = 0; i < days[day].Count; i++)
-        {
-            var value = days[day][i];
-
-            if(value.GetReportType() == ReportType.EditorBug)
-            {
-                var bug = (EditorBug)value;
-
-                bool hasCorrectBoth = false;
-                bool hasVersionsWhenNoRegression = false;
-                bool hasNoVersionButIsRegression = false;
-
-                foreach(var area in areas)
-                {
-                    if(area.area == bug.GetArea().area && area.grabbag == bug.GetArea().grabbag)
-                    {
-                        hasCorrectBoth = true;
-                        break;
-                    }
-                }
-
-                var stringWithoutFAV = bug.GetFirstAffected().Substring(5, bug.GetFirstAffected().Length - 5);
-                var strings = stringWithoutFAV.Split(',');
-
-                foreach (var str in strings)
-                {
-                    if (str.Length > 8 && bug.IsRegression() == false)
-                    {
-                        hasVersionsWhenNoRegression = true;
-                    }
-                    else if(str.Length < 8 && bug.IsRegression() == true)
-                    {
-                        hasNoVersionButIsRegression = true;
-                    }
-                }
-
-                if(hasVersionsWhenNoRegression)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "FAV has a specified version, but no regression");
-                    continue;
-                }
-                if(hasNoVersionButIsRegression)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Regression if specified but no regression found");
-                    continue;
-                }
-                if (hasCorrectBoth == false)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect Area/Grabbag");
-                    continue;
-                }
-
-                if(bug.GetReproSteps().Contains("Actual") || bug.GetReproSteps().Contains("Reproducible"))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect report order");
-                    continue;
-                }
-                if(bug.isPublic() == false)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "should be public not private");
-                    continue;
-                }
-                if((bug.GetTitle().Contains("WebGL") && bug.GetPlatformImportance() != 1) || (bug.GetTitle().Contains("Player")) &&
-                    bug.GetPlatformImportance() != 2)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Bad Platform Importance selected");
-                    continue;
-                }
-                if(bug.GetSeverity() == 1 && !bug.GetExpectedActualResults().Contains("crash"))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Wrong severity is selected");
-                    continue;
-                }
-                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
-            }
-
-            if (value.GetReportType() == ReportType.PackageBug)
-            {
-                var bug = (PackageBug)value;
-
-                bool hasCorrectBoth = false;
-
-                foreach (var area in areas)
-                {
-                    if (area.area == bug.GetArea().area && area.grabbag == bug.GetArea().grabbag)
-                    {
-                        hasCorrectBoth = true;
-                        break;
-                    }
-                }
-
-                if (hasCorrectBoth == false)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect Area/Grabbag");
-                    continue;
-                }
-                if (bug.GetReproSteps().Contains("Actual") || bug.GetReproSteps().Contains("Reproducible"))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "has incorrect report order");
-                    continue;
-                }
-                if (bug.isPublic() == false)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "should be public not private");
-                    continue;
-                }
-                if ((bug.GetTitle().Contains("WebGL") && bug.GetPlatformImportance() != 1) || (bug.GetTitle().Contains("Player")) &&
-                    bug.GetPlatformImportance() != 2)
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Bad Platform Importance selected");
-                    continue;
-                }
-                if (bug.GetSeverity() == 1 && !bug.GetExpectedActualResults().Contains("crash"))
-                {
-                    Debug.Log("Day " + day + " Scenario number " + i + "Wrong severity is selected");
-                    continue;
-                }
-                Debug.Log("Day " + day + " Scenario number " + i + "is a good report");
-            }
-        }
+        return Tuple.Create(areas, days);
     }
 
     private void InitializeAreasAndGrabbags()
