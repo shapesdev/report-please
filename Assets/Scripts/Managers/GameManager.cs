@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour, IManager
         currentCard = e.card;
         currentPanelWidth = e.panelWidth;
 
-        currentCard.Check(currentPanelWidth, scenarioData.Item2[10][0].GetReportType());
+        currentCard.Check(currentPanelWidth, scenarioData.Item2[12][0].GetReportType());
     }
 
     public void FixedManagerUpdate()
