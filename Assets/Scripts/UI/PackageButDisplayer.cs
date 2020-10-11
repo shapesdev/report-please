@@ -32,6 +32,8 @@ public class PackageButDisplayer : MonoBehaviour
     [SerializeField]
     private TMP_Text caseId;
     [SerializeField]
+    private TMP_Text FAV;
+    [SerializeField]
     private TMP_Text package;
     [SerializeField]
     private TMP_Text packageVersion;
@@ -58,8 +60,9 @@ public class PackageButDisplayer : MonoBehaviour
         grabbag.text = bug.GetArea().grabbag;
         area.text = bug.GetArea().area;
         caseId.text = bug.GetCaseID().ToString();
-        package.text = bug.GetPackage();
-        packageVersion.text = bug.GetPackageVersion();
+        FAV.text = bug.GetFirstAffected();
+        package.text = "Package: " + bug.GetPackage();
+        packageVersion.text = "Package Found Version: " + bug.GetPackageVersion();
 
         gameObject.SetActive(true);
     }

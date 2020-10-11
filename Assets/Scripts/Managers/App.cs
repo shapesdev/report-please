@@ -11,7 +11,7 @@ public class App : MonoBehaviour
     {
         IManagers = new List<IManager>();
 
-        var managers = FindObjectsOfType<MonoBehaviour>().OfType<IManager>();
+        var managers = GetComponentsInChildren<MonoBehaviour>().OfType<IManager>();
 
         foreach(var a in managers)
         {

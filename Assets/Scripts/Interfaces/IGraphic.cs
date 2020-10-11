@@ -6,4 +6,5 @@ using UnityEngine;
 public interface IGraphic
 {
     event EventHandler<DragRightEventArgs> OnDragRight;
+    event EventHandler<PapersReturnedEventArgs> OnPapersReturned;
 }

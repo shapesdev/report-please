@@ -846,6 +846,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stampPanel: {fileID: 30616738}
   leftPanel: {fileID: 2114897822}
+  returnArea: {fileID: 1336127870}
+  selectableGO:
+  - {fileID: 993871042}
+  - {fileID: 1644559813}
 --- !u!1 &78673559
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,7 +1352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 105.32, y: 175}
+  m_AnchoredPosition: {x: 97.6, y: 175}
   m_SizeDelta: {x: 347.7683, y: 56.036613}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &192013698
@@ -3239,6 +3243,7 @@ MonoBehaviour:
   grabbag: {fileID: 1764964493}
   area: {fileID: 2089040932}
   caseId: {fileID: 25939402}
+  FAV: {fileID: 1840447686}
   package: {fileID: 1253128787}
   packageVersion: {fileID: 1095917121}
 --- !u!1 &708774446
@@ -3745,10 +3750,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hi,   \r\n\r\nWe haven't received a response from you on the issue.\r\n\r\nPlease
-    let us know if you have more information.\r\n\r\nFor now, this case will be closed.
-    If we hear from you in the future, we'll reopen it for further investigation.\r\n\r\nThanks,\r\nDonatas\nCustomer
-    QA Team"
+  m_text: 'Hi,
+
+
+    Thanks for getting in touch, we actually know about this issue
+    and are tracking progress here: https://issuetracker.unity3d.com/product/unity/issues/guid/1212956
+
+
+    Please
+    reach out to me if I can answer any questions or be of further help.
+
+
+    Thanks,
+
+    Justinas
+
+    Customer
+    QA Team'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3775,8 +3793,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 36
+  m_fontSize: 18
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
@@ -5644,6 +5662,42 @@ MonoBehaviour:
   grabbag: {fileID: 199131319}
   area: {fileID: 991768894}
   caseId: {fileID: 971567741}
+  FAV: {fileID: 988341343}
+--- !u!1 &1336127869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1336127870}
+  m_Layer: 5
+  m_Name: ReturnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1336127870
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336127869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2114897822}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0.0000047684, y: -195.01001}
+  m_SizeDelta: {x: 699.9998, y: 389.97687}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1380673575
 GameObject:
   m_ObjectHideFlags: 0
@@ -5944,7 +5998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.14998, y: 83.329994}
+  m_AnchoredPosition: {x: -0.14998, y: 89}
   m_SizeDelta: {x: 550, y: 152.0556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1405454682
@@ -6009,12 +6063,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
+  m_fontSize: 22.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 22
+  m_fontSizeMax: 25
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -8429,7 +8483,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.0062737, y: 110}
-  m_SizeDelta: {x: 550, y: 158.0578}
+  m_SizeDelta: {x: 550, y: 163.90396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1899916430
 MonoBehaviour:
@@ -8487,7 +8541,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 22
+  m_fontSizeMax: 25
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -9355,7 +9409,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1336127870}
   m_Father: {fileID: 53157977}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
