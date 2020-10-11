@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour, IManager
     private DataLoadManager loadManager;
     private Tuple<List<AreasNGrabbags>, Dictionary<int, List<IScenario>>> scenarioData;
 
-    public GraphicManager graphicManager;
+    [SerializeField]
+    private GraphicManager graphicManager;
 
     private Card currentCard;
     private float currentPanelWidth;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour, IManager
         currentCard = e.card;
         currentPanelWidth = e.panelWidth;
 
-        currentCard.Check(currentPanelWidth, scenarioData.Item2[12][0].GetReportType());
+        currentCard.Check(currentPanelWidth, scenarioData.Item2[13][9]);
     }
 
     public void FixedManagerUpdate()

@@ -5,77 +5,47 @@ using UnityEngine;
 public class ReportCard : Card
 {
     [SerializeField]
-    private GameObject response;
+    private ResponseDisplayer responseDisplay;
     [SerializeField]
-    private GameObject editorBug;
+    private EditorBugDisplayer editorDisplay;
     [SerializeField]
-    private GameObject packageBug;
+    private PackageButDisplayer packageDisplay;
 
-    public override void ChangeSizeToLeft(ReportType reportType)
+    public override void ChangeSizeToLeft(IScenario scenario)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperLeft;
         changeSize = !changeSize;
 
-        if(reportType == ReportType.Response)
+        if(scenario.GetReportType() == ReportType.Response)
         {
-            ShowLeftResponse();
+            responseDisplay.LeftDisplay();
         }
-        else if(reportType == ReportType.EditorBug)
+        else if(scenario.GetReportType() == ReportType.EditorBug)
         {
-            ShowLeftEditorBug();
+            editorDisplay.LeftDisplay();
         }
-        else if(reportType == ReportType.PackageBug)
+        else if(scenario.GetReportType() == ReportType.PackageBug)
         {
-            ShowLeftPackageBug();
+            packageDisplay.LeftDisplay();
         }
     }
 
-    public override void ChangeSizeToRight(ReportType reportType)
+    public override void ChangeSizeToRight(IScenario scenario)
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperRight;
         changeSize = !changeSize;
 
-        if (reportType == ReportType.Response)
+        if (scenario.GetReportType() == ReportType.Response)
         {
-            ShowRightResponse();
+            responseDisplay.RightDisplay(scenario);
         }
-        else if (reportType == ReportType.EditorBug)
+        else if (scenario.GetReportType() == ReportType.EditorBug)
         {
-            ShowRightEditorBug();
+            editorDisplay.RightDisplay(scenario);
         }
-        else if (reportType == ReportType.PackageBug)
+        else if (scenario.GetReportType() == ReportType.PackageBug)
         {
-            ShowRightPackageBug();
+            packageDisplay.RightDisplay(scenario);
         }
-    }
-
-    private void ShowRightResponse()
-    {
-        response.SetActive(true);
-    }
-
-    private void ShowRightEditorBug()
-    {
-        editorBug.SetActive(true);
-    }
-
-    private void ShowRightPackageBug()
-    {
-        packageBug.SetActive(true);
-    }
-
-    private void ShowLeftResponse()
-    {
-        response.SetActive(false);
-    }
-
-    private void ShowLeftEditorBug()
-    {
-        editorBug.SetActive(false);
-    }
-
-    private void ShowLeftPackageBug()
-    {
-        packageBug.SetActive(false);
     }
 }
