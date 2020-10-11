@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IScenario
 {
     ReportType GetReportType();
+    Tester GetTester();
 }
