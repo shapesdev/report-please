@@ -23,12 +23,18 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
 
     private bool selected = false;
     private bool offsetSet = false;
+    private bool canBeReturned = false;
     private Vector3 offset;
 
     [SerializeField]
     private RectTransform leftPanel;
+    [SerializeField]
+    private RectTransform returnArea;
+    [SerializeField]
+    private GameObject[] selectableGO;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
+    public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
 
     public void Initialize()
     {
@@ -57,6 +63,20 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
             selected = false;
             offsetSet = false;
             Cursor.lockState = CursorLockMode.None;
+
+            if(selectedGO != null)
+            {
+                if (PaperCanBeReturned(selectedGO.transform.position))
+                {
+                    selectedGO.gameObject.SetActive(false);
+                }
+            }
+
+            if(selectableGO[0].activeInHierarchy == false && selectableGO[1].activeInHierarchy == false)
+            {
+                var eventArgs = new PapersReturnedEventArgs();
+                OnPapersReturned(this, eventArgs);
+            }
         }
     }
 
@@ -93,7 +113,6 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
     {
         selectedGO = go;
         selectedGO.transform.SetSiblingIndex(transform.childCount - 3);
-
         selected = true;
     }
 
@@ -107,6 +126,7 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
             {
                 stamp = new GameObject("Stamp");
                 stamp.AddComponent<Image>();
+                stamp.AddComponent<StampTest>();
 
                 var stampImage = stamp.GetComponent<Image>();
                 stampImage.sprite = sprite;
@@ -123,6 +143,7 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
                 stamp.transform.position = currentButton.transform.position;
                 stamp.transform.localScale = Vector3.one;
                 stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+                canBeReturned = true;
             }
         }
     }
@@ -153,6 +174,30 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
         return false;
     }
 
+    private bool PaperCanBeReturned(Vector3 pos)
+    {
+        if (selectedGO != null)
+        {
+            for (int i = 0; i < selectedGO.transform.childCount; i++)
+            {
+                for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
+                {
+                    if (selectedGO.transform.GetChild(i).transform.GetChild(j).name == "Stamp" || canBeReturned)
+                    {
+                        Vector3[] v = new Vector3[4];
+                        returnArea.GetWorldCorners(v);
+
+                        if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void ActivateStampPanel()
     {
         // ADD ANIMATION FOR THE STAMP PANEL
@@ -166,6 +211,25 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
             {
                 child.gameObject.SetActive(true);
             }
+        }
+    }
+
+    public void Reset()
+    {
+        StartCoroutine(ResetIenum());
+    }
+
+    IEnumerator ResetIenum()
+    {
+        yield return new WaitForSeconds(2f);
+
+        canBeReturned = false;
+
+        foreach (var go in selectableGO)
+        {
+            var stamp = go?.GetComponentInChildren<StampTest>(true);
+            Destroy(stamp?.gameObject);
+            go.SetActive(true);
         }
     }
 }

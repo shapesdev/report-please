@@ -31,6 +31,10 @@ public class EditorBugDisplayer : MonoBehaviour
     private TMP_Text area;
     [SerializeField]
     private TMP_Text caseId;
+    [SerializeField]
+    private TMP_Text FAV;
+
+    private RectTransform rectTransform;
 
     public void LeftDisplay()
     {
@@ -54,6 +58,7 @@ public class EditorBugDisplayer : MonoBehaviour
         grabbag.text = bug.GetArea().grabbag;
         area.text = bug.GetArea().area;
         caseId.text = bug.GetCaseID().ToString();
+        FAV.text = bug.GetFirstAffected();
 
         gameObject.SetActive(true);
     }
