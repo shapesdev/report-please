@@ -14,16 +14,14 @@ public class EmployeeIdCard : Card
 
     public override void ChangeSizeToLeft(IScenario scenario)
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperLeft;
-        changeSize = !changeSize;
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
 
         DisplayEmployeeLeft();
     }
 
     public override void ChangeSizeToRight(IScenario scenario)
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = employeePaperRight;
-        changeSize = !changeSize;
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
 
         DisplayEmployeeRight(scenario);
     }

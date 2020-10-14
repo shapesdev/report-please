@@ -15,6 +15,8 @@ public class ResponseDisplayer : MonoBehaviour
     private TMP_Text lastReplyDate;
     [SerializeField]
     private TMP_Text emailSentFrom;
+    [SerializeField]
+    private TMP_Text status;
 
     public void LeftDisplay()
     {
@@ -32,6 +34,21 @@ public class ResponseDisplayer : MonoBehaviour
         dateSent.text = response.GetDateSent().ToString("dd/MM/yyyy");
         lastReplyDate.text = response.GetLastReplyDate().ToString("dd/MM/yyyy");
         emailSentFrom.text = response.GetEmailSentFrom();
+        if(response.GetCloseType() == CloseType.Empty)
+        {
+            status.text = "Status: Active (New)";
+        }
+        else
+        {
+            if(response.GetCloseType() == CloseType.NotQualified)
+            {
+                status.text = "Status: Closed (Not Qualified)";
+            }
+            else
+            {
+                status.text = "Status: Closed (" + response.GetCloseType() + ")";
+            }
+        }
 
         reply.enableAutoSizing = true;
 

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour, IManager
     private Card currentCard;
     private float currentPanelWidth;
 
-    private int currentDay = 13;
+    private int currentDay = 10;
     private int currentScenario = 0;
 
     public void Initialize()

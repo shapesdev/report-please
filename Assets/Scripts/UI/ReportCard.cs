@@ -13,8 +13,7 @@ public class ReportCard : Card
 
     public override void ChangeSizeToLeft(IScenario scenario)
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperLeft;
-        changeSize = !changeSize;
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
 
         if(scenario.GetReportType() == ReportType.Response)
         {
@@ -32,8 +31,7 @@ public class ReportCard : Card
 
     public override void ChangeSizeToRight(IScenario scenario)
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = reportPaperRight;
-        changeSize = !changeSize;
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
 
         if (scenario.GetReportType() == ReportType.Response)
         {
