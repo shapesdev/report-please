@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum CloseType
 {
-    NotQualified, Responded, Duplicate
+    Empty, NotQualified, Responded, Duplicate
 }
 
 public class Response : IScenario

@@ -89,25 +89,25 @@ public class DataLoadManager
     {
         scenarios = new List<IScenario>();
 
-        Tester tester1 = new Tester("Ramunas", "Pondukas", "ramunas.pondukas@unity3d.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25));
-        Tester tester2 = new Tester("Sergej", "Aleksej", "sergej.aleksej@unity3d.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
+        Tester tester1 = new Tester("Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25));
+        Tester tester2 = new Tester("Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
 
         Response response1 = new Response(1122777, new DateTime(2020, 11, 3), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "We haven't received a response from you on the issue.\n\n" +
-        "Please let us know if you have more information.\n\n" +
-        "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
+        "Thank you for contacting Diversity.\n\n" +
+        "Sadly I couldn't reproduce the issue. Would it be possible for you to provide a video format of the issue, so we could reproduce it on our side?\n\n" +
+        "Looking forward to your reply.\n\n" +
         "Thanks\n"
         + tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1);
 
         Response response2 = new Response(1122778, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for getting in touch!\n\n" +
-        "We no longer support Unity versions lower than Unity 2019.4 except for Unity 2018.4 LTS (long - term support) version.\n\n" +
-        "Please update to the newest stable version here: https://unity3d.com/get-unity/update\n\n" +
+        "We no longer support Diversity versions lower than Diversity 2019.4 except for Diversity 2018.4 LTS (long - term support) version.\n\n" +
+        "Please update to the newest stable version here: https://diversity.com/get-diversity/update\n\n" +
         "If your problem still exists after updating, please submit a new bug report and we'll investigate for you.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1);
 
         Response response3 = new Response(1122779, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for reporting the issue.\n\n" +
@@ -118,59 +118,59 @@ public class DataLoadManager
         "4. Describe the expected and actual results\n\n" +
         "Thanks,\n" +
         "Petras\n" +
-        "Customer QA Team\n", tester1.GetEmail(), tester1);
+        "nDiversity QA Team\n", tester1.GetEmail(), tester1);
 
         Response response4 = new Response(1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Unity should look in the future.\n\n" +
-        "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Unity Forums, https://forum.unity.com/. The forums are a great place for discussion, ideation, and inspiration between community members and Unity team members.\n\n" +
+        "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
+        "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/. The forums are a great place for discussion, ideation, and inspiration between community members and Diversity team members.\n\n" +
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n\n\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1);
 
         Response response5 = new Response(1122781, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
-        "The issue is related to the 3rd party package. Currently, Unity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
+        "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1);
 
         Response response6 = new Response(1244581, new DateTime(2020, 11, 5), new DateTime(2020, 11, 10), "Hi ,  \n\n" +
-        "Thank  you  for  contacting Unity  about  your  issue.\n\n" +
+        "Thank  you  for  contacting Diversity  about  your  issue.\n\n" +
         "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue?\n\n" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
         Response response7 = new Response(1244582, new DateTime(2020, 11, 6), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step - by - step directions ? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@assetstore.unity.com", tester2);
+        "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2);
 
         Response response8 = new Response(1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "Thank you for contacting Unity about your issue.\n\n" +
+        "Thank you for contacting Diversity about your issue.\n\n" +
         "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue ?\n\n" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
         Response response9 = new Response(1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://issuetracker.unity3d.com/1244583\n\n" +
+        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://tracker.diversity.com/1244583\n\n" +
         "We highly appreciate your contribution.If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
         Response response10 = new Response(1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "Thanks for reporting the issue.We have fixed this problem and it should not appear in Probuilder 4.5.0 and above. This package version is available in Unity 2019.4.12f1 and above.\n\n" +
+        "Thanks for reporting the issue.We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
         "If you are still able to reproduce this issue using the mentioned package version, please respond to this email and the case will be reopened for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
         scenarios.Add(response1);
         scenarios.Add(response2);
@@ -190,15 +190,15 @@ public class DataLoadManager
     {
         scenarios = new List<IScenario>();
 
-        Tester tester1 = new Tester("Justinas", "Paulauskas", "j.paulauskas@unity3d.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25));
-        Tester tester2 = new Tester("Kristijonas", "Dadutis", "k.dadutis@unity3d.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
+        Tester tester1 = new Tester("Justinas", "Paulauskas", "j.paulauskas@diversity.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25));
+        Tester tester2 = new Tester("Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
 
         Response response1 = new Response(1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
-        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.unity3d.com/product/unity/issues/guid/1212956\n\n" +
+        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://tracker.diversity.com/1212956\n\n" +
         "Please reach out to me if I can answer any questions or be of further help.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate);
 
         Response response2 = new Response(1212957, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
@@ -206,31 +206,31 @@ public class DataLoadManager
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified);
 
         Response response3 = new Response(1212958, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step by step directions? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.NotQualified);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.NotQualified);
 
         Response response4 = new Response(1212959, new DateTime(2020, 11, 10), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request.\n\n" +
-        "We really appreciate it when our users contribute to how Unity should look in the future.\n\n" +
-        "Unfortunately, feature requests are no longer being handled via bug reports.Now our primary feedback channel is Unity Forums, https://forum.unity.com/.\n" +
-        "The forums are a great place for discussion, ideation, and inspiration between community members and Unity team members.\n\n" +
+        "We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
+        "Unfortunately, feature requests are no longer being handled via bug reports.Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/.\n" +
+        "The forums are a great place for discussion, ideation, and inspiration between community members and Diversity team members.\n\n" +
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nCustomer QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.Responded);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.Responded);
 
         Response response5 = new Response(1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
-        "The issue is related to the 3rd party package. Currently, Unity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
+        "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester2.GetName() +
-        "\nCustomer QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
         scenarios.Add(response1);
         scenarios.Add(response2);
@@ -245,8 +245,8 @@ public class DataLoadManager
     {
         scenarios = new List<IScenario>();
 
-        Tester tester1 = new Tester("Donny", "Vaichio", "d.vaichio@unity3d.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9));
-        Tester tester2 = new Tester("Nicholas", "Creator", "n.creator@unity3d.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
+        Tester tester1 = new Tester("Donny", "Vaichio", "d.vaichio@diversity.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9));
+        Tester tester2 = new Tester("Nicholas", "Creator", "n.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
 
         EditorBug editor1 = new EditorBug("Particles are not visible in WebGL Build", 1230101, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
         "How to reproduce:\n" +
@@ -394,8 +394,8 @@ public class DataLoadManager
     {
         scenarios = new List<IScenario>();
 
-        Tester tester1 = new Tester("Joachim", "Creator", "j.creator@unity3d.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27));
-        Tester tester2 = new Tester("David", "Creator", "d.creator@unity3d.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10));
+        Tester tester1 = new Tester("Joachim", "Creator", "j.creator@diversity.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27));
+        Tester tester2 = new Tester("David", "Creator", "d.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10));
 
         EditorBug editor1 = new EditorBug("Build fails with an Exception when IL2CPP Scripting Backend is selected", 1679012, tester1.GetName(), new AreasNGrabbags { area = "IL2CPP", grabbag = "VM-IL2CPP Grabbag" },
         "How to reproduce:\n" +
@@ -459,10 +459,10 @@ public class DataLoadManager
         "2. Open the 'Example.cs' script with Visual Studio\n" +
         "3. Press Run in the Visual Studio\n" +
         "4. Select any GameObject in the Hierarchy window\n" +
-        "5. Open another application, so Unity Editor would be out of focus\n" +
+        "5. Open another application, so Diversity Editor would be out of focus\n" +
         "6. Hover on one of the selected GameObject's properties in the Inspector window\n",
-        "Expected result: No tooltip is shown since Unity Editor is not in focus\n" +
-        "Actual result: Tooltip appears, the opened application loses focus and now the Unity Editor is in focus\n",
+        "Expected result: No tooltip is shown since Diversity Editor is not in focus\n" +
+        "Actual result: Tooltip appears, the opened application loses focus and now the Diversity Editor is in focus\n",
         "Reproducible with: 2020.1.0a23, 2020.1.6f1, 2020.2.0b3\n" +
         "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a22",
         true, "FAV:\n2020.1.0a23, 2020.2", true, 3, 3, 2, tester1);
