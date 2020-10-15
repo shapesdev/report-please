@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public struct AreasNGrabbags
-{
-    public string area;
-    public string grabbag;
-}
-
 public enum ReportType
 {
     Response, EditorBug, PackageBug
@@ -20,8 +14,6 @@ public class DataLoadManager
 
     private List<IScenario> scenarios;
 
-    private List<AreasNGrabbags> areas;
-
     public DataLoadManager()
     {
         Initialize();
@@ -31,58 +23,15 @@ public class DataLoadManager
     {
         days = new Dictionary<int, List<IScenario>>();
 
-        InitializeAreasAndGrabbags();
         InitializeDayOne(10);
         InitializeDayTwo(11);
         InitializeDayThree(12);
         InitializeDayFour(13);
     }
 
-    public Tuple<List<AreasNGrabbags>, Dictionary<int, List<IScenario>>> GetAreaAndDayData()
+    public Dictionary<int, List<IScenario>> GetAreaAndDayData()
     {
-        return Tuple.Create(areas, days);
-    }
-
-    private void InitializeAreasAndGrabbags()
-    {
-        areas = new List<AreasNGrabbags>();
-
-        AreasNGrabbags webgl = new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" };
-        AreasNGrabbags terrain = new AreasNGrabbags { area = "Terrain", grabbag = "Terrain Grabbag" };
-        AreasNGrabbags desktop = new AreasNGrabbags { area = "Window Management", grabbag = "Desktop Grabbag" };
-        AreasNGrabbags imgui = new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" };
-        AreasNGrabbags probuilder = new AreasNGrabbags { area = "Probuilder", grabbag = "Scene Tooling Grabbag" };
-        AreasNGrabbags packman = new AreasNGrabbags { area = "Packman", grabbag = "Packman Grabbag" };
-        AreasNGrabbags texture = new AreasNGrabbags { area = "Texture", grabbag = "Texture Grabbag" };
-        AreasNGrabbags physics2d = new AreasNGrabbags { area = "Physics2D", grabbag = "John the 2D Guy" };
-        AreasNGrabbags assetImport = new AreasNGrabbags { area = "Asset Import Pipeline", grabbag = "Asset Pipeline V2 Grabbag" };
-
-        AreasNGrabbags shader = new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" };
-        AreasNGrabbags uiToolkit = new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" };
-        AreasNGrabbags addressables = new AreasNGrabbags { area = "Addressables Assets", grabbag = "Addressables Grabbag" };
-        AreasNGrabbags windows = new AreasNGrabbags { area = "Windows", grabbag = "Desktop Grabbag" };
-        AreasNGrabbags text = new AreasNGrabbags { area = "Text", grabbag = "John the Text Guy" };
-        AreasNGrabbags scripting = new AreasNGrabbags { area = "Scripting", grabbag = "Scripting Grabbag" };
-        AreasNGrabbags il2cpp = new AreasNGrabbags { area = "IL2CPP", grabbag = "VM-IL2CPP Grabbag" };
-        AreasNGrabbags scene = new AreasNGrabbags { area = "Scene Management", grabbag = "Scene Management Grabbag" };
-
-        areas.Add(webgl);
-        areas.Add(terrain);
-        areas.Add(desktop);
-        areas.Add(imgui);
-        areas.Add(probuilder);
-        areas.Add(packman);
-        areas.Add(texture);
-        areas.Add(physics2d);
-        areas.Add(assetImport);
-        areas.Add(shader);
-        areas.Add(uiToolkit);
-        areas.Add(addressables);
-        areas.Add(windows);
-        areas.Add(text);
-        areas.Add(scripting);
-        areas.Add(il2cpp);
-        areas.Add(scene);
+        return days;
     }
 
     private void InitializeDayOne(int day)
@@ -255,8 +204,8 @@ public class DataLoadManager
         "3. Observe the application in the browser\n",
         "Expected result: Particles are visible in the browser\n" +
         "Actual result: Particles are not visible in the browser\n",
-        "Reproducible with: 2019.2.0a7, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
-        "Not reproducible with: 2018.4.27f1, 2019.2.0a6", true, "FAV:\n2019.2.0a7, 2019.4, 2020.1, 2020.2",
+        "Reproducible with: 2019.4.0a7, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
+        "Not reproducible with: 2018.4.27f1, 2019.4.0a6", true, "FAV:\n2019.4.0a7, 2020.1, 2020.2",
         true, 2, 1, 2, tester1);
 
         EditorBug editor2 = new EditorBug("Terrain's 'Pixel Error' value has no effect when Camera's Z position is set to 0",
@@ -307,8 +256,8 @@ public class DataLoadManager
         "6. Observe the application in the Player\n",
         "Expected result: Objects are illuminated the same as in the Editor, the lighting on the objects is not distorted\n" +
         "Actual result: Objects are not illuminated the same as in the Editor, the lighting on the objects is distorted\n",
-        "Reproducible with: 4.3.0-preview.6 (2019.4.2f1), 4.3.1 (2020.1.6f1), 4.4.0-preview.1 (2020.2.0b3)\n" +
-        "Not reproducible with: 4.2.3(2018.4.24f1), 4.3.0 - preview.4(2019.4.2f1)",
+        "Reproducible with: 4.3.0-preview.6 (2019.4.11f1), 4.3.1 (2020.1.6f1), 4.4.0-preview.1 (2020.2.0b3)\n" +
+        "Not reproducible with: 4.2.3(2018.4.27f1), 4.3.0 - preview.4(2019.4.11f1)",
         true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.3.0-preview.6", tester1);
 
         EditorBug editor5 = new EditorBug("Keyboard input is not detected in the Input Field when built on WebGL",
@@ -449,7 +398,7 @@ public class DataLoadManager
          "Expected result: No warning message is thrown in the Inspector window when a symbol is added to an Enum keyword\n" +
          "Actual result: 'shader is not supported on this GPU' warning message is thrown in the Inspector\n",
          "Reproducible with: 7.3.1 (2019.4.11f1), 8.2.0 (2020.1.6f1), 10.0.0-preview.27 (2020.2.0b3)\n" +
-         "Could not test with: 4.10.0-preview (2018.4.26f1) - Enum keyword not supported",
+         "Could not test with: 4.10.0-preview (2018.4.27f1) - Enum keyword not supported",
          false, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0-preview.27", tester1);
 
         EditorBug editor4 = new EditorBug("Tooltip and certain buttons in the Editor cause loss of focus on top level windows when VS or VS Code", 1578978, tester1.GetName(),
@@ -463,8 +412,8 @@ public class DataLoadManager
         "6. Hover on one of the selected GameObject's properties in the Inspector window\n",
         "Expected result: No tooltip is shown since Diversity Editor is not in focus\n" +
         "Actual result: Tooltip appears, the opened application loses focus and now the Diversity Editor is in focus\n",
-        "Reproducible with: 2020.1.0a23, 2020.1.6f1, 2020.2.0b3\n" +
-        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a22",
+        "Reproducible with: 2020.1.1f1, 2020.1.6f1, 2020.2.0b3\n" +
+        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0f1",
         true, "FAV:\n2020.1.0a23, 2020.2", true, 3, 3, 2, tester1);
 
         EditorBug editor5 = new EditorBug("One extra item is added to the ListView when a ListView is bound to a SerializeReference List", 1679412, tester2.GetName(),
