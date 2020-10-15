@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, IManager
 {
     private DataLoadManager loadManager;
-    private Tuple<List<AreasNGrabbags>, Dictionary<int, List<IScenario>>> scenarioData;
+    private Dictionary<int, List<IScenario>> dayData;
 
     [SerializeField]
     private GraphicManager graphicManager;
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour, IManager
     public void Initialize()
     {
         loadManager = new DataLoadManager();
-        scenarioData = loadManager.GetAreaAndDayData();
+        dayData = loadManager.GetAreaAndDayData();
 
         graphicManager.OnDragRight += GraphicManager_OnDragRight;
         graphicManager.OnPapersReturned += GraphicManager_OnPapersReturned;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour, IManager
 
     private void GraphicManager_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
-        if(currentScenario + 1 < scenarioData.Item2[currentDay].Count)
+        if(currentScenario + 1 < dayData[currentDay].Count)
         {
             currentScenario++;
             graphicManager.Reset();
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour, IManager
         currentCard = e.card;
         currentPanelWidth = e.panelWidth;
 
-        currentCard.Check(currentPanelWidth, scenarioData.Item2[currentDay][currentScenario]);
+        currentCard.Check(currentPanelWidth, dayData[currentDay][currentScenario]);
     }
 
     public void FixedManagerUpdate()

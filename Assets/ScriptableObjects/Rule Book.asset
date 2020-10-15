@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdd5fc9f3c8f6f4993abc11838329cf, type: 3}
+  m_Name: Rule Book
+  m_EditorClassIdentifier: 
+  basicRules:
+  - Reports are closed as Not Qualified after 7 days from the last reply
+  - Versions lower than 2018.4 are not supported
+  - Only 1 empty line between paragraphs
+  - No double spaces between letters
+  - Bug report is filled in correct order
+  - All bug reports are public
+  - Bug report is tested on all latest versions
+  - Tester has a valid Employee ID
+  areas:
+  - area: WebGL
+    grabbag: WebGL Grabbag
+  - area: Terrain
+    grabbag: Terrain Grabbag
+  - area: Window Management
+    grabbag: Desktop Grabbag
+  - area: IMGUI
+    grabbag: Editor-External Grabbag
+  - area: Probuilder
+    grabbag: Scene Tooling Grabbag
+  - area: Packman
+    grabbag: Packman Grabbag
+  - area: Texture
+    grabbag: Texture Grabbag
+  - area: Physics2D
+    grabbag: John the 2D Guy
+  - area: Asset Import Pipeline
+    grabbag: Asset Pipeline V2 Grabbag
+  - area: ShaderGraph
+    grabbag: ShaderGraph Grabbag
+  - area: UI Toolkit
+    grabbag: UI Toolkit Grabbag
+  - area: Addressables Assets
+    grabbag: Addressables Grabbag
+  - area: Windows
+    grabbag: Desktop Grabbag
+  - area: Text
+    grabbag: John the Text Guy
+  - area: Scripting
+    grabbag: Scripting Grabbag
+  - area: IL2CPP
+    grabbag: VM-IL2CPP Grabbag
+  - area: Scene Management
+    grabbag: Scene Management Grabbag
+  reportFields:
+  - field: Platform Importance
+    description: What platform is affected by this issue
+    info:
+    - level: 1
+      name: Single non-Core
+      details: WebGL, PS, XBOX, Tizen, Switch
+    - level: 2
+      name: Desktop, iOS, Android
+      details: Mac, Windows, iOS, Android
+    - level: 3
+      name: Editor
+      details: Editor Issues
+    - level: 4
+      name: Cross Platform
+      details: All or most platforms
+  - field: Severity
+    description: The state of the bug
+    info:
+    - level: 1
+      name: Crash, freeze, data stops
+      details: Crash, cannot be opened, unacceptable performance degradation
+    - level: 2
+      name: Core functionality majorly impacted
+      details: Can't build to platform, pink textures, performance degradation, Component
+        not working
+    - level: 3
+      name: Secondary functionality broken
+      details: Workflow impacted, but has a workaround
+    - level: 4
+      name: Minor, cosmetic
+      details: Aesthetic issue with easy workaround
+  - field: Public
+    description: If the issue is publicly seen or not
+    info: []
+  - field: Regression
+    description: If the functionality is working in earlier versions, but is broken
+      in newer ones
+    info: []
+  - field: First Affected Versions (FAV)
+    description: What versions are affected by the bug
+    info: []
+  - field: Tester
+    description: Contains the name of the tester
+    info: []
+  - field: Package
+    description: Which package has broken functionality
+    info: []
+  - field: Package Found Version
+    description: The latest package version, which has a bug (If it's a regression
+      - in which package version did the bug appear)
+    info: []
+  versionInfo:
+  - stream: 2018.4
+    versions:
+    - 2018.4.27f1
+  - stream: 2019.4
+    versions:
+    - 2019.4.0a1
+    - 2019.4.0a2
+    - 2019.4.0a3
+    - 2019.4.0a4
+    - 2019.4.0a5
+    - 2019.4.0a6
+    - 2019.4.0a7
+    - 2019.4.0a8
+    - 2019.4.0a9
+    - 2019.4.0a10
+    - 2019.4.0a11
+    - 2019.4.0a12
+    - 2019.4.0a13
+    - 2019.4.0a14
+    - 2019.4.0a15
+    - 2019.4.0b1
+    - 2019.4.0b2
+    - 2019.4.0b3
+    - 2019.4.0b4
+    - 2019.4.0b5
+    - 2019.4.0b6
+    - 2019.4.0b7
+    - 2019.4.0b8
+    - 2019.4.0b9
+    - 2019.4.0b10
+    - 2019.4.0b11
+    - 2019.4.0b12
+    - 2019.4.0b13
+    - 2019.4.0b14
+    - 2019.4.0b15
+    - 2019.4.0f1
+    - 2019.4.1f1
+    - 2019.4.2f1
+    - 2019.4.3f1
+    - 2019.4.4f1
+    - 2019.4.5f1
+    - 2019.4.6f1
+    - 2019.4.7f1
+    - 2019.4.8f1
+    - 2019.4.9f1
+    - 2019.4.10f1
+    - 2019.4.11f1
+  - stream: 2020.1
+    versions:
+    - 2020.1.0a1
+    - 2020.1.0a2
+    - 2020.1.0a3
+    - 2020.1.0a4
+    - 2020.1.0a5
+    - 2020.1.0a6
+    - 2020.1.0a7
+    - 2020.1.0a8
+    - 2020.1.0a9
+    - 2020.1.0a10
+    - 2020.1.0a11
+    - 2020.1.0a12
+    - 2020.1.0a13
+    - 2020.1.0a14
+    - 2020.1.0a15
+    - 2020.1.0b1
+    - 2020.1.0b2
+    - 2020.1.0b3
+    - 2020.1.0b4
+    - 2020.1.0b5
+    - 2020.1.0b6
+    - 2020.1.0b7
+    - 2020.1.0b8
+    - 2020.1.0b9
+    - 2020.1.0b10
+    - 2020.1.0b11
+    - 2020.1.0b12
+    - 2020.1.0b13
+    - 2020.1.0b14
+    - 2020.1.0b15
+    - 2020.1.0f1
+    - 2020.1.1f1
+    - 2020.1.2f1
+    - 2020.1.3f1
+    - 2020.1.4f1
+    - 2020.1.5f1
+    - 2020.1.6f1
+  - stream: 2020.2
+    versions:
+    - 2020.2.0a1
+    - 2020.2.0a2
+    - 2020.2.0a3
+    - 2020.2.0a4
+    - 2020.2.0a5
+    - 2020.2.0a6
+    - 2020.2.0a7
+    - 2020.2.0a8
+    - 2020.2.0a9
+    - 2020.2.0a10
+    - 2020.2.0a11

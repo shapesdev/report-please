@@ -2,39 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuleBook : MonoBehaviour
+[System.Serializable]
+public struct AreasNGrabbags
 {
-    private object passedData;
-
-    /// <summary>
-    /// Rule Book for Day 10
-    /// </summary>
-    public RuleBook()
-    {
-
-    }
-
-    /// <summary>
-    /// Rule Book for Day 11
-    /// </summary>
-    public RuleBook(int a)
-    {
-
-    }
-
-    /// <summary>
-    /// Rule Book for Day 12
-    /// </summary>
-    public RuleBook(string a)
-    {
-
-    }
-
-    /// <summary>
-    /// Rule Book for Day 13
-    /// </summary>
-    public RuleBook(float a)
-    {
-
-    }
+    public string area;
+    public string grabbag;
 }
+
+[System.Serializable]
+public struct ReportFieldInfo
+{
+    public string field;
+    public string description;
+    public Info[] info;
+}
+
+[CreateAssetMenu(fileName = "New Rule Book", menuName = "Rule Book")]
+public class RuleBook : ScriptableObject
+{
+    public List<string> basicRules;
+    public List<AreasNGrabbags> areas;
+    public List<ReportFieldInfo> reportFields;
+    public List<Versions> versionInfo;
+}
+
+[System.Serializable]
+public class Info
+{
+    public int level;
+    public string name;
+    public string details;
+}
+
+[System.Serializable]
+public class Versions
+{
+    public string stream;
+    public string[] versions;
+}
+
