@@ -61,33 +61,24 @@ MonoBehaviour:
     description: What platform is affected by this issue
     info:
     - level: 1
-      name: Single non-Core
-      details: WebGL, PS, XBOX, Tizen, Switch
+      name: Single non-Core platforms (WebGL, PS, XBOX, Tizen, Switch)
     - level: 2
-      name: Desktop, iOS, Android
-      details: Mac, Windows, iOS, Android
+      name: The Core platforms (Desktop, iOS, Android)
     - level: 3
-      name: Editor
-      details: Editor Issues
+      name: Editor (Greater than Core platforms, trumps testing)
     - level: 4
-      name: Cross Platform
-      details: All or most platforms
+      name: Cross Platform (All or most platforms)
   - field: Severity
     description: The state of the bug
     info:
     - level: 1
       name: Crash, freeze, data stops
-      details: Crash, cannot be opened, unacceptable performance degradation
     - level: 2
-      name: Core functionality majorly impacted
-      details: Can't build to platform, pink textures, performance degradation, Component
-        not working
+      name: Can't build to platform, pink textures, Component broken
     - level: 3
-      name: Secondary functionality broken
-      details: Workflow impacted, but has a workaround
+      name: Workflow impacted, but has a workaround
     - level: 4
-      name: Minor, cosmetic
-      details: Aesthetic issue with easy workaround
+      name: Aesthetic issue with easy workaround
   - field: Public
     description: If the issue is publicly seen or not
     info: []
@@ -99,7 +90,7 @@ MonoBehaviour:
     description: What versions are affected by the bug
     info: []
   - field: Tester
-    description: Contains the name of the tester
+    description: 'The name of the tester, who processsed the bug report '
     info: []
   - field: Package
     description: Which package has broken functionality
@@ -111,6 +102,32 @@ MonoBehaviour:
   versionInfo:
   - stream: 2018.4
     versions:
+    - 2018.4.1f1
+    - 2018.4.2f1
+    - 2018.4.3f1
+    - 2018.4.4f1
+    - 2018.4.5f1
+    - 2018.4.6f1
+    - 2018.4.7f1
+    - 2018.4.8f1
+    - 2018.4.9f1
+    - 2018.4.10f1
+    - 2018.4.11f1
+    - 2018.4.12f1
+    - 2018.4.13f1
+    - 2018.4.14f1
+    - 2018.4.15f1
+    - 2018.4.16f1
+    - 2018.4.17f1
+    - 2018.4.18f1
+    - 2018.4.19f1
+    - 2018.4.20f1
+    - 2018.4.21f1
+    - 2018.4.22f1
+    - 2018.4.23f1
+    - 2018.4.24f1
+    - 2018.4.25f1
+    - 2018.4.26f1
     - 2018.4.27f1
   - stream: 2019.4
     versions:

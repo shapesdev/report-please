@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class RuleBookCard : Card
 {
-    public GameObject homePage;
-
-    public RuleBook ruleBook;
-    public BasicRuleDisplayer basicRuleDisplayer;
-    public AreasDisplayer areasDisplayer;
+    [SerializeField]
+    private GameObject homePage;
+    [SerializeField]
+    private RuleBook ruleBook;
+    [SerializeField]
+    private BasicRuleDisplayer basicRuleDisplayer;
+    [SerializeField]
+    private AreasDisplayer areasDisplayer;
+    [SerializeField]
+    private ReportFieldsDisplayer reportFieldsDisplayer;
 
     private bool changeSize;
 
@@ -16,6 +21,7 @@ public class RuleBookCard : Card
     {
         areasDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
         basicRuleDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
+        reportFieldsDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
     }
 
     private void AreasDisplayer_OnPageBack(object sender, PageClosedEventArgs e)
@@ -58,8 +64,17 @@ public class RuleBookCard : Card
         areasDisplayer.DisplayAreasPageOne(ruleBook.areas);
     }
 
+    public void OpenFieldsInfo()
+    {
+        DeactiveAllChildren();
+        reportFieldsDisplayer.DisplayReportFields(ruleBook.reportFields);
+    }
+
     private void DeactiveAllChildren()
     {
+        reportFieldsDisplayer.DeactiveChildren();
+        areasDisplayer.DeactiveChildren();
+
         foreach(Transform child in transform)
         {
             child.gameObject.SetActive(false);

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class BasicRuleDisplayer : MonoBehaviour, IRuleDisplayer
+public class BasicRuleDisplayer : MonoBehaviour
 {
     public TMP_Text[] rules;
 

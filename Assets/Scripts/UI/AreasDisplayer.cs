@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class AreasDisplayer : MonoBehaviour, IRuleDisplayer
+public class AreasDisplayer : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text[] areasTextPage1;
@@ -58,6 +58,18 @@ public class AreasDisplayer : MonoBehaviour, IRuleDisplayer
         }
 
         secondPage.SetActive(true);
+    }
+
+    public void DeactiveChildren()
+    {
+        if (firstPage.activeInHierarchy == true)
+        {
+            firstPage.SetActive(false);
+        }
+        if (secondPage.activeInHierarchy == true)
+        {
+            secondPage.SetActive(false);
+        }
     }
 
     public void OpenHomePage()

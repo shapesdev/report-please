@@ -31,7 +31,6 @@ public class Info
 {
     public int level;
     public string name;
-    public string details;
 }
 
 [System.Serializable]
