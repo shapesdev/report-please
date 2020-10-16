@@ -69,7 +69,7 @@ MonoBehaviour:
     - level: 4
       name: Cross Platform (All or most platforms)
   - field: Severity
-    description: The state of the bug
+    description: The state of the bug, how major is it
     info:
     - level: 1
       name: Crash, freeze, data stops
