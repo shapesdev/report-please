@@ -12,21 +12,18 @@ public enum Stamp
 
 public class GraphicManager : MonoBehaviour, IManager, IGraphic
 {
-    GraphicRaycaster graphicRaycaster;
-    PointerEventData pointerEvent;
-    EventSystem eventSystem;
+    private GraphicRaycaster graphicRaycaster;
+    private PointerEventData pointerEvent;
+    private EventSystem eventSystem;
 
     private GameObject selectedGO;
     private GameObject stamp;
-    public GameObject stampPanel;
-
-    private LineRenderer lineRenderer;
 
     private bool selected = false;
     private bool offsetSet = false;
     private bool canBeReturned = false;
-    private Vector3 offset;
 
+    private Vector3 offset;
     private bool inspectorMode = false;
 
     [SerializeField]
@@ -35,13 +32,16 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
     private RectTransform returnArea;
     [SerializeField]
     private GameObject[] selectableGO;
+    [SerializeField]
+    private GameObject stampPanel;
+    [SerializeField]
+    private LineDrawer lineDrawer;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
 
     public void Initialize()
     {
-        lineRenderer = GetComponent<LineRenderer>();
         graphicRaycaster = GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
     }
@@ -95,20 +95,18 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var startPosEdgeLocalX = selectableGO[0].transform.localPosition.x - selectableGO[0].GetComponent<RectTransform>().rect.width / 2;
-                var localStartPos = new Vector3(startPosEdgeLocalX, selectableGO[0].transform.localPosition.y, selectableGO[0].transform.localPosition.z);
-                var worldPos = transform.TransformPoint(localStartPos);
+                pointerEvent = new PointerEventData(eventSystem);
+                pointerEvent.position = Input.mousePosition;
 
-                var endPosEdgeLocalX = selectableGO[1].transform.localPosition.x - selectableGO[1].GetComponent<RectTransform>().rect.width / 2;
-                var localEndPos = new Vector3(endPosEdgeLocalX, selectableGO[1].transform.localPosition.y, selectableGO[1].transform.localPosition.z);
-                var worldEndPos = transform.TransformPoint(localEndPos);
+                List<RaycastResult> results = new List<RaycastResult>();
 
+                graphicRaycaster.Raycast(pointerEvent, results);
 
-                Debug.Log(selectableGO[0].transform.position);
-                Debug.Log("Employee Edge position: " + worldPos);
-
-                lineRenderer.SetPosition(0, worldEndPos);
-                lineRenderer.SetPosition(1, worldPos);
+                if (results.Count > 0)
+                {
+                    Debug.Log(results[0].gameObject.name);
+                    lineDrawer.SelectField(results[0].gameObject);
+                }
             }
         }
     }
