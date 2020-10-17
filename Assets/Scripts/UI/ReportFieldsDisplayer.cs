@@ -58,4 +58,20 @@ public class ReportFieldsDisplayer : MonoBehaviour
         var eventArgs = new PageClosedEventArgs();
         OnPageBack(this, eventArgs);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        foreach(var display in fieldDisplayers)
+        {
+            display.TurnOnInspectorMode();
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        foreach (var display in fieldDisplayers)
+        {
+            display.TurnOffInspectorMode();
+        }
+    }
 }

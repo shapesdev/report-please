@@ -35,18 +35,22 @@ public class LineDrawer : MonoBehaviour
 
             var positions = GetTwoShortestPositions();
 
+            Debug.Log(positions.Item1);
+            Debug.Log(positions.Item2);
+
             lineRenderer.SetPosition(0, positions.Item1);
             lineRenderer.SetPosition(1, positions.Item2);
         }
         else
         {
-            Debug.Log("Need clearing");
+            firstSelection = selectedGO;
+            secondSelection = null;
         }
     }
 
     private void UpdateFirstSelectionEdges()
     {
-        var localEdges = firstSelection.GetComponent<RectTransform>().rect;
+        var localEdges = firstSelection.transform.parent.parent.GetComponent<RectTransform>().rect;
 
         var localEdgeXAxis1 = firstSelection.transform.localPosition.x - localEdges.width / 2;
         var localStartPos1 = new Vector3(localEdgeXAxis1, firstSelection.transform.localPosition.y, firstSelection.transform.localPosition.z);
@@ -72,7 +76,7 @@ public class LineDrawer : MonoBehaviour
 
     private void UpdateSecondSelectionEdges()
     {
-        var localEdges = secondSelection.GetComponent<RectTransform>().rect;
+        var localEdges = firstSelection.transform.parent.parent.GetComponent<RectTransform>().rect;
 
         var localEdgeXAxis1 = secondSelection.transform.localPosition.x - localEdges.width / 2;
         var localStartPos1 = new Vector3(localEdgeXAxis1, secondSelection.transform.localPosition.y, secondSelection.transform.localPosition.z);

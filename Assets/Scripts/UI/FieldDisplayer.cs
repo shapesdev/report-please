@@ -26,4 +26,32 @@ public class FieldDisplayer : MonoBehaviour
         }
         gameObject.SetActive(true);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        title.raycastTarget = true;
+        description.raycastTarget = true;
+
+        if(options.Length > 0)
+        {
+            foreach (var option in options)
+            {
+                option.raycastTarget = true;
+            }
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        title.raycastTarget = false;
+        description.raycastTarget = false;
+
+        if (options.Length > 0)
+        {
+            foreach (var option in options)
+            {
+                option.raycastTarget = false;
+            }
+        }
+    }
 }

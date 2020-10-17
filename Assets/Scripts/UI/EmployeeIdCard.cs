@@ -48,4 +48,24 @@ public class EmployeeIdCard : Card
             transform.GetChild(0).gameObject.SetActive(false);
         }
     }
+
+    public override void TurnOnInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = false;
+
+        fullName.raycastTarget = true;
+        email.raycastTarget = true;
+        dateStarted.raycastTarget = true;
+        dateOfExpiry.raycastTarget = true;
+}
+
+    public override void TurnOffInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = true;
+
+        fullName.raycastTarget = false;
+        email.raycastTarget = false;
+        dateStarted.raycastTarget = false;
+        dateOfExpiry.raycastTarget = false;
+    }
 }

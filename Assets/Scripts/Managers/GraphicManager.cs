@@ -10,7 +10,7 @@ public enum Stamp
     SIREN, PLUS
 }
 
-public class GraphicManager : MonoBehaviour, IManager, IGraphic
+public class GraphicManager : MonoBehaviour, IManager
 {
     private GraphicRaycaster graphicRaycaster;
     private PointerEventData pointerEvent;
@@ -26,6 +26,8 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
     private Vector3 offset;
     private bool inspectorMode = false;
 
+    [SerializeField]
+    private Card[] cards;
     [SerializeField]
     private RectTransform leftPanel;
     [SerializeField]
@@ -52,6 +54,39 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
         {
             inspectorMode = !inspectorMode;
             Debug.Log("Inspector mode: " + inspectorMode);
+
+            if(inspectorMode == false)
+            {
+                foreach (var card in cards)
+                {
+                    card.TurnOffInspectorMode();
+
+                    stampPanel.GetComponent<Image>().raycastTarget = true;
+                    returnArea.gameObject.GetComponent<Image>().raycastTarget = true;
+
+                    foreach (Transform child in stampPanel.transform)
+                    {
+                        child.GetComponent<Image>().raycastTarget = true;
+                        child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = true;
+                    }
+                }
+            }
+            else if(inspectorMode == true)
+            {
+                foreach (var card in cards)
+                {
+                    card.TurnOnInspectorMode();
+
+                    stampPanel.GetComponent<Image>().raycastTarget = false;
+                    returnArea.gameObject.GetComponent<Image>().raycastTarget = false;
+
+                    foreach (Transform child in stampPanel.transform)
+                    {
+                        child.GetComponent<Image>().raycastTarget = false;
+                        child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = false;
+                    }
+                }
+            }
         }
 
         if(inspectorMode == false)
@@ -140,10 +175,6 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
                 var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
                 OnDragRight(this, eventArgs);
             }
-        }
-        else if(inspectorMode == true)
-        {
-
         }
     }
 

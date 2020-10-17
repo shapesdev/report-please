@@ -77,4 +77,40 @@ public class AreasDisplayer : MonoBehaviour
         var eventArgs = new PageClosedEventArgs();
         OnPageBack(this, eventArgs);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        if(firstPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage1)
+            {
+                text.raycastTarget = true;
+            }
+        }
+        else if(secondPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage2)
+            {
+                text.raycastTarget = true;
+            }
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        if (firstPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage1)
+            {
+                text.raycastTarget = false;
+            }
+        }
+        else if (secondPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage2)
+            {
+                text.raycastTarget = false;
+            }
+        }
+    }
 }

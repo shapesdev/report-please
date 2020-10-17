@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ReportCard : Card
 {
@@ -45,5 +46,23 @@ public class ReportCard : Card
         {
             packageDisplay.RightDisplay(scenario);
         }
+    }
+
+    public override void TurnOffInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = true;
+
+        responseDisplay.TurnOffInspectorMode();
+        editorDisplay.TurnOffInspectorMode();
+        packageDisplay.TurnOffInspectorMode();
+    }
+
+    public override void TurnOnInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = false;
+
+        responseDisplay.TurnOnInspectorMode();
+        editorDisplay.TurnOnInspectorMode();
+        packageDisplay.TurnOnInspectorMode();
     }
 }

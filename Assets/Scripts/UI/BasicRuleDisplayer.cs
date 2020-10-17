@@ -27,4 +27,20 @@ public class BasicRuleDisplayer : MonoBehaviour
         var eventArgs = new PageClosedEventArgs();
         OnPageBack(this, eventArgs);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        foreach (var rule in rules)
+        {
+            rule.raycastTarget = false;
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        foreach(var rule in rules)
+        {
+            rule.raycastTarget = false;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RuleBookCard : Card
 {
@@ -79,5 +80,23 @@ public class RuleBookCard : Card
         {
             child.gameObject.SetActive(false);
         }
+    }
+
+    public override void TurnOnInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = false;
+
+        basicRuleDisplayer.TurnOnInspectorMode();
+        areasDisplayer.TurnOnInspectorMode();
+        reportFieldsDisplayer.TurnOnInspectorMode();
+    }
+
+    public override void TurnOffInspectorMode()
+    {
+        gameObject.GetComponent<Image>().raycastTarget = true;
+
+        basicRuleDisplayer.TurnOffInspectorMode();
+        areasDisplayer.TurnOffInspectorMode();
+        reportFieldsDisplayer.TurnOffInspectorMode();
     }
 }
