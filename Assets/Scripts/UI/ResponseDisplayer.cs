@@ -54,4 +54,24 @@ public class ResponseDisplayer : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        caseId.raycastTarget = true;
+        reply.raycastTarget = true;
+        dateSent.raycastTarget = true;
+        lastReplyDate.raycastTarget = true;
+        emailSentFrom.raycastTarget = true;
+        status.raycastTarget = true;
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        caseId.raycastTarget = false;
+        reply.raycastTarget = false;
+        dateSent.raycastTarget = false;
+        lastReplyDate.raycastTarget = false;
+        emailSentFrom.raycastTarget = false;
+        status.raycastTarget = false;
+    }
 }

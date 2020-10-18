@@ -10,28 +10,34 @@ public enum Stamp
     SIREN, PLUS
 }
 
-public class GraphicManager : MonoBehaviour, IManager, IGraphic
+public class GraphicManager : MonoBehaviour, IManager
 {
-    GraphicRaycaster graphicRaycaster;
-    PointerEventData pointerEvent;
-    EventSystem eventSystem;
+    private GraphicRaycaster graphicRaycaster;
+    private PointerEventData pointerEvent;
+    private EventSystem eventSystem;
 
     private GameObject selectedGO;
-
     private GameObject stamp;
-    public GameObject stampPanel;
 
     private bool selected = false;
     private bool offsetSet = false;
     private bool canBeReturned = false;
-    private Vector3 offset;
 
+    private Vector3 offset;
+    private bool inspectorMode = false;
+
+    [SerializeField]
+    private Card[] cards;
     [SerializeField]
     private RectTransform leftPanel;
     [SerializeField]
     private RectTransform returnArea;
     [SerializeField]
     private GameObject[] selectableGO;
+    [SerializeField]
+    private GameObject stampPanel;
+    [SerializeField]
+    private LineDrawer lineDrawer;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
@@ -44,55 +50,117 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
 
     public void ManagerUpdate()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKeyUp(KeyCode.Space))
         {
-            pointerEvent = new PointerEventData(eventSystem);
-            pointerEvent.position = Input.mousePosition;
+            inspectorMode = !inspectorMode;
+            Debug.Log("Inspector mode: " + inspectorMode);
 
-            List<RaycastResult> results = new List<RaycastResult>();
-
-            graphicRaycaster.Raycast(pointerEvent, results);
-
-            if(results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
+            if(inspectorMode == false)
             {
-                BringGraphicToFront(results[0].gameObject);
-            }
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            selected = false;
-            offsetSet = false;
-            Cursor.lockState = CursorLockMode.None;
-
-            if(selectedGO != null)
-            {
-                if (PaperCanBeReturned(selectedGO.transform.position))
+                foreach (var card in cards)
                 {
-                    selectedGO.gameObject.SetActive(false);
+                    card.TurnOffInspectorMode();
+
+                    stampPanel.GetComponent<Image>().raycastTarget = true;
+                    returnArea.gameObject.GetComponent<Image>().raycastTarget = true;
+
+                    foreach (Transform child in stampPanel.transform)
+                    {
+                        child.GetComponent<Image>().raycastTarget = true;
+                        child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = true;
+                    }
                 }
             }
-
-            if(selectableGO[0].activeInHierarchy == false && selectableGO[1].activeInHierarchy == false)
+            else if(inspectorMode == true)
             {
-                var eventArgs = new PapersReturnedEventArgs();
-                OnPapersReturned(this, eventArgs);
+                foreach (var card in cards)
+                {
+                    card.TurnOnInspectorMode();
+
+                    stampPanel.GetComponent<Image>().raycastTarget = false;
+                    returnArea.gameObject.GetComponent<Image>().raycastTarget = false;
+
+                    foreach (Transform child in stampPanel.transform)
+                    {
+                        child.GetComponent<Image>().raycastTarget = false;
+                        child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = false;
+                    }
+                }
+            }
+        }
+
+        if(inspectorMode == false)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                pointerEvent = new PointerEventData(eventSystem);
+                pointerEvent.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                graphicRaycaster.Raycast(pointerEvent, results);
+
+                if (results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
+                {
+                    BringGraphicToFront(results[0].gameObject);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                selected = false;
+                offsetSet = false;
+                Cursor.lockState = CursorLockMode.None;
+
+                if (selectedGO != null)
+                {
+                    if (PaperCanBeReturned(selectedGO.transform.position))
+                    {
+                        selectedGO.gameObject.SetActive(false);
+                    }
+                }
+
+                if (selectableGO[0].activeInHierarchy == false && selectableGO[1].activeInHierarchy == false)
+                {
+                    var eventArgs = new PapersReturnedEventArgs();
+                    OnPapersReturned(this, eventArgs);
+                }
+            }
+        }
+        else if(inspectorMode == true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                pointerEvent = new PointerEventData(eventSystem);
+                pointerEvent.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                graphicRaycaster.Raycast(pointerEvent, results);
+
+                if (results.Count > 0)
+                {
+                    Debug.Log(results[0].gameObject.name);
+                    lineDrawer.SelectField(results[0].gameObject);
+                }
             }
         }
     }
 
     public void FixedManagerUpdate()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && selected)
+        if(inspectorMode == false)
         {
-            if (!offsetSet)
+            if (Input.GetKey(KeyCode.Mouse0) && selected)
             {
-                offset = Input.mousePosition - selectedGO.transform.localPosition;
-                offsetSet = !offsetSet;
-                Cursor.lockState = CursorLockMode.Confined;
-            }
+                if (!offsetSet)
+                {
+                    offset = Input.mousePosition - selectedGO.transform.localPosition;
+                    offsetSet = !offsetSet;
+                    Cursor.lockState = CursorLockMode.Confined;
+                }
 
-            if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
-            {
+                if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
+                {
 #if UNITY_STANDALONE_OSX
     if(Input.mousePosition.x <= Screen.width && Input.mousePosition.x >= 0f)
     {
@@ -101,11 +169,12 @@ public class GraphicManager : MonoBehaviour, IManager, IGraphic
 #endif
 
 #if UNITY_STANDALONE_WIN
-    selectedGO.transform.localPosition = Input.mousePosition - offset;
+                    selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
+                }
+                var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
+                OnDragRight(this, eventArgs);
             }
-            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
-            OnDragRight(this, eventArgs);
         }
     }
 

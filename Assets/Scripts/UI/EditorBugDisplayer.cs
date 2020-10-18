@@ -62,4 +62,40 @@ public class EditorBugDisplayer : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
+    public void TurnOnInspectorMode()
+    {
+        title.raycastTarget = true;
+        testerName.raycastTarget = true;
+        reproSteps.raycastTarget = true;
+        expectedActual.raycastTarget = true;
+        reproducible.raycastTarget = true;
+        regression.raycastTarget = true;
+        publicField.raycastTarget = true;
+        severity.raycastTarget = true;
+        platform.raycastTarget = true;
+        userPrev.raycastTarget = true;
+        grabbag.raycastTarget = true;
+        area.raycastTarget = true;
+        caseId.raycastTarget = true;
+        FAV.raycastTarget = true;
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        title.raycastTarget = false;
+        testerName.raycastTarget = false;
+        reproSteps.raycastTarget = false;
+        expectedActual.raycastTarget = false;
+        reproducible.raycastTarget = false;
+        regression.raycastTarget = false;
+        publicField.raycastTarget = false;
+        severity.raycastTarget = false;
+        platform.raycastTarget = false;
+        userPrev.raycastTarget = false;
+        grabbag.raycastTarget = false;
+        area.raycastTarget = false;
+        caseId.raycastTarget = false;
+        FAV.raycastTarget = false;
+    }
 }

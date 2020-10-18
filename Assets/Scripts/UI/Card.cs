@@ -14,6 +14,9 @@ public abstract class Card : MonoBehaviour
     public abstract void ChangeSizeToRight(IScenario scenario);
     public abstract void ChangeSizeToLeft(IScenario scenario);
 
+    public abstract void TurnOnInspectorMode();
+    public abstract void TurnOffInspectorMode();
+
     public void Check(float panelWidth, IScenario scenario)
     {
         if (transform.localPosition.x >= -Screen.width / 2 + panelWidth + sizeChangeOffsetRight)

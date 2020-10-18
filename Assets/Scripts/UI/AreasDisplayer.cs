@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class AreasDisplayer : MonoBehaviour, IRuleDisplayer
+public class AreasDisplayer : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text[] areasTextPage1;
@@ -60,9 +60,57 @@ public class AreasDisplayer : MonoBehaviour, IRuleDisplayer
         secondPage.SetActive(true);
     }
 
+    public void DeactiveChildren()
+    {
+        if (firstPage.activeInHierarchy == true)
+        {
+            firstPage.SetActive(false);
+        }
+        if (secondPage.activeInHierarchy == true)
+        {
+            secondPage.SetActive(false);
+        }
+    }
+
     public void OpenHomePage()
     {
         var eventArgs = new PageClosedEventArgs();
         OnPageBack(this, eventArgs);
+    }
+
+    public void TurnOnInspectorMode()
+    {
+        if(firstPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage1)
+            {
+                text.raycastTarget = true;
+            }
+        }
+        else if(secondPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage2)
+            {
+                text.raycastTarget = true;
+            }
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        if (firstPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage1)
+            {
+                text.raycastTarget = false;
+            }
+        }
+        else if (secondPage.activeInHierarchy == true)
+        {
+            foreach (var text in areasTextPage2)
+            {
+                text.raycastTarget = false;
+            }
+        }
     }
 }

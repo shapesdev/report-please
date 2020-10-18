@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class BasicRuleDisplayer : MonoBehaviour, IRuleDisplayer
+public class BasicRuleDisplayer : MonoBehaviour
 {
     public TMP_Text[] rules;
 
@@ -26,5 +26,21 @@ public class BasicRuleDisplayer : MonoBehaviour, IRuleDisplayer
     {
         var eventArgs = new PageClosedEventArgs();
         OnPageBack(this, eventArgs);
+    }
+
+    public void TurnOnInspectorMode()
+    {
+        foreach (var rule in rules)
+        {
+            rule.raycastTarget = false;
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        foreach(var rule in rules)
+        {
+            rule.raycastTarget = false;
+        }
     }
 }
