@@ -141,7 +141,6 @@ public class GraphicManager : MonoBehaviour, IManager
 
                 if (results.Count > 0)
                 {
-                    Debug.Log(results[0].gameObject.name);
                     lineDrawer.SelectField(results[0].gameObject);
                 }
             }

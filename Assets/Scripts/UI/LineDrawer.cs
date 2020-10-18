@@ -11,7 +11,7 @@ public class LineDrawer : MonoBehaviour
     private GameObject firstSelection;
     private GameObject secondSelection;
 
-    private List<Vector3> allWorldPositions = new List<Vector3>();
+    private List<Vector3> worldEdgePositions = new List<Vector3>();
 
     public void SelectField(GameObject selectedGameObject)
     {
@@ -32,7 +32,7 @@ public class LineDrawer : MonoBehaviour
         {
             firstSelection = selectedGameObject;
             secondSelection = null;
-            allWorldPositions.Clear();
+            worldEdgePositions.Clear();
             ClearLine();
         }
     }
@@ -44,12 +44,12 @@ public class LineDrawer : MonoBehaviour
 
     private void DrawLine()
     {
-        var positions = GetPositions();
+        var positions = GetAllLinePositions();
 
-        lineRenderer.positionCount = 2;
+        lineRenderer.positionCount = positions.Count;
 
-        lineRenderer.SetPosition(0, positions.Item1);
-        lineRenderer.SetPosition(1, positions.Item2);
+        lineRenderer.SetPosition(0, positions[0]);
+        lineRenderer.SetPosition(1, positions[1]);
     }
 
     private void AddGameObjectEdgesToList(GameObject go)
@@ -72,45 +72,69 @@ public class LineDrawer : MonoBehaviour
         var upLocalPosition = new Vector3(go.transform.localPosition.x, upLocalEdge, go.transform.localPosition.z);
         var upWorldPosition = go.transform.parent.TransformPoint(upLocalPosition);
 
-        allWorldPositions.Add(leftWorldPosition);
-        allWorldPositions.Add(rightWorldPosition);
-        allWorldPositions.Add(bottomWorldPosition);
-        allWorldPositions.Add(upWorldPosition);
+        worldEdgePositions.Add(leftWorldPosition);
+        worldEdgePositions.Add(rightWorldPosition);
+        worldEdgePositions.Add(bottomWorldPosition);
+        worldEdgePositions.Add(upWorldPosition);
     }
 
-    private Tuple<Vector3, Vector3> GetPositions()
+    private Tuple<Vector3, Vector3> GetStartAndEndPositions()
     {
         List<Vector3> positions = new List<Vector3>();
 
         double currentDistance = 0;
 
-        for(int i = 0; i < allWorldPositions.Count / 2; i++)
+        for(int i = 0; i < worldEdgePositions.Count / 2; i++)
         {
-            for(int j = allWorldPositions.Count / 2; j < allWorldPositions.Count; j++)
+            for(int j = worldEdgePositions.Count / 2; j < worldEdgePositions.Count; j++)
             {
                 /*If we want to find the distance between two points in a coordinate plane we use a different formula
                 that is based on the Pythagorean Theorem where(x1, y1) and(x2, y2) are the coordinates and d marks the distance:
                 d = (x2−x1)2 + (y2−y1)2−−−−−−−−−−−−−−−−−−√*/
 
-                var distance = Math.Sqrt(Math.Pow((allWorldPositions[j].x - allWorldPositions[i].x), 2) + Math.Pow((allWorldPositions[j].y - allWorldPositions[i].y), 2));
+                var distance = Math.Sqrt(Math.Pow((worldEdgePositions[j].x - worldEdgePositions[i].x), 2) + Math.Pow((worldEdgePositions[j].y - worldEdgePositions[i].y), 2));
 
                 if(currentDistance == 0)
                 {
                     currentDistance = distance;
 
-                    positions.Add(allWorldPositions[i]);
-                    positions.Add(allWorldPositions[j]);
+                    positions.Add(worldEdgePositions[i]);
+                    positions.Add(worldEdgePositions[j]);
                 }
                 else if(distance < currentDistance)
                 {
                     currentDistance = distance;
 
                     positions.Clear();
-                    positions.Add(allWorldPositions[i]);
-                    positions.Add(allWorldPositions[j]);
+                    positions.Add(worldEdgePositions[i]);
+                    positions.Add(worldEdgePositions[j]);
                 }
             }
         }
         return new Tuple<Vector3, Vector3>(positions[0], positions[1]);
+    }
+
+    private List<Vector3> GetAllLinePositions()
+    {
+        List<Vector3> allPositions = new List<Vector3>();
+
+        var positions = GetStartAndEndPositions();
+
+        var startPosition = positions.Item1;
+        var endPosition = positions.Item2;
+
+        allPositions.Add(startPosition);
+        allPositions.Add(endPosition);
+
+        Debug.Log(startPosition);
+        Debug.Log(endPosition);
+
+        Debug.Log((int)startPosition.x);
+        Debug.Log((int)endPosition.x);
+
+        Debug.Log((int)startPosition.y);
+        Debug.Log((int)endPosition.y);
+
+        return allPositions;
     }
 }
