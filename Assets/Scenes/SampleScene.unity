@@ -441,7 +441,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000012805}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25650087
@@ -1949,7 +1949,7 @@ GameObject:
   - component: {fileID: 146130407}
   m_Layer: 5
   m_Name: BasicRules
-  m_TagString: Selectable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4110,7 +4110,7 @@ GameObject:
   - component: {fileID: 338804805}
   m_Layer: 5
   m_Name: AreasAndGrabbags
-  m_TagString: Selectable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4359,7 +4359,7 @@ GameObject:
   - component: {fileID: 407449445}
   m_Layer: 5
   m_Name: HomePage
-  m_TagString: Selectable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7009,8 +7009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58.298, y: -98.5}
-  m_SizeDelta: {x: 256.83743, y: 26.124313}
+  m_AnchoredPosition: {x: 58.298065, y: -98.50003}
+  m_SizeDelta: {x: 256.83743, y: 26.124268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708774448
 MonoBehaviour:
@@ -7591,7 +7591,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -114}
-  m_SizeDelta: {x: 558.40265, y: 430.61514}
+  m_SizeDelta: {x: 558.40265, y: 430.6151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &774456969
 MonoBehaviour:
@@ -9129,7 +9129,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &952947664
 GameObject:
@@ -14787,7 +14787,7 @@ GameObject:
   - component: {fileID: 1562746944}
   m_Layer: 5
   m_Name: ReportFields
-  m_TagString: Selectable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16316,7 +16316,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1675361350
 GameObject:

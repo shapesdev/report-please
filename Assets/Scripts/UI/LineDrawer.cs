@@ -11,125 +11,106 @@ public class LineDrawer : MonoBehaviour
     private GameObject firstSelection;
     private GameObject secondSelection;
 
-    private List<Vector3> firstSelectionEdges;
-    private List<Vector3> secondSelectionEdges;
-    private List<Vector3> allPositions;
+    private List<Vector3> allWorldPositions = new List<Vector3>();
 
-    public void SelectField(GameObject selectedGO)
+    public void SelectField(GameObject selectedGameObject)
     {
         if(firstSelection == null)
         {
-            firstSelection = selectedGO;
+            firstSelection = selectedGameObject;
         }
         else if(secondSelection == null)
         {
-            secondSelection = selectedGO;
+            secondSelection = selectedGameObject;
 
-            firstSelectionEdges = new List<Vector3>();
-            secondSelectionEdges = new List<Vector3>();
+            AddGameObjectEdgesToList(firstSelection);
+            AddGameObjectEdgesToList(secondSelection);
 
-            Debug.Log("I'm here");
-
-            UpdateFirstSelectionEdges();
-            UpdateSecondSelectionEdges();
-
-            var positions = GetTwoShortestPositions();
-
-            Debug.Log(positions.Item1);
-            Debug.Log(positions.Item2);
-
-            lineRenderer.SetPosition(0, positions.Item1);
-            lineRenderer.SetPosition(1, positions.Item2);
+            DrawLine();
         }
         else
         {
-            firstSelection = selectedGO;
+            firstSelection = selectedGameObject;
             secondSelection = null;
+            allWorldPositions.Clear();
+            ClearLine();
         }
     }
 
-    private void UpdateFirstSelectionEdges()
+    public void ClearLine()
     {
-        var localEdges = firstSelection.transform.parent.parent.GetComponent<RectTransform>().rect;
-
-        var localEdgeXAxis1 = firstSelection.transform.localPosition.x - localEdges.width / 2;
-        var localStartPos1 = new Vector3(localEdgeXAxis1, firstSelection.transform.localPosition.y, firstSelection.transform.localPosition.z);
-        var worldEdge1 = transform.TransformPoint(localStartPos1);
-
-        var localEdgeXAxis2 = firstSelection.transform.localPosition.x + localEdges.width / 2;
-        var localStartPos2 = new Vector3(localEdgeXAxis2, firstSelection.transform.localPosition.y, firstSelection.transform.localPosition.z);
-        var worldEdge2 = transform.TransformPoint(localStartPos2);
-
-        var localEdgeYAxis1 = firstSelection.transform.localPosition.y - localEdges.height / 2;
-        var localStartPos3 = new Vector3(firstSelection.transform.localPosition.x, localEdgeYAxis1, firstSelection.transform.localPosition.z);
-        var worldEdge3 = transform.TransformPoint(localStartPos3);
-
-        var localEdgeYAxis2 = firstSelection.transform.localPosition.y + localEdges.height / 2;
-        var localStartPos4 = new Vector3(firstSelection.transform.localPosition.x, localEdgeYAxis2, firstSelection.transform.localPosition.z);
-        var worldEdge4 = transform.TransformPoint(localStartPos4);
-
-        firstSelectionEdges.Add(worldEdge1);
-        firstSelectionEdges.Add(worldEdge2);
-        firstSelectionEdges.Add(worldEdge3);
-        firstSelectionEdges.Add(worldEdge4);
+        lineRenderer.positionCount = 0;
     }
 
-    private void UpdateSecondSelectionEdges()
+    private void DrawLine()
     {
-        var localEdges = firstSelection.transform.parent.parent.GetComponent<RectTransform>().rect;
+        var positions = GetPositions();
 
-        var localEdgeXAxis1 = secondSelection.transform.localPosition.x - localEdges.width / 2;
-        var localStartPos1 = new Vector3(localEdgeXAxis1, secondSelection.transform.localPosition.y, secondSelection.transform.localPosition.z);
-        var worldEdge1 = transform.TransformPoint(localStartPos1);
+        lineRenderer.positionCount = 2;
 
-        var localEdgeXAxis2 = secondSelection.transform.localPosition.x + localEdges.width / 2;
-        var localStartPos2 = new Vector3(localEdgeXAxis2, secondSelection.transform.localPosition.y, secondSelection.transform.localPosition.z);
-        var worldEdge2 = transform.TransformPoint(localStartPos2);
-
-        var localEdgeYAxis1 = secondSelection.transform.localPosition.y - localEdges.height / 2;
-        var localStartPos3 = new Vector3(secondSelection.transform.localPosition.x, localEdgeYAxis1, secondSelection.transform.localPosition.z);
-        var worldEdge3 = transform.TransformPoint(localStartPos3);
-
-        var localEdgeYAxis2 = secondSelection.transform.localPosition.y + localEdges.height / 2;
-        var localStartPos4 = new Vector3(secondSelection.transform.localPosition.x, localEdgeYAxis2, secondSelection.transform.localPosition.z);
-        var worldEdge4 = transform.TransformPoint(localStartPos4);
-
-        secondSelectionEdges.Add(worldEdge1);
-        secondSelectionEdges.Add(worldEdge2);
-        secondSelectionEdges.Add(worldEdge3);
-        secondSelectionEdges.Add(worldEdge4);
+        lineRenderer.SetPosition(0, positions.Item1);
+        lineRenderer.SetPosition(1, positions.Item2);
     }
 
-    private Tuple<Vector3, Vector3> GetTwoShortestPositions()
+    private void AddGameObjectEdgesToList(GameObject go)
     {
-        List<Vector3> shortestPositions = new List<Vector3>();
+        var localEdges = go.transform.GetComponent<RectTransform>().rect;
 
-        float currentShortest = 0f;
+        var leftLocalEdge = go.transform.localPosition.x - localEdges.width / 2;
+        var leftLocalPosition = new Vector3(leftLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
+        var leftWorldPosition = go.transform.parent.TransformPoint(leftLocalPosition);
 
-        foreach(var first in firstSelectionEdges)
+        var rightLocalEdge = go.transform.localPosition.x + localEdges.width / 2;
+        var rightLocalPosition = new Vector3(rightLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
+        var rightWorldPosition = go.transform.parent.TransformPoint(rightLocalPosition);
+
+        var bottomLocalEdge = go.transform.localPosition.y - localEdges.height / 2;
+        var bottomLocalPosition = new Vector3(go.transform.localPosition.x, bottomLocalEdge, go.transform.localPosition.z);
+        var bottomWorldPosition = go.transform.parent.TransformPoint(bottomLocalPosition);
+
+        var upLocalEdge = go.transform.localPosition.y + localEdges.height / 2;
+        var upLocalPosition = new Vector3(go.transform.localPosition.x, upLocalEdge, go.transform.localPosition.z);
+        var upWorldPosition = go.transform.parent.TransformPoint(upLocalPosition);
+
+        allWorldPositions.Add(leftWorldPosition);
+        allWorldPositions.Add(rightWorldPosition);
+        allWorldPositions.Add(bottomWorldPosition);
+        allWorldPositions.Add(upWorldPosition);
+    }
+
+    private Tuple<Vector3, Vector3> GetPositions()
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        double currentDistance = 0;
+
+        for(int i = 0; i < allWorldPositions.Count / 2; i++)
         {
-            foreach(var second in secondSelectionEdges)
+            for(int j = allWorldPositions.Count / 2; j < allWorldPositions.Count; j++)
             {
-                float dist = Vector3.Distance(first, second);
+                /*If we want to find the distance between two points in a coordinate plane we use a different formula
+                that is based on the Pythagorean Theorem where(x1, y1) and(x2, y2) are the coordinates and d marks the distance:
+                d = (x2−x1)2 + (y2−y1)2−−−−−−−−−−−−−−−−−−√*/
 
-                if(currentShortest == 0f)
+                var distance = Math.Sqrt(Math.Pow((allWorldPositions[j].x - allWorldPositions[i].x), 2) + Math.Pow((allWorldPositions[j].y - allWorldPositions[i].y), 2));
+
+                if(currentDistance == 0)
                 {
-                    currentShortest = dist;
+                    currentDistance = distance;
 
-                    shortestPositions.Add(first);
-                    shortestPositions.Add(second);
+                    positions.Add(allWorldPositions[i]);
+                    positions.Add(allWorldPositions[j]);
                 }
-                else if(dist < currentShortest)
+                else if(distance < currentDistance)
                 {
-                    currentShortest = dist;
+                    currentDistance = distance;
 
-                    shortestPositions.Clear();
-                    shortestPositions.Add(first);
-                    shortestPositions.Add(second);
+                    positions.Clear();
+                    positions.Add(allWorldPositions[i]);
+                    positions.Add(allWorldPositions[j]);
                 }
             }
         }
-
-        return new Tuple<Vector3, Vector3>(shortestPositions[0], shortestPositions[1]);
+        return new Tuple<Vector3, Vector3>(positions[0], positions[1]);
     }
 }

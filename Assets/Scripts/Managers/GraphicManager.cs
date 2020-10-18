@@ -70,6 +70,8 @@ public class GraphicManager : MonoBehaviour, IManager
                         child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = true;
                     }
                 }
+
+                lineDrawer.ClearLine();
             }
             else if(inspectorMode == true)
             {
