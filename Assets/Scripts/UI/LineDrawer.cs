@@ -22,7 +22,6 @@ public class LineDrawer : MonoBehaviour
         else if(secondSelection == null)
         {
             secondSelection = selectedGameObject;
-
             AddGameObjectEdgesToList(firstSelection);
             AddGameObjectEdgesToList(secondSelection);
             DrawLine();
@@ -52,29 +51,31 @@ public class LineDrawer : MonoBehaviour
 
         lineRenderer.positionCount = positions.Count;
 
-        lineRenderer.SetPosition(0, positions[0]);
-        lineRenderer.SetPosition(1, positions[1]);
+        for(int i = 0; i < positions.Count; i++)
+        {
+            lineRenderer.SetPosition(i, positions[i]);
+        }
     }
 
     private void AddGameObjectEdgesToList(GameObject go)
     {
-        var localEdges = go.transform.GetComponent<RectTransform>().rect;
+        Rect localEdges = go.transform.GetComponent<RectTransform>().rect;
 
-        var leftLocalEdge = go.transform.localPosition.x - localEdges.width / 2;
-        var leftLocalPosition = new Vector3(leftLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
-        var leftWorldPosition = go.transform.parent.TransformPoint(leftLocalPosition);
+        float leftLocalEdge = go.transform.localPosition.x - localEdges.width / 2;
+        Vector3 leftLocalPosition = new Vector3(leftLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
+        Vector3 leftWorldPosition = go.transform.parent.TransformPoint(leftLocalPosition);
 
-        var rightLocalEdge = go.transform.localPosition.x + localEdges.width / 2;
-        var rightLocalPosition = new Vector3(rightLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
-        var rightWorldPosition = go.transform.parent.TransformPoint(rightLocalPosition);
+        float rightLocalEdge = go.transform.localPosition.x + localEdges.width / 2;
+        Vector3 rightLocalPosition = new Vector3(rightLocalEdge, go.transform.localPosition.y, go.transform.localPosition.z);
+        Vector3 rightWorldPosition = go.transform.parent.TransformPoint(rightLocalPosition);
 
-        var bottomLocalEdge = go.transform.localPosition.y - localEdges.height / 2;
-        var bottomLocalPosition = new Vector3(go.transform.localPosition.x, bottomLocalEdge, go.transform.localPosition.z);
-        var bottomWorldPosition = go.transform.parent.TransformPoint(bottomLocalPosition);
+        float bottomLocalEdge = go.transform.localPosition.y - localEdges.height / 2;
+        Vector3 bottomLocalPosition = new Vector3(go.transform.localPosition.x, bottomLocalEdge, go.transform.localPosition.z);
+        Vector3 bottomWorldPosition = go.transform.parent.TransformPoint(bottomLocalPosition);
 
-        var upLocalEdge = go.transform.localPosition.y + localEdges.height / 2;
-        var upLocalPosition = new Vector3(go.transform.localPosition.x, upLocalEdge, go.transform.localPosition.z);
-        var upWorldPosition = go.transform.parent.TransformPoint(upLocalPosition);
+        float upLocalEdge = go.transform.localPosition.y + localEdges.height / 2;
+        Vector3 upLocalPosition = new Vector3(go.transform.localPosition.x, upLocalEdge, go.transform.localPosition.z);
+        Vector3 upWorldPosition = go.transform.parent.TransformPoint(upLocalPosition);
 
         worldEdgePositions.Add(leftWorldPosition);
         worldEdgePositions.Add(rightWorldPosition);
@@ -96,7 +97,7 @@ public class LineDrawer : MonoBehaviour
                 that is based on the Pythagorean Theorem where(x1, y1) and(x2, y2) are the coordinates and d marks the distance:
                 d = (x2−x1)2 + (y2−y1)2−−−−−−−−−−−−−−−−−−√*/
 
-                var distance = Math.Sqrt(Math.Pow((worldEdgePositions[j].x - worldEdgePositions[i].x), 2) + Math.Pow((worldEdgePositions[j].y - worldEdgePositions[i].y), 2));
+                double distance = Math.Sqrt(Math.Pow((worldEdgePositions[j].x - worldEdgePositions[i].x), 2) + Math.Pow((worldEdgePositions[j].y - worldEdgePositions[i].y), 2));
 
                 if(currentDistance == 0)
                 {
@@ -121,11 +122,10 @@ public class LineDrawer : MonoBehaviour
     private List<Vector3> GetAllLinePositions()
     {
         List<Vector3> allPositions = new List<Vector3>();
+        Tuple<Vector3, Vector3> positions = GetStartAndEndPositions();
 
-        var positions = GetStartAndEndPositions();
-
-        var startPosition = positions.Item1;
-        var endPosition = positions.Item2;
+        Vector3 startPosition = positions.Item1;
+        Vector3 endPosition = positions.Item2;
 
         allPositions.Add(startPosition);
         allPositions.Add(endPosition);
