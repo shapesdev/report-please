@@ -25,20 +25,24 @@ public class LineDrawer : MonoBehaviour
 
             AddGameObjectEdgesToList(firstSelection);
             AddGameObjectEdgesToList(secondSelection);
-
             DrawLine();
         }
         else
         {
             firstSelection = selectedGameObject;
-            secondSelection = null;
-            worldEdgePositions.Clear();
-            ClearLine();
+            ClearLine(false);
         }
     }
 
-    public void ClearLine()
+    public void ClearLine(bool clear)
     {
+        if(clear)
+        {
+            firstSelection = null;
+        }
+
+        secondSelection = null;
+        worldEdgePositions.Clear();
         lineRenderer.positionCount = 0;
     }
 
@@ -125,15 +129,6 @@ public class LineDrawer : MonoBehaviour
 
         allPositions.Add(startPosition);
         allPositions.Add(endPosition);
-
-        Debug.Log(startPosition);
-        Debug.Log(endPosition);
-
-        Debug.Log((int)startPosition.x);
-        Debug.Log((int)endPosition.x);
-
-        Debug.Log((int)startPosition.y);
-        Debug.Log((int)endPosition.y);
 
         return allPositions;
     }

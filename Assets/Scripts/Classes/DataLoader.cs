@@ -8,13 +8,13 @@ public enum ReportType
     Response, EditorBug, PackageBug
 }
 
-public class DataLoadManager
+public class DataLoader
 {
     private Dictionary<int, List<IScenario>> days;
 
     private List<IScenario> scenarios;
 
-    public DataLoadManager()
+    public DataLoader()
     {
         Initialize();
     }
@@ -67,7 +67,7 @@ public class DataLoadManager
         "4. Describe the expected and actual results\n\n" +
         "Thanks,\n" +
         "Petras\n" +
-        "nDiversity QA Team\n", tester1.GetEmail(), tester1);
+        "Diversity QA Team\n", tester1.GetEmail(), tester1);
 
         Response response4 = new Response(1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +

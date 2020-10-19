@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IManager
 {
-    private DataLoadManager loadManager;
+    private DataLoader loadManager;
     private Dictionary<int, List<IScenario>> dayData;
 
     [SerializeField]
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour, IManager
 
     public void Initialize()
     {
-        loadManager = new DataLoadManager();
+        loadManager = new DataLoader();
         dayData = loadManager.GetAreaAndDayData();
 
         graphicManager.OnDragRight += GraphicManager_OnDragRight;

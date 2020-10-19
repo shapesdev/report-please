@@ -5,34 +5,40 @@ using UnityEngine;
 
 public class App : MonoBehaviour
 {
-    private List<IManager> IManagers;
+    private List<IManager> managers;
 
     private void Awake()
     {
-        IManagers = new List<IManager>();
+        this.managers = new List<IManager>();
 
         var managers = GetComponentsInChildren<MonoBehaviour>().OfType<IManager>();
 
         foreach(var a in managers)
         {
-            IManagers.Add(a);
+            this.managers.Add(a);
             a.Initialize();
         }
     }
 
     private void Update()
     {
-        foreach (var manager in IManagers)
+        if(managers.Count > 0)
         {
-            manager.ManagerUpdate();
+            foreach (var manager in managers)
+            {
+                manager.ManagerUpdate();
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        foreach (var manager in IManagers)
+        if(managers.Count > 0)
         {
-            manager.FixedManagerUpdate();
+            foreach (var manager in managers)
+            {
+                manager.FixedManagerUpdate();
+            }
         }
     }
 }
