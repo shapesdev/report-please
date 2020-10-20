@@ -18,7 +18,7 @@ public struct ReportFieldInfo
 }
 
 [CreateAssetMenu(fileName = "New Rule Book", menuName = "Rule Book")]
-public class RuleBook : ScriptableObject
+public class RuleBookSO : ScriptableObject
 {
     public List<string> basicRules;
     public List<AreasNGrabbags> areas;

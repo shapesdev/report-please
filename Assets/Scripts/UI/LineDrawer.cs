@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class LineDrawer : MonoBehaviour
@@ -124,12 +125,58 @@ public class LineDrawer : MonoBehaviour
         List<Vector3> allPositions = new List<Vector3>();
         Tuple<Vector3, Vector3> positions = GetStartAndEndPositions();
 
-        Vector3 startPosition = positions.Item1;
-        Vector3 endPosition = positions.Item2;
+        /* Formula for finding the Midpoint between two points */
+        //Vector3 midPos = new Vector3((startPos.x + endPos.x) / 2, (startPos.y + endPos.y) / 2, 0);
 
-        allPositions.Add(startPosition);
-        allPositions.Add(endPosition);
+        var midPoints = GetMidPoints(positions.Item1, positions.Item2, 10);
+
+        Debug.Log(positions.Item1);
+        Debug.Log(positions.Item2);
+
+        allPositions.Add(positions.Item1);
+
+        foreach (var mid in midPoints)
+        {
+            allPositions.Add(mid);
+            Debug.Log(mid);
+        }
+
+        allPositions.Add(positions.Item2);
 
         return allPositions;
+    }
+
+    private List<Vector3> GetMidPoints(Vector3 start, Vector3 end, int count)
+    {
+        List<Vector3> midPoints = new List<Vector3>();
+
+        var diff_X = end.x - start.x;
+        var diff_Y = end.y - start.y;
+
+        var interval_X = diff_X / (count + 1);
+        var interval_Y = diff_Y / (count + 1);
+
+        for (int i = 1; i <= count; i++)
+        {
+            midPoints.Add(new Vector3(start.x + interval_X * i, start.y, 0));
+
+/*            if (i == 1)
+            {
+                //midPoints.Add(new Vector3(start.x + interval_X * i, start.y + interval_Y * i, 0)); TEMPLATE
+                midPoints.Add(new Vector3(start.x + interval_X * i, start.y, 0));
+            }
+            else
+            {
+                if(midPoints[i - 1].x == start.x)
+                {
+                    midPoints.Add(new Vector3(start.x + interval_X * i, start.y, 0));
+                }
+                else if(midPoints[i - 1].y == start.y)
+                {
+                    midPoints.Add(new Vector3(start.x, start.y + interval_Y * i, 0));
+                }
+            }*/
+        }
+        return midPoints;
     }
 }

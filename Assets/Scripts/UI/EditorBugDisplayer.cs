@@ -34,8 +34,6 @@ public class EditorBugDisplayer : MonoBehaviour
     [SerializeField]
     private TMP_Text FAV;
 
-    private RectTransform rectTransform;
-
     public void LeftDisplay()
     {
         gameObject.SetActive(false);
@@ -50,8 +48,8 @@ public class EditorBugDisplayer : MonoBehaviour
         reproSteps.text = bug.GetReproSteps();
         expectedActual.text = bug.GetExpectedActualResults();
         reproducible.text = bug.GetReproNoReproWith();
-        if(bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
-        if(bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
+        if (bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
+        if (bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
         severity.text = "Severity: " + bug.GetSeverity();
         platform.text = "Platform Importance: " + bug.GetPlatformImportance();
         userPrev.text = "User Prevalence: " + bug.GetUserPrevalence();
@@ -59,8 +57,6 @@ public class EditorBugDisplayer : MonoBehaviour
         area.text = bug.GetArea().area;
         caseId.text = bug.GetCaseID().ToString();
         FAV.text = bug.GetFirstAffected();
-
-        gameObject.SetActive(true);
     }
 
     public void TurnOnInspectorMode()

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Reflection;
+using System.Linq;
+using System;
 
-public class PackageButDisplayer : MonoBehaviour
+public class PackageBugDisplayer : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text title;
@@ -38,11 +41,6 @@ public class PackageButDisplayer : MonoBehaviour
     [SerializeField]
     private TMP_Text packageVersion;
 
-    public void LeftDisplay()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void RightDisplay(IScenario scenario)
     {
         var bug = (PackageBug)scenario;
@@ -63,9 +61,13 @@ public class PackageButDisplayer : MonoBehaviour
         FAV.text = bug.GetFirstAffected();
         package.text = "Package: " + bug.GetPackage();
         packageVersion.text = "Package Found Version: " + bug.GetPackageVersion();
-
-        gameObject.SetActive(true);
     }
+
+    public void LeftDisplay()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public void TurnOnInspectorMode()
     {
