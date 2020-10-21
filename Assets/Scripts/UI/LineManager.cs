@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using TMPro;
 
-public class LineDrawer : MonoBehaviour
+public class LineManager : MonoBehaviour, IManager
 {
     [SerializeField]
     private LineRenderer lineRenderer;
@@ -12,7 +13,9 @@ public class LineDrawer : MonoBehaviour
     private GameObject firstSelection;
     private GameObject secondSelection;
 
-    private List<Vector3> worldEdgePositions = new List<Vector3>();
+    private List<Vector3> worldEdgePositions;
+
+    public event EventHandler<TwoFieldsSelectedEventArgs> OnTwoFieldsSelected = (sender, e) => { };
 
     public void SelectField(GameObject selectedGameObject)
     {
@@ -26,6 +29,9 @@ public class LineDrawer : MonoBehaviour
             AddGameObjectEdgesToList(firstSelection);
             AddGameObjectEdgesToList(secondSelection);
             DrawLine();
+
+            var eventArgs = new TwoFieldsSelectedEventArgs(firstSelection, secondSelection);
+            OnTwoFieldsSelected(this, eventArgs);
         }
         else
         {
@@ -178,5 +184,20 @@ public class LineDrawer : MonoBehaviour
             }*/
         }
         return midPoints;
+    }
+
+    public void Initialize()
+    {
+        worldEdgePositions = new List<Vector3>();
+    }
+
+    public void ManagerUpdate()
+    {
+
+    }
+
+    public void FixedManagerUpdate()
+    {
+
     }
 }

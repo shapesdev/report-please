@@ -1349,8 +1349,8 @@ GameObject:
   - component: {fileID: 80456073}
   - component: {fileID: 80456072}
   m_Layer: 5
-  m_Name: Rule4
-  m_TagString: Untagged
+  m_Name: DoubleSpaces
+  m_TagString: DoubleSpaces
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2638,7 +2638,7 @@ GameObject:
   - component: {fileID: 192013698}
   m_Layer: 5
   m_Name: EmailSent
-  m_TagString: Untagged
+  m_TagString: Email
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3174,7 +3174,7 @@ GameObject:
   - component: {fileID: 207235828}
   m_Layer: 5
   m_Name: DateSent
-  m_TagString: Untagged
+  m_TagString: DateSent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3841,8 +3841,8 @@ GameObject:
   - component: {fileID: 296091905}
   - component: {fileID: 296091904}
   m_Layer: 5
-  m_Name: Rule1
-  m_TagString: Untagged
+  m_Name: NotQualified
+  m_TagString: NotQualified
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4313,7 +4313,7 @@ GameObject:
   - component: {fileID: 374817232}
   - component: {fileID: 374817233}
   m_Layer: 0
-  m_Name: Game
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4348,6 +4348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicManager: {fileID: 53157978}
+  lineManager: {fileID: 2059114475}
 --- !u!1 &407449444
 GameObject:
   m_ObjectHideFlags: 0
@@ -6988,7 +6989,7 @@ GameObject:
   - component: {fileID: 708774448}
   m_Layer: 5
   m_Name: DateOfExpiry
-  m_TagString: Untagged
+  m_TagString: ExpireDate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7256,7 +7257,7 @@ GameObject:
   - component: {fileID: 727712778}
   m_Layer: 5
   m_Name: CaseID
-  m_TagString: Untagged
+  m_TagString: CaseID
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7569,7 +7570,7 @@ GameObject:
   - component: {fileID: 774456969}
   m_Layer: 5
   m_Name: Reply
-  m_TagString: Untagged
+  m_TagString: Reply
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17026,7 +17027,7 @@ GameObject:
   - component: {fileID: 1731881001}
   m_Layer: 5
   m_Name: Name
-  m_TagString: Untagged
+  m_TagString: Name
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18104,8 +18105,8 @@ GameObject:
   - component: {fileID: 1862367546}
   - component: {fileID: 1862367545}
   m_Layer: 5
-  m_Name: Rule3
-  m_TagString: Untagged
+  m_Name: EmptyLines
+  m_TagString: EmptyLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19924,7 +19925,7 @@ GameObject:
   - component: {fileID: 2039287161}
   m_Layer: 5
   m_Name: Email
-  m_TagString: Untagged
+  m_TagString: Email
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20177,7 +20178,7 @@ GameObject:
   - component: {fileID: 2059114475}
   - component: {fileID: 2059114474}
   m_Layer: 0
-  m_Name: LineDrawer
+  m_Name: LineManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

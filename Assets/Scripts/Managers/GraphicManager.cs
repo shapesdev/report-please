@@ -37,7 +37,7 @@ public class GraphicManager : MonoBehaviour, IManager
     [SerializeField]
     private GameObject stampPanel;
     [SerializeField]
-    private LineDrawer lineDrawer;
+    private LineManager lineDrawer;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };

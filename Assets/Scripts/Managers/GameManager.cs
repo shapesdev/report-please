@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IManager
 {
-    private DataLoader loadManager;
+    private DataLoader dataLoader;
+    private DataChecker dataChecker;
     private Dictionary<int, List<IScenario>> dayData;
 
     [SerializeField]
     private GraphicManager graphicManager;
+    [SerializeField]
+    private LineManager lineManager;
 
     private Card currentCard;
     private float currentPanelWidth;
@@ -19,19 +22,33 @@ public class GameManager : MonoBehaviour, IManager
 
     public void Initialize()
     {
-        loadManager = new DataLoader();
-        dayData = loadManager.GetAreaAndDayData();
+        dataLoader = new DataLoader();
+        dataChecker = new DataChecker();
+
+        dayData = dataLoader.GetAreaAndDayData();
+        dataChecker.SetScenario(dayData[currentDay][currentScenario]);
 
         graphicManager.OnDragRight += GraphicManager_OnDragRight;
         graphicManager.OnPapersReturned += GraphicManager_OnPapersReturned;
+
+        lineManager.OnTwoFieldsSelected += LineManager_OnTwoFieldsSelected;
+    }
+
+    private void LineManager_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
+    {
+        dataChecker.DoFieldsHaveCorrelation(e.firstField, e.secondField);
     }
 
     private void GraphicManager_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
         if(currentScenario + 1 < dayData[currentDay].Count)
         {
+            var citation = dataChecker.CheckForCitations();
+            Debug.Log(citation.Item2);
+
             currentScenario++;
             graphicManager.Reset();
+            dataChecker.SetScenario(dayData[currentDay][currentScenario]);
         }
     }
 
