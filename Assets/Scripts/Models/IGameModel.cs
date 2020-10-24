@@ -6,8 +6,6 @@ using UnityEngine;
 public interface IGameModel
 {
     Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
-
-    event EventHandler<InspectorModeEventArgs> OnInspectorModeActivated;
     Card CurrentCard { get; set; }
     DateTime CurrentDay { get; set; }
     float CurrentPanelWidth { get; set; }
@@ -18,4 +16,6 @@ public interface IGameModel
     bool InspectorMode { get; set; }
     Vector3 Offset { get; set; }
     RuleBookSO RuleBook { get; }
+
+    GameObject SelectedGameObject { get; set; }
 }

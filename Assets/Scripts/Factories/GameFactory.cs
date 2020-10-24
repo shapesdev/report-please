@@ -13,9 +13,11 @@ public class GameFactory
     {
         instance = GameObject.Instantiate(gamePrefab);
 
-        model = new GameModel(ruleBook);
         view = instance.GetComponent<GameView>();
-        controller = new GameController(model, view);
+        var selectionView = instance.GetComponentInChildren<GameSelectionView>();
+
+        model = new GameModel(ruleBook);
+        controller = new GameController(model, view, selectionView);
     }
 
     public void Unload()

@@ -317,6 +317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc67440c42ac2d4da6d351b9c27aded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePrefab: {fileID: 7028892225223374796, guid: bb47da4d12ef41242b4a64f9a600ea57, type: 3}
+  gamePrefab: {fileID: 6143270259566252243, guid: bb47da4d12ef41242b4a64f9a600ea57, type: 3}
   menuPrefab: {fileID: 0}
-  ruleBook: {fileID: 11400000, guid: f29a2105f0a8a5f458baff66732c50ee, type: 2}
+  ruleBook: {fileID: 0}

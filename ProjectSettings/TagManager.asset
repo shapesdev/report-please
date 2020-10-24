@@ -10,16 +10,15 @@ TagManager:
   - Selectable
   - Stamp
   - StampArea
-  - Name
   - Email
-  - Reply
   - EmptyLine
-  - DoubleSpaces
-  - DateSent
-  - NotQualified
+  - Name
   - CaseID
   - ExpireDate
-  - ValidID
+  - Reply
+  - NotQualified
+  - DateSent
+  - DoubleSpaces
   layers:
   - Default
   - TransparentFX

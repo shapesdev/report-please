@@ -8,78 +8,49 @@ using TMPro;
 
 public class GameView : MonoBehaviour, IGameView
 {
-    private GraphicRaycaster graphicRaycaster;
-    private PointerEventData pointerEvent;
-    private EventSystem eventSystem;
-
-    private GameObject selectedGO;
     private GameObject stamp;
 
     [SerializeField]
     private Card[] cards;
+
     [SerializeField]
     private RectTransform leftPanel;
     [SerializeField]
     private RectTransform returnArea;
+
     [SerializeField]
     private GameObject[] selectableGO;
     [SerializeField]
     private GameObject stampPanel;
+    [SerializeField]
+    private GameObject topPanel;
+
     [SerializeField]
     private TMP_Text dateText;
 
     [SerializeField]
     private LineManager lineDrawer;
 
-    [SerializeField]
-    private InspectorModeView inspectorModeView;
-    [SerializeField]
-    private NormalModeView normalModeView;
-
-    public bool InspectorMode { set { InspectorMode = value; } }
-
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
-    public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
+    public event EventHandler<MousePressedEventArgs> OnMousePressed = (sender, e) => { };
+    public event EventHandler<MouseReleasedEventArgs> OnMouseReleased = (sender, e) => { };
+    public event EventHandler<MouseHoldEventArgs> OnMouseHold = (sender, e) => { };
+    public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
+    public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
 
     public void Init(RuleBookSO ruleBook, DateTime day, IScenario scenario)
     {
-        graphicRaycaster = GetComponent<GraphicRaycaster>();
-        eventSystem = GetComponent<EventSystem>();
-        GetComponent<Canvas>().worldCamera = Camera.main;
-
         dateText.text = day.ToString("yyyy/MM/dd");
-
+        dateText.gameObject.transform.SetAsLastSibling();
+        stampPanel.transform.SetAsLastSibling();
+        topPanel.transform.SetAsLastSibling();
         ShowScenario(scenario);
-        // SHOW CURRENT DATE SOMEWHERE
     }
 
     public void ShowScenario(IScenario scenario)
     {
         // SHOW SCENARIO DATA
-    }
-
-    public void ChangeInspectorMode(bool inspectorMode)
-    {
-        if(inspectorMode == true)
-        {
-            Debug.Log("Inspector Mode is true");
-        }
-        else
-        {
-            StartCoroutine(NormalMode());
-            Debug.Log("Inspector mode is false");
-        }
-    }
-
-    IEnumerator NormalMode()
-    {
-        while (true)
-        {
-            yield return null;
-
-
-        }
     }
 
     private void Update()
@@ -89,22 +60,46 @@ public class GameView : MonoBehaviour, IGameView
             var eventArgs = new SpaceBarPressedEventArgs();
             OnSpaceBarPressed(this, eventArgs);
         }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            var eventArgs = new MousePressedEventArgs();
+            OnMousePressed(this, eventArgs);
+        }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            var eventArgs = new MouseReleasedEventArgs();
+            OnMouseReleased(this, eventArgs);
+        }
     }
 
     private void FixedUpdate()
     {
-        if(selectedGO != null)
-      
-
-        if (!offsetSet)
+        if(Input.GetKey(KeyCode.Mouse0))
         {
-            var offset = position - selectedGO.transform.localPosition;
-            offsetSet = !offsetSet;
-            Cursor.lockState = CursorLockMode.Confined;
+            var eventArgs = new MouseHoldEventArgs();
+            OnMouseHold(this, eventArgs);
         }
+    }
 
-        if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
+    public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)
+    {
+        if(selectedGO != null)
         {
+            if (offsetSet == false)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                offset = Input.mousePosition - selectedGO.transform.localPosition;
+
+                var offsetValueEventArgs = new OffsetValueEventArgs(offset);
+                OnOffsetChanged(this, offsetValueEventArgs);
+
+                var offsetEventArgs = new OffsetSetEventArgs(true);
+                OnOffsetSet(this, offsetEventArgs);
+            }
+
+            if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
+            {
 #if UNITY_STANDALONE_OSX
         if(Input.mousePosition.x <= Screen.width && Input.mousePosition.x >= 0f)
         {
@@ -113,11 +108,12 @@ public class GameView : MonoBehaviour, IGameView
 #endif
 
 #if UNITY_STANDALONE_WIN
-            selectedGO.transform.localPosition = Input.mousePosition - offset;
+                selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
+            }
+            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
+            OnDragRight(this, eventArgs);
         }
-        var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
-        OnDragRight(this, eventArgs);
     }
 
     /*    public void ManagerUpdate()

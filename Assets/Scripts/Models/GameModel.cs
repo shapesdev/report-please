@@ -5,12 +5,6 @@ using System;
 
 public class GameModel: IGameModel
 {
-    private RuleBookSO ruleBook;
-
-    private bool inspectorMode;
-
-    public event EventHandler<InspectorModeEventArgs> OnInspectorModeActivated = (sender, e) => { };
-
     public Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
     public Card CurrentCard { get; set; }
     public DateTime CurrentDay { get; set; }
@@ -19,25 +13,15 @@ public class GameModel: IGameModel
     public bool Selected { get; set; }
     public bool OffsetSet { get; set; }
     public bool CanBeReturned { get; set; }
-    public bool InspectorMode { get { return inspectorMode; }
-        set {
-
-            if(inspectorMode != value)
-            {
-                inspectorMode = value;
-
-                var eventArgs = new InspectorModeEventArgs();
-                OnInspectorModeActivated(this, eventArgs);
-            }
-        }
-    }
+    public bool InspectorMode { get; set; }
     public Vector3 Offset { get; set; }
 
-    public RuleBookSO RuleBook => ruleBook;
+    public RuleBookSO RuleBook { get; }
+    public GameObject SelectedGameObject { get; set; }
 
     public GameModel(RuleBookSO ruleBook)
     {
-        this.ruleBook = ruleBook;
+        RuleBook = ruleBook;
         DataInitialization dataInitialization = new DataInitialization();
         DaysWithScenarios = dataInitialization.GetDayData();
         CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));

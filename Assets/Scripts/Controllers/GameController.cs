@@ -6,41 +6,74 @@ public class GameController
 {
     private readonly IGameModel model;
     private readonly IGameView view;
+    private readonly IGameSelectionView selectionView;
+
+    private readonly LineManager lineManager;
 
     private DataChecker dataChecker;
 
-/*    [SerializeField]
-    private GraphicManager graphicManager;
-    [SerializeField]
-    private LineManager lineManager;*/
-
-    public GameController(IGameModel model, IGameView view)
+    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView)
     {
         this.model = model;
         this.view = view;
+        this.selectionView = selectionView;
 
         view.Init(model.RuleBook, model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
 
-        model.OnInspectorModeActivated += Model_OnInspectorModeActivated;
+        view.OnMousePressed += View_OnMousePressed;
+        view.OnMouseReleased += View_OnMouseReleased;
+        view.OnMouseHold += View_OnMouseHold;
+        view.OnDragRight += View_OnDragRight;
+        view.OnOffsetSet += SelectionView_OnOffsetSet;
+        view.OnOffsetChanged += View_OnOffsetChanged;
+        selectionView.OnGameObjectSelected += SelectionView_OnGameObjectSelected;
+        selectionView.OnOffsetSet += SelectionView_OnOffsetSet;
 
         //dataChecker = new DataChecker();
-
-/*        //dataChecker.SetScenario(dayData[currentDay][currentScenario]);
-
-        graphicManager.OnDragRight += GraphicManager_OnDragRight;
-        graphicManager.OnPapersReturned += GraphicManager_OnPapersReturned;
-
-        lineManager.OnTwoFieldsSelected += LineManager_OnTwoFieldsSelected;*/
     }
 
-    private void Model_OnInspectorModeActivated(object sender, InspectorModeEventArgs e)
+    private void View_OnOffsetChanged(object sender, OffsetValueEventArgs e)
     {
-        view.ChangeInspectorMode(model.InspectorMode);
+        model.Offset = e.offset;
+    }
+
+    private void View_OnDragRight(object sender, DragRightEventArgs e)
+    {
+        model.CurrentCard = e.card;
+        model.CurrentPanelWidth = e.panelWidth;
+
+        model.CurrentCard.Check(model.CurrentPanelWidth, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+    }
+
+    private void View_OnMouseHold(object sender, MouseHoldEventArgs e)
+    {
+        view.UpdateGameObjectPosition(model.Offset, model.OffsetSet, model.SelectedGameObject);
+    }
+
+    private void SelectionView_OnOffsetSet(object sender, OffsetSetEventArgs e)
+    {
+        model.OffsetSet = e.offsetSet;
+    }
+
+    private void View_OnMouseReleased(object sender, MouseReleasedEventArgs e)
+    {
+        selectionView.UnSelectGameObject();
+        model.SelectedGameObject = null;
     }
 
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
         model.InspectorMode = !model.InspectorMode;
+    }
+
+    private void View_OnMousePressed(object sender, MousePressedEventArgs e)
+    {
+        model.SelectedGameObject = selectionView.SelectGameObject(model.InspectorMode);
+    }
+
+    private void SelectionView_OnGameObjectSelected(object sender, GameObjectSelectedEventArgs e)
+    {
+        model.Selected = e.selected;
     }
 
     private void LineManager_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
@@ -59,13 +92,5 @@ public class GameController
             graphicManager.Reset();
             dataChecker.SetScenario(dayData[currentDay][currentScenario]);
         }*/
-    }
-
-    private void GraphicManager_OnDragRight(object sender, DragRightEventArgs e)
-    {
-/*        currentCard = e.card;
-        currentPanelWidth = e.panelWidth;
-
-        currentCard.Check(currentPanelWidth, dayData[currentDay][currentScenario]);*/
     }
 }
