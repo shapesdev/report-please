@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using TMPro;
 
-public class LineManager : MonoBehaviour, IManager
+public class LineManager : MonoBehaviour
 {
     [SerializeField]
     private LineRenderer lineRenderer;

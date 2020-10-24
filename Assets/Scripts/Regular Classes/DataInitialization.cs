@@ -1,42 +1,43 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public enum ReportType
+public class DataInitialization
 {
-    Response, EditorBug, PackageBug
-}
+    private List<IScenario> tempScenarioList;
 
-public class DataLoader
-{
-    private Dictionary<int, List<IScenario>> days;
+    private Dictionary<DateTime, List<IScenario>> daysWithScenarios;
 
-    private List<IScenario> scenarios;
-
-    public DataLoader()
+    public DataInitialization()
     {
-        Initialize();
+        daysWithScenarios = new Dictionary<DateTime, List<IScenario>>();
+
+        DateTime dayOne = new DateTime(2020, 11, 10);
+        DateTime dayTwo = new DateTime(2020, 11, 11);
+        DateTime dayThree = new DateTime(2020, 11, 12);
+        DateTime dayFour = new DateTime(2020, 11, 13);
+
+        if(PlayerPrefs.GetInt("CurrentDay") == 0)
+        {
+            PlayerPrefs.SetInt("CurrentDay", dayOne.Day);
+        }
+
+        InitializeDayOne(dayOne);
+        InitializeDayTwo(dayTwo);
+        InitializeDayThree(dayThree);
+        InitializeDayFour(dayFour);
     }
 
-    private void Initialize()
+    public Dictionary<DateTime, List<IScenario>> GetDayData()
     {
-        days = new Dictionary<int, List<IScenario>>();
-
-        InitializeDayOne(10);
-        InitializeDayTwo(11);
-        InitializeDayThree(12);
-        InitializeDayFour(13);
+        return daysWithScenarios;
     }
 
-    public Dictionary<int, List<IScenario>> GetAreaAndDayData()
+    #region Day data initialization
+    private void InitializeDayOne(DateTime day)
     {
-        return days;
-    }
-
-    private void InitializeDayOne(int day)
-    {
-        scenarios = new List<IScenario>();
+        tempScenarioList = new List<IScenario>();
 
         Tester tester1 = new Tester("Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25));
         Tester tester2 = new Tester("Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
@@ -121,23 +122,23 @@ public class DataLoader
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
-        scenarios.Add(response1);
-        scenarios.Add(response2);
-        scenarios.Add(response3);
-        scenarios.Add(response4);
-        scenarios.Add(response5);
-        scenarios.Add(response6);
-        scenarios.Add(response7);
-        scenarios.Add(response8);
-        scenarios.Add(response9);
-        scenarios.Add(response10);
+        tempScenarioList.Add(response1);
+        tempScenarioList.Add(response2);
+        tempScenarioList.Add(response3);
+        tempScenarioList.Add(response4);
+        tempScenarioList.Add(response5);
+        tempScenarioList.Add(response6);
+        tempScenarioList.Add(response7);
+        tempScenarioList.Add(response8);
+        tempScenarioList.Add(response9);
+        tempScenarioList.Add(response10);
 
-        days.Add(day, scenarios);
+        daysWithScenarios.Add(day, tempScenarioList);
     }
 
-    private void InitializeDayTwo(int day)
+    private void InitializeDayTwo(DateTime day)
     {
-        scenarios = new List<IScenario>();
+        tempScenarioList = new List<IScenario>();
 
         Tester tester1 = new Tester("Justinas", "Paulauskas", "j.paulauskas@diversity.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25));
         Tester tester2 = new Tester("Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
@@ -181,18 +182,18 @@ public class DataLoader
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2);
 
-        scenarios.Add(response1);
-        scenarios.Add(response2);
-        scenarios.Add(response3);
-        scenarios.Add(response4);
-        scenarios.Add(response5);
+        tempScenarioList.Add(response1);
+        tempScenarioList.Add(response2);
+        tempScenarioList.Add(response3);
+        tempScenarioList.Add(response4);
+        tempScenarioList.Add(response5);
 
-        days.Add(day, scenarios);
+        daysWithScenarios.Add(day, tempScenarioList);
     }
 
-    private void InitializeDayThree(int day)
+    private void InitializeDayThree(DateTime day)
     {
-        scenarios = new List<IScenario>();
+        tempScenarioList = new List<IScenario>();
 
         Tester tester1 = new Tester("Donny", "Vaichio", "d.vaichio@diversity.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9));
         Tester tester2 = new Tester("Nicholas", "Creator", "n.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
@@ -325,23 +326,23 @@ public class DataLoader
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
          false, "FAV:\n2018.4, 2020.2", true, 1, 3, 2, tester2);
 
-        scenarios.Add(editor1);
-        scenarios.Add(editor2);
-        scenarios.Add(editor3);
-        scenarios.Add(editor4);
-        scenarios.Add(package1);
-        scenarios.Add(editor5);
-        scenarios.Add(editor6);
-        scenarios.Add(editor7);
-        scenarios.Add(editor8);
-        scenarios.Add(editor9);
+        tempScenarioList.Add(editor1);
+        tempScenarioList.Add(editor2);
+        tempScenarioList.Add(editor3);
+        tempScenarioList.Add(editor4);
+        tempScenarioList.Add(package1);
+        tempScenarioList.Add(editor5);
+        tempScenarioList.Add(editor6);
+        tempScenarioList.Add(editor7);
+        tempScenarioList.Add(editor8);
+        tempScenarioList.Add(editor9);
 
-        days.Add(day, scenarios);
+        daysWithScenarios.Add(day, tempScenarioList);
     }
 
-    private void InitializeDayFour(int day)
+    private void InitializeDayFour(DateTime day)
     {
-        scenarios = new List<IScenario>();
+        tempScenarioList = new List<IScenario>();
 
         Tester tester1 = new Tester("Joachim", "Creator", "j.creator@diversity.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27));
         Tester tester2 = new Tester("David", "Creator", "d.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10));
@@ -484,17 +485,18 @@ public class DataLoader
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
         false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2);
 
-        scenarios.Add(editor1);
-        scenarios.Add(editor2);
-        scenarios.Add(editor3);
-        scenarios.Add(package1);
-        scenarios.Add(editor4);
-        scenarios.Add(editor5);
-        scenarios.Add(package2);
-        scenarios.Add(editor6);
-        scenarios.Add(package3);
-        scenarios.Add(editor7);
+        tempScenarioList.Add(editor1);
+        tempScenarioList.Add(editor2);
+        tempScenarioList.Add(editor3);
+        tempScenarioList.Add(package1);
+        tempScenarioList.Add(editor4);
+        tempScenarioList.Add(editor5);
+        tempScenarioList.Add(package2);
+        tempScenarioList.Add(editor6);
+        tempScenarioList.Add(package3);
+        tempScenarioList.Add(editor7);
 
-        days.Add(day, scenarios);
+        daysWithScenarios.Add(day, tempScenarioList);
     }
+    #endregion
 }

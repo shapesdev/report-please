@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CloseType
-{
-    Empty, NotQualified, Responded, Duplicate
-}
-
 public class Response : IScenario
 {
     private int caseID;
