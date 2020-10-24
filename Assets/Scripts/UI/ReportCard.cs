@@ -10,7 +10,7 @@ public class ReportCard : Card
     [SerializeField]
     private EditorBugDisplayer editorDisplay;
     [SerializeField]
-    private PackageButDisplayer packageDisplay;
+    private PackageBugDisplayer packageDisplay;
 
     public override void ChangeSizeToLeft(IScenario scenario)
     {

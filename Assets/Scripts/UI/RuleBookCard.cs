@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class RuleBookCard : Card
 {
     [SerializeField]
+    private Image[] objectsWithRaycast;
+    [SerializeField]
+    private Button[] buttons;
+    [SerializeField]
     private GameObject homePage;
     [SerializeField]
-    private RuleBook ruleBook;
+    private RuleBookSO ruleBook;
     [SerializeField]
     private BasicRuleDisplayer basicRuleDisplayer;
     [SerializeField]
@@ -84,7 +88,15 @@ public class RuleBookCard : Card
 
     public override void TurnOnInspectorMode()
     {
-        gameObject.GetComponent<Image>().raycastTarget = false;
+        foreach (var img in objectsWithRaycast)
+        {
+            img.raycastTarget = false;
+        }
+
+        foreach(var btn in buttons)
+        {
+            btn.interactable = false;
+        }
 
         basicRuleDisplayer.TurnOnInspectorMode();
         areasDisplayer.TurnOnInspectorMode();
@@ -93,7 +105,15 @@ public class RuleBookCard : Card
 
     public override void TurnOffInspectorMode()
     {
-        gameObject.GetComponent<Image>().raycastTarget = true;
+        foreach (var img in objectsWithRaycast)
+        {
+            img.raycastTarget = true;
+        }
+
+        foreach (var btn in buttons)
+        {
+            btn.interactable = true;
+        }
 
         basicRuleDisplayer.TurnOffInspectorMode();
         areasDisplayer.TurnOffInspectorMode();

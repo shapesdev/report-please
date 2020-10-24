@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Reflection;
+using System.Linq;
+using System;
 
-public class EditorBugDisplayer : MonoBehaviour
+public class PackageBugDisplayer : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text title;
@@ -33,15 +36,14 @@ public class EditorBugDisplayer : MonoBehaviour
     private TMP_Text caseId;
     [SerializeField]
     private TMP_Text FAV;
-
-    public void LeftDisplay()
-    {
-        gameObject.SetActive(false);
-    }
+    [SerializeField]
+    private TMP_Text package;
+    [SerializeField]
+    private TMP_Text packageVersion;
 
     public void RightDisplay(IScenario scenario)
     {
-        var bug = (EditorBug)scenario;
+        var bug = (PackageBug)scenario;
 
         title.text = bug.GetTitle();
         testerName.text = bug.GetTesterName();
@@ -57,7 +59,15 @@ public class EditorBugDisplayer : MonoBehaviour
         area.text = bug.GetArea().area;
         caseId.text = bug.GetCaseID().ToString();
         FAV.text = bug.GetFirstAffected();
+        package.text = "Package: " + bug.GetPackage();
+        packageVersion.text = "Package Found Version: " + bug.GetPackageVersion();
     }
+
+    public void LeftDisplay()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public void TurnOnInspectorMode()
     {
@@ -75,6 +85,8 @@ public class EditorBugDisplayer : MonoBehaviour
         area.raycastTarget = true;
         caseId.raycastTarget = true;
         FAV.raycastTarget = true;
+        package.raycastTarget = true;
+        packageVersion.raycastTarget = true;
     }
 
     public void TurnOffInspectorMode()
@@ -93,5 +105,7 @@ public class EditorBugDisplayer : MonoBehaviour
         area.raycastTarget = false;
         caseId.raycastTarget = false;
         FAV.raycastTarget = false;
+        packageVersion.raycastTarget = false;
+        package.raycastTarget = false;
     }
 }
