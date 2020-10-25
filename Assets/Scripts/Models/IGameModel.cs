@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IGameModel
 {
     Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
-    Card CurrentCard { get; set; }
+    GameGeneralView CurrentCard { get; set; }
     DateTime CurrentDay { get; set; }
     float CurrentPanelWidth { get; set; }
     int CurrentScenario { get; set; }
@@ -15,7 +15,5 @@ public interface IGameModel
     bool CanBeReturned { get; set; }
     bool InspectorMode { get; set; }
     Vector3 Offset { get; set; }
-    RuleBookSO RuleBook { get; }
-
     GameObject SelectedGameObject { get; set; }
 }

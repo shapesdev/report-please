@@ -9,8 +9,6 @@ public class App : MonoBehaviour
     private GameObject gamePrefab;
     [SerializeField]
     private GameObject menuPrefab;
-    [SerializeField]
-    private RuleBookSO ruleBook;
 
     private GameFactory gameFactory;
 
@@ -23,6 +21,6 @@ public class App : MonoBehaviour
     private void Init()
     {
         gameFactory = new GameFactory();
-        gameFactory.Load(gamePrefab, ruleBook);
+        gameFactory.Load(gamePrefab);
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
-public class EditorBugDisplayer : MonoBehaviour
+public class EditorBugDisplayer : GeneralDisplayer
 {
     [SerializeField]
     private TMP_Text title;
@@ -34,32 +32,40 @@ public class EditorBugDisplayer : MonoBehaviour
     [SerializeField]
     private TMP_Text FAV;
 
-    public void LeftDisplay()
+    public override void Init(IScenario scenario)
     {
-        gameObject.SetActive(false);
+        if (scenario.GetReportType() == ReportType.EditorBug)
+        {
+            var bug = (EditorBug)scenario;
+
+            title.text = bug.GetTitle();
+            testerName.text = bug.GetTesterName();
+            reproSteps.text = bug.GetReproSteps();
+            expectedActual.text = bug.GetExpectedActualResults();
+            reproducible.text = bug.GetReproNoReproWith();
+            if (bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
+            if (bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
+            severity.text = "Severity: " + bug.GetSeverity();
+            platform.text = "Platform Importance: " + bug.GetPlatformImportance();
+            userPrev.text = "User Prevalence: " + bug.GetUserPrevalence();
+            grabbag.text = bug.GetArea().grabbag;
+            area.text = bug.GetArea().area;
+            caseId.text = bug.GetCaseID().ToString();
+            FAV.text = bug.GetFirstAffected();
+        }
     }
 
-    public void RightDisplay(IScenario scenario)
+    public override void LeftDisplay(ReportType type)
     {
-        var bug = (EditorBug)scenario;
-
-        title.text = bug.GetTitle();
-        testerName.text = bug.GetTesterName();
-        reproSteps.text = bug.GetReproSteps();
-        expectedActual.text = bug.GetExpectedActualResults();
-        reproducible.text = bug.GetReproNoReproWith();
-        if (bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
-        if (bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
-        severity.text = "Severity: " + bug.GetSeverity();
-        platform.text = "Platform Importance: " + bug.GetPlatformImportance();
-        userPrev.text = "User Prevalence: " + bug.GetUserPrevalence();
-        grabbag.text = bug.GetArea().grabbag;
-        area.text = bug.GetArea().area;
-        caseId.text = bug.GetCaseID().ToString();
-        FAV.text = bug.GetFirstAffected();
+        if(type == ReportType.EditorBug) { gameObject.SetActive(false); }
     }
 
-    public void TurnOnInspectorMode()
+    public override void RightDisplay(ReportType type)
+    {
+        if(type == ReportType.EditorBug) { gameObject.SetActive(true); }
+    }
+
+    public override void TurnOnRaycast()
     {
         title.raycastTarget = true;
         testerName.raycastTarget = true;
@@ -77,7 +83,7 @@ public class EditorBugDisplayer : MonoBehaviour
         FAV.raycastTarget = true;
     }
 
-    public void TurnOffInspectorMode()
+    public override void TurnOffRaycast()
     {
         title.raycastTarget = false;
         testerName.raycastTarget = false;

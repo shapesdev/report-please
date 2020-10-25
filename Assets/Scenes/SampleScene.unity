@@ -319,4 +319,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePrefab: {fileID: 6143270259566252243, guid: bb47da4d12ef41242b4a64f9a600ea57, type: 3}
   menuPrefab: {fileID: 0}
-  ruleBook: {fileID: 0}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RuleBookCard : Card
+public class RuleBookView : GameGeneralView, IGameGeneralView
 {
     [SerializeField]
     private Image[] objectsWithRaycast;
@@ -22,7 +22,7 @@ public class RuleBookCard : Card
 
     private bool changeSize;
 
-    private void OnEnable()
+    public void OnEnable()
     {
         areasDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
         basicRuleDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
@@ -35,7 +35,7 @@ public class RuleBookCard : Card
         homePage.SetActive(true);
     }
 
-    public override void ChangeSizeToLeft(IScenario scenario)
+    public override void ChangeSizeToLeft()
     {
         if(changeSize == true)
         {
@@ -46,7 +46,7 @@ public class RuleBookCard : Card
         }
     }
 
-    public override void ChangeSizeToRight(IScenario scenario)
+    public override void ChangeSizeToRight()
     {
         if(changeSize == false)
         {

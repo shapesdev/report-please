@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Linq;
 using System;
 
-public class PackageBugDisplayer : MonoBehaviour
+public class PackageBugDisplayer : GeneralDisplayer
 {
     [SerializeField]
     private TMP_Text title;
@@ -41,35 +41,43 @@ public class PackageBugDisplayer : MonoBehaviour
     [SerializeField]
     private TMP_Text packageVersion;
 
-    public void RightDisplay(IScenario scenario)
+    public override void Init(IScenario scenario)
     {
-        var bug = (PackageBug)scenario;
+        if(scenario.GetReportType() == ReportType.PackageBug)
+        {
+            var bug = (PackageBug)scenario;
 
-        title.text = bug.GetTitle();
-        testerName.text = bug.GetTesterName();
-        reproSteps.text = bug.GetReproSteps();
-        expectedActual.text = bug.GetExpectedActualResults();
-        reproducible.text = bug.GetReproNoReproWith();
-        if (bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
-        if (bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
-        severity.text = "Severity: " + bug.GetSeverity();
-        platform.text = "Platform Importance: " + bug.GetPlatformImportance();
-        userPrev.text = "User Prevalence: " + bug.GetUserPrevalence();
-        grabbag.text = bug.GetArea().grabbag;
-        area.text = bug.GetArea().area;
-        caseId.text = bug.GetCaseID().ToString();
-        FAV.text = bug.GetFirstAffected();
-        package.text = "Package: " + bug.GetPackage();
-        packageVersion.text = "Package Found Version: " + bug.GetPackageVersion();
+            title.text = bug.GetTitle();
+            testerName.text = bug.GetTesterName();
+            reproSteps.text = bug.GetReproSteps();
+            expectedActual.text = bug.GetExpectedActualResults();
+            reproducible.text = bug.GetReproNoReproWith();
+            if (bug.IsRegression()) { regression.text = "Regression: Yes"; } else { regression.text = "Regression: No"; }
+            if (bug.isPublic()) { publicField.text = "Public: Yes"; } else { publicField.text = "Public: No"; }
+            severity.text = "Severity: " + bug.GetSeverity();
+            platform.text = "Platform Importance: " + bug.GetPlatformImportance();
+            userPrev.text = "User Prevalence: " + bug.GetUserPrevalence();
+            grabbag.text = bug.GetArea().grabbag;
+            area.text = bug.GetArea().area;
+            caseId.text = bug.GetCaseID().ToString();
+            FAV.text = bug.GetFirstAffected();
+            package.text = "Package: " + bug.GetPackage();
+            packageVersion.text = "Package Found Version: " + bug.GetPackageVersion();
+        }
     }
 
-    public void LeftDisplay()
+    public override void RightDisplay(ReportType type)
     {
-        gameObject.SetActive(false);
+        if(type == ReportType.PackageBug) { gameObject.SetActive(true); }
+    }
+
+    public override void LeftDisplay(ReportType type)
+    {
+        if(type == ReportType.PackageBug) { gameObject.SetActive(false); }
     }
 
 
-    public void TurnOnInspectorMode()
+    public override void TurnOnRaycast()
     {
         title.raycastTarget = true;
         testerName.raycastTarget = true;
@@ -89,7 +97,7 @@ public class PackageBugDisplayer : MonoBehaviour
         packageVersion.raycastTarget = true;
     }
 
-    public void TurnOffInspectorMode()
+    public override void TurnOffRaycast()
     {
         title.raycastTarget = false;
         testerName.raycastTarget = false;

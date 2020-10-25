@@ -205,7 +205,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4880,7 +4880,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5416,7 +5416,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -8507,17 +8507,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9232a9998c06b84f88febd76e07d577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 6143270260824010295}
-  - {fileID: 6143270259616916288}
-  - {fileID: 6143270260215953177}
   leftPanel: {fileID: 6143270260962274050}
-  returnArea: {fileID: 0}
-  selectableGO: []
-  stampPanel: {fileID: 6143270260235888053}
   topPanel: {fileID: 6143270260175135406}
   dateText: {fileID: 6143270258859515210}
-  lineDrawer: {fileID: 0}
 --- !u!1 &6143270259578444470
 GameObject:
   m_ObjectHideFlags: 0
@@ -9226,7 +9218,7 @@ RectTransform:
   m_Children:
   - {fileID: 6143270260297863932}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9291,6 +9283,7 @@ MonoBehaviour:
   email: {fileID: 6143270259803078954}
   dateStarted: {fileID: 6143270260784516610}
   dateOfExpiry: {fileID: 6143270260294642714}
+  picture: {fileID: 0}
 --- !u!1 &6143270259630370523
 GameObject:
   m_ObjectHideFlags: 0
@@ -11986,7 +11979,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -14082,9 +14075,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GraphicManager, Assembly-CSharp
-        m_MethodName: StampEffect
+      - m_Target: {fileID: 1704557628}
+        m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
+        m_MethodName: StampPress
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 21300000, guid: 9bc4e5a233a49c142bc739f7e1dbd5c5, type: 3}
@@ -14604,7 +14597,7 @@ RectTransform:
   - {fileID: 6143270260162368533}
   - {fileID: 6143270259563214998}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14862,7 +14855,7 @@ RectTransform:
   - {fileID: 6143270260278957286}
   - {fileID: 6143270260188162406}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14950,8 +14943,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GraphicManager, Assembly-CSharp
+      - m_Target: {fileID: 1704557628}
+        m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
         m_MethodName: ActivateStampPanel
         m_Mode: 1
         m_Arguments:
@@ -15339,9 +15332,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GraphicManager, Assembly-CSharp
-        m_MethodName: StampEffect
+      - m_Target: {fileID: 1704557628}
+        m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
+        m_MethodName: StampPress
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 21300000, guid: e68f4d257a7d2e74eb18ebce0146729a, type: 3}
@@ -15717,7 +15710,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16030,7 +16023,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16478,6 +16471,7 @@ GameObject:
   - component: {fileID: 6143270260358064191}
   - component: {fileID: 6143270260358064176}
   - component: {fileID: 6942930658216827324}
+  - component: {fileID: 1704557628}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Finish
@@ -16500,11 +16494,11 @@ RectTransform:
   - {fileID: 6143270260198898275}
   - {fileID: 6143270260175135405}
   - {fileID: 6143270260962274050}
-  - {fileID: 6143270260235888052}
   - {fileID: 6143270259616916289}
   - {fileID: 6143270258859515211}
   - {fileID: 6143270260824010312}
   - {fileID: 6143270260215953178}
+  - {fileID: 6143270260235888052}
   m_Father: {fileID: 6143270259566252242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16585,6 +16579,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922a47cf6f93e9146a92eb7c0feb0261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectableGameObjects:
+  - {fileID: 6143270259616916290}
+  - {fileID: 6143270260824010313}
+  returnArea: {fileID: 6143270260170111599}
+--- !u!114 &1704557628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143270260358064178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c8c9f6458bbce54fae0562439c2d3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stampPanel: {fileID: 6143270260235888053}
 --- !u!1 &6143270260367442609
 GameObject:
   m_ObjectHideFlags: 0
@@ -20127,7 +20138,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -20325,7 +20336,7 @@ GameObject:
   - component: {fileID: 6143270260774046374}
   - component: {fileID: 6143270260774046375}
   m_Layer: 0
-  m_Name: LineManager
+  m_Name: LineView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21012,7 +21023,7 @@ RectTransform:
   - {fileID: 6143270259595893933}
   - {fileID: 6143270260887705020}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21073,9 +21084,10 @@ MonoBehaviour:
   paperLeft: {x: 100, y: 150}
   sizeChangeOffsetRight: 80
   sizeChangeOffsetLeft: 20
-  responseDisplay: {fileID: 6143270258866309785}
-  editorDisplay: {fileID: 6143270259595893932}
-  packageDisplay: {fileID: 6143270260887705019}
+  generalDisplayers:
+  - {fileID: 6143270258866309785}
+  - {fileID: 6143270259595893932}
+  - {fileID: 6143270260887705019}
 --- !u!1 &6143270260834233612
 GameObject:
   m_ObjectHideFlags: 0

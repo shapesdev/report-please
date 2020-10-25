@@ -1,35 +1,18 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameView : MonoBehaviour, IGameView
 {
-    private GameObject stamp;
-
-    [SerializeField]
-    private Card[] cards;
+    private IGameScenarioView[] gameScenarioViews;
+    private IGameGeneralView[] gamegeneralViews;
 
     [SerializeField]
     private RectTransform leftPanel;
     [SerializeField]
-    private RectTransform returnArea;
-
-    [SerializeField]
-    private GameObject[] selectableGO;
-    [SerializeField]
-    private GameObject stampPanel;
-    [SerializeField]
     private GameObject topPanel;
-
     [SerializeField]
     private TMP_Text dateText;
-
-    [SerializeField]
-    private LineManager lineDrawer;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
@@ -39,18 +22,40 @@ public class GameView : MonoBehaviour, IGameView
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
     public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
 
-    public void Init(RuleBookSO ruleBook, DateTime day, IScenario scenario)
+    public void Init(DateTime day, IScenario scenario)
     {
-        dateText.text = day.ToString("yyyy/MM/dd");
-        dateText.gameObject.transform.SetAsLastSibling();
-        stampPanel.transform.SetAsLastSibling();
-        topPanel.transform.SetAsLastSibling();
+        gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
+        gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
+
         ShowScenario(scenario);
+        dateText.text = day.ToString("yyyy/MM/dd");
+
+        dateText.gameObject.transform.SetAsLastSibling();
+        topPanel.transform.SetAsLastSibling();
     }
 
     public void ShowScenario(IScenario scenario)
     {
-        // SHOW SCENARIO DATA
+        foreach (var view in gameScenarioViews)
+        {
+            view.Init(scenario);
+        }
+    }
+
+    public void TurnOnInspectorMode()
+    {
+        foreach(var view in gamegeneralViews)
+        {
+            view.TurnOnInspectorMode();
+        }
+    }
+
+    public void TurnOffInspectorMode()
+    {
+        foreach(var view in gamegeneralViews)
+        {
+            view.TurnOffInspectorMode();
+        }
     }
 
     private void Update()
@@ -111,7 +116,7 @@ public class GameView : MonoBehaviour, IGameView
                 selectedGO.transform.localPosition = Input.mousePosition - offset;
 #endif
             }
-            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
+            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<GameGeneralView>());
             OnDragRight(this, eventArgs);
         }
     }
@@ -213,103 +218,6 @@ public class GameView : MonoBehaviour, IGameView
                     }
                 }
             }
-        }
-
-        public void FixedManagerUpdate()
-        {
-            if (inspectorMode == false)
-            {
-                if (Input.GetKey(KeyCode.Mouse0) && selected)
-                {
-                    if (!offsetSet)
-                    {
-                        offset = Input.mousePosition - selectedGO.transform.localPosition;
-                        offsetSet = !offsetSet;
-                        Cursor.lockState = CursorLockMode.Confined;
-                    }
-
-                    if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
-                    {
-    #if UNITY_STANDALONE_OSX
-        if(Input.mousePosition.x <= Screen.width && Input.mousePosition.x >= 0f)
-        {
-            selectedGO.transform.localPosition = Input.mousePosition - offset;
-        }
-    #endif
-
-    #if UNITY_STANDALONE_WIN
-                        selectedGO.transform.localPosition = Input.mousePosition - offset;
-    #endif
-                    }
-                    var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<Card>());
-                    OnDragRight(this, eventArgs);
-                }
-            }
-        }
-
-        private void BringGraphicToFront(GameObject go)
-        {
-            selectedGO = go;
-            selectedGO.transform.SetSiblingIndex(transform.childCount - 3);
-            selected = true;
-        }
-
-        public void StampEffect(Sprite sprite)
-        {
-            var currentButton = EventSystem.current.currentSelectedGameObject;
-
-            if (StampCanBePlaced(currentButton.transform.position) == true)
-            {
-                if (stamp == null && selectedGO.transform.childCount > 1)
-                {
-                    stamp = new GameObject("Stamp");
-                    stamp.AddComponent<Image>();
-                    stamp.AddComponent<StampTest>();
-
-                    var stampImage = stamp.GetComponent<Image>();
-                    stampImage.sprite = sprite;
-                    stampImage.raycastTarget = false;
-
-                    for (int i = 0; i < selectedGO.transform.childCount; i++)
-                    {
-                        if (selectedGO.transform.GetChild(i).gameObject.activeInHierarchy)
-                        {
-                            stamp.transform.SetParent(selectedGO.transform.GetChild(i).transform);
-                        }
-                    }
-
-                    stamp.transform.position = currentButton.transform.position;
-                    stamp.transform.localScale = Vector3.one;
-                    stamp.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
-                    canBeReturned = true;
-                }
-            }
-        }
-
-        private bool StampCanBePlaced(Vector3 pos)
-        {
-            if (selectedGO != null)
-            {
-                for (int i = 0; i < selectedGO.transform.childCount; i++)
-                {
-                    for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
-                    {
-                        if (selectedGO.transform.GetChild(i).transform.GetChild(j).tag == "StampArea")
-                        {
-                            var child = selectedGO.transform.GetChild(i).transform.GetChild(j);
-
-                            Vector3[] v = new Vector3[4];
-                            child.GetComponent<RectTransform>().GetWorldCorners(v);
-
-                            if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
         }
 
         private bool PaperCanBeReturned(Vector3 pos)
