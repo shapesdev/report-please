@@ -44,7 +44,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public void TurnOnInspectorMode()
     {
-        foreach(var view in gamegeneralViews)
+        foreach (var view in gamegeneralViews)
         {
             view.TurnOnInspectorMode();
         }
@@ -52,7 +52,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public void TurnOffInspectorMode()
     {
-        foreach(var view in gamegeneralViews)
+        foreach (var view in gamegeneralViews)
         {
             view.TurnOffInspectorMode();
         }
@@ -60,18 +60,18 @@ public class GameView : MonoBehaviour, IGameView
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             var eventArgs = new SpaceBarPressedEventArgs();
             OnSpaceBarPressed(this, eventArgs);
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             var eventArgs = new MousePressedEventArgs();
             OnMousePressed(this, eventArgs);
         }
-        else if(Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
             var eventArgs = new MouseReleasedEventArgs();
             OnMouseReleased(this, eventArgs);
@@ -80,7 +80,7 @@ public class GameView : MonoBehaviour, IGameView
 
     private void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             var eventArgs = new MouseHoldEventArgs();
             OnMouseHold(this, eventArgs);
@@ -89,7 +89,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)
     {
-        if(selectedGO != null)
+        if (selectedGO != null)
         {
             if (offsetSet == false)
             {
@@ -120,162 +120,4 @@ public class GameView : MonoBehaviour, IGameView
             OnDragRight(this, eventArgs);
         }
     }
-
-    /*    public void ManagerUpdate()
-        {
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                var eventArgs = new SpaceBarPressedEventArgs();
-                OnSpaceBarPressed(this, eventArgs);
-
-                if (inspectorMode == false)
-                {
-                    foreach (var card in cards)
-                    {
-                        card.TurnOffInspectorMode();
-
-                        stampPanel.GetComponent<Image>().raycastTarget = true;
-                        returnArea.gameObject.GetComponent<Image>().raycastTarget = true;
-
-                        foreach (Transform child in stampPanel.transform)
-                        {
-                            child.GetComponent<Image>().raycastTarget = true;
-                            child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = true;
-                        }
-                    }
-                    lineDrawer.ClearLine(true);
-                }
-                else if (inspectorMode == true)
-                {
-                    foreach (var card in cards)
-                    {
-                        card.TurnOnInspectorMode();
-
-                        stampPanel.GetComponent<Image>().raycastTarget = false;
-                        returnArea.gameObject.GetComponent<Image>().raycastTarget = false;
-
-                        foreach (Transform child in stampPanel.transform)
-                        {
-                            child.GetComponent<Image>().raycastTarget = false;
-                            child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = false;
-                        }
-                    }
-                }
-            }
-
-            if (inspectorMode == false)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    pointerEvent = new PointerEventData(eventSystem);
-                    pointerEvent.position = Input.mousePosition;
-
-                    List<RaycastResult> results = new List<RaycastResult>();
-
-                    graphicRaycaster.Raycast(pointerEvent, results);
-
-                    if (results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
-                    {
-                        BringGraphicToFront(results[0].gameObject);
-                    }
-                }
-                else if (Input.GetMouseButtonUp(0))
-                {
-                    selected = false;
-                    offsetSet = false;
-                    Cursor.lockState = CursorLockMode.None;
-
-                    if (selectedGO != null)
-                    {
-                        if (PaperCanBeReturned(selectedGO.transform.position))
-                        {
-                            selectedGO.gameObject.SetActive(false);
-                        }
-                    }
-
-                    if (selectableGO[0].activeInHierarchy == false && selectableGO[1].activeInHierarchy == false)
-                    {
-                        var eventArgs = new PapersReturnedEventArgs();
-                        OnPapersReturned(this, eventArgs);
-                    }
-                }
-            }
-            else if (inspectorMode == true)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    pointerEvent = new PointerEventData(eventSystem);
-                    pointerEvent.position = Input.mousePosition;
-
-                    List<RaycastResult> results = new List<RaycastResult>();
-
-                    graphicRaycaster.Raycast(pointerEvent, results);
-
-                    if (results.Count > 0)
-                    {
-                        Debug.Log(results[0].gameObject);
-                        lineDrawer.SelectField(results[0].gameObject);
-                    }
-                }
-            }
-        }
-
-        private bool PaperCanBeReturned(Vector3 pos)
-        {
-            if (selectedGO != null)
-            {
-                for (int i = 0; i < selectedGO.transform.childCount; i++)
-                {
-                    for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
-                    {
-                        if (selectedGO.transform.GetChild(i).transform.GetChild(j).name == "Stamp" || canBeReturned)
-                        {
-                            Vector3[] v = new Vector3[4];
-                            returnArea.GetWorldCorners(v);
-
-                            if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        public void ActivateStampPanel()
-        {
-            // ADD ANIMATION FOR THE STAMP PANEL
-            foreach (Transform child in stampPanel.transform)
-            {
-                if (child.gameObject.activeInHierarchy)
-                {
-                    child.gameObject.SetActive(false);
-                }
-                else
-                {
-                    child.gameObject.SetActive(true);
-                }
-            }
-        }
-
-        public void Reset()
-        {
-            StartCoroutine(ResetEnumerator());
-        }
-
-        IEnumerator ResetEnumerator()
-        {
-            yield return new WaitForSeconds(2f);
-
-            canBeReturned = false;
-
-            foreach (var go in selectableGO)
-            {
-                var stamp = go?.GetComponentInChildren<StampTest>(true);
-                Destroy(stamp?.gameObject);
-                go.SetActive(true);
-            }
-        }*/
 }
