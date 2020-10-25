@@ -7,29 +7,46 @@ public class GameController
     private readonly IGameModel model;
     private readonly IGameView view;
     private readonly IGameSelectionView selectionView;
+    private readonly IGameStampView stampView;
 
     private readonly LineManager lineManager;
 
     private DataChecker dataChecker;
 
-    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView)
+    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView)
     {
         this.model = model;
         this.view = view;
         this.selectionView = selectionView;
+        this.stampView = stampView;
 
-        view.Init(model.RuleBook, model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+        view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+
+        dataChecker = new DataChecker();
 
         view.OnMousePressed += View_OnMousePressed;
         view.OnMouseReleased += View_OnMouseReleased;
         view.OnMouseHold += View_OnMouseHold;
         view.OnDragRight += View_OnDragRight;
         view.OnOffsetSet += SelectionView_OnOffsetSet;
+        view.OnSpaceBarPressed += View_OnSpaceBarPressed;
         view.OnOffsetChanged += View_OnOffsetChanged;
+
         selectionView.OnGameObjectSelected += SelectionView_OnGameObjectSelected;
         selectionView.OnOffsetSet += SelectionView_OnOffsetSet;
 
-        //dataChecker = new DataChecker();
+        stampView.OnReturned += StampView_OnReturned;
+        stampView.OnStampPressed += StampView_OnStampPressed;
+    }
+
+    private void StampView_OnStampPressed(object sender, StampPressEventArgs e)
+    {
+        stampView.PlaceStamp(model.SelectedGameObject, e.sprite);
+    }
+
+    private void StampView_OnReturned(object sender, CanBeReturnedEventArgs e)
+    {
+        model.CanBeReturned = e.canBeReturned;
     }
 
     private void View_OnOffsetChanged(object sender, OffsetValueEventArgs e)
@@ -42,33 +59,49 @@ public class GameController
         model.CurrentCard = e.card;
         model.CurrentPanelWidth = e.panelWidth;
 
-        model.CurrentCard.Check(model.CurrentPanelWidth, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+        model.CurrentCard.Check(model.CurrentPanelWidth);
     }
 
     private void View_OnMouseHold(object sender, MouseHoldEventArgs e)
     {
-        view.UpdateGameObjectPosition(model.Offset, model.OffsetSet, model.SelectedGameObject);
-    }
-
-    private void SelectionView_OnOffsetSet(object sender, OffsetSetEventArgs e)
-    {
-        model.OffsetSet = e.offsetSet;
+        if(model.InspectorMode == false && model.Selected == true)
+        {
+            view.UpdateGameObjectPosition(model.Offset, model.OffsetSet, model.SelectedGameObject);
+        }
     }
 
     private void View_OnMouseReleased(object sender, MouseReleasedEventArgs e)
     {
         selectionView.UnSelectGameObject();
-        model.SelectedGameObject = null;
     }
 
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
         model.InspectorMode = !model.InspectorMode;
+
+        if(model.InspectorMode == true)
+        {
+            view.TurnOnInspectorMode();
+        }
+        else if(model.InspectorMode == false)
+        {
+            view.TurnOffInspectorMode();
+        }
     }
 
     private void View_OnMousePressed(object sender, MousePressedEventArgs e)
     {
-        model.SelectedGameObject = selectionView.SelectGameObject(model.InspectorMode);
+        var go = selectionView.SelectGameObject(model.InspectorMode);
+
+        if(go != null)
+        {
+            model.SelectedGameObject = go;
+        }
+    }
+
+    private void SelectionView_OnOffsetSet(object sender, OffsetSetEventArgs e)
+    {
+        model.OffsetSet = e.offsetSet;
     }
 
     private void SelectionView_OnGameObjectSelected(object sender, GameObjectSelectedEventArgs e)

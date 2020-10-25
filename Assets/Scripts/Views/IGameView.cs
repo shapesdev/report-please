@@ -5,8 +5,10 @@ using UnityEngine;
 
 public interface IGameView : IOffsetView
 {
-    void Init(RuleBookSO ruleBook, DateTime date, IScenario scenario);
+    void Init(DateTime date, IScenario scenario);
     void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject go);
+    void TurnOnInspectorMode();
+    void TurnOffInspectorMode();
 
     event EventHandler<DragRightEventArgs> OnDragRight;
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;

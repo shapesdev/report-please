@@ -9,15 +9,16 @@ public class GameFactory
 
     private GameObject instance;
 
-    public void Load(GameObject gamePrefab, RuleBookSO ruleBook)
+    public void Load(GameObject gamePrefab)
     {
         instance = GameObject.Instantiate(gamePrefab);
 
         view = instance.GetComponent<GameView>();
         var selectionView = instance.GetComponentInChildren<GameSelectionView>();
+        var stampView = instance.GetComponentInChildren<GameStampView>();
 
-        model = new GameModel(ruleBook);
-        controller = new GameController(model, view, selectionView);
+        model = new GameModel();
+        controller = new GameController(model, view, selectionView, stampView);
     }
 
     public void Unload()

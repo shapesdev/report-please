@@ -54,9 +54,6 @@ public class DataChecker
         {
             if((tags.first == field1.tag && tags.second == field2.tag) || (tags.first == field2.tag && tags.second == field1.tag))
             {
-                var fieldText1 = field1?.GetComponent<TMP_Text>();
-                var fieldText2 = field2?.GetComponent<TMP_Text>();
-
                 return true;
             }
         }

@@ -4,29 +4,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class EmployeeIdCard : Card
+public class EmployeeView : GameGeneralView, IGameScenarioView
 {
     public TMP_Text fullName;
     public TMP_Text email;
     public TMP_Text dateStarted;
     public TMP_Text dateOfExpiry;
-    //public Image picture;
+    public Image picture;
 
-    public override void ChangeSizeToLeft(IScenario scenario)
-    {
-        gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
-
-        DisplayEmployeeLeft();
-    }
-
-    public override void ChangeSizeToRight(IScenario scenario)
-    {
-        gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
-
-        DisplayEmployeeRight(scenario);
-    }
-
-    private void DisplayEmployeeRight(IScenario scenario)
+    public void Init(IScenario scenario)
     {
         var tester = scenario.GetTester();
 
@@ -34,18 +20,25 @@ public class EmployeeIdCard : Card
         email.text = tester.GetEmail();
         dateStarted.text = tester.GetStartedDate().ToString("MM/dd/yyyy");
         dateOfExpiry.text = tester.GetExpiryDate().ToString("MM/dd/yyyy");
+    }
+
+    public override void ChangeSizeToLeft()
+    {
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
+
+        if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    public override void ChangeSizeToRight()
+    {
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
 
         if (transform.GetChild(0).gameObject.activeInHierarchy == false)
         {
             transform.GetChild(0).gameObject.SetActive(true);
-        }
-    }
-
-    private void DisplayEmployeeLeft()
-    {
-        if (transform.GetChild(0).gameObject.activeInHierarchy == true)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
