@@ -121,4 +121,16 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             go.SetActive(true);
         }
     }
+
+    public void ChangeMode(bool value)
+    {
+        if(value == false)
+        {
+            returnArea.gameObject.GetComponent<Image>().raycastTarget = true;
+        }
+        else
+        {
+            returnArea.gameObject.GetComponent<Image>().raycastTarget = false;
+        }
+    }
 }

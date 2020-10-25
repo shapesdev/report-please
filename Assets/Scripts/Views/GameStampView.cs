@@ -111,4 +111,28 @@ public class GameStampView : MonoBehaviour, IGameStampView
         var stamp = GetComponentInChildren<StampTest>(true);
         Destroy(stamp?.gameObject);
     }
+
+    public void ChangeMode(bool value)
+    {
+        if (value == true)
+        {
+            stampPanel.GetComponent<Image>().raycastTarget = false;
+
+            foreach (Transform child in stampPanel.transform)
+            {
+                child.GetComponent<Image>().raycastTarget = false;
+                child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = false;
+            }
+        }
+        else
+        {
+            stampPanel.GetComponent<Image>().raycastTarget = true;
+
+            foreach (Transform child in stampPanel.transform)
+            {
+                child.GetComponent<Image>().raycastTarget = true;
+                child.GetChild(0).gameObject.GetComponent<Text>().raycastTarget = true;
+            }
+        }
+    }
 }
