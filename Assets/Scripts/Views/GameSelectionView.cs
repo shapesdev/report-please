@@ -11,8 +11,14 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
     private PointerEventData pointerEvent;
     private EventSystem eventSystem;
 
+    [SerializeField]
+    private GameObject[] selectableGameObjects;
+    [SerializeField]
+    private RectTransform returnArea;
+
     public event EventHandler<GameObjectSelectedEventArgs> OnGameObjectSelected = (sender, e) => { };
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
+    public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
 
     private void Start()
     {
@@ -30,10 +36,17 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
         graphicRaycaster.Raycast(pointerEvent, results);
 
-        if (results.Count > 0 && (results[0].gameObject.tag == "Selectable"))
+        if (results.Count > 0)
         {
-            if(inspectorMode == false) { BringGameObjectToFront(results[0].gameObject); }
-            return results[0].gameObject;
+            if(results[0].gameObject.tag == "Selectable")
+            {
+                BringGameObjectToFront(results[0].gameObject);
+                return results[0].gameObject;
+            }
+            else if(inspectorMode == true)
+            {
+                return results[0].gameObject;
+            }
         }
         return null;
     }
@@ -46,7 +59,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         OnGameObjectSelected(this, eventArgs);
     }
 
-    public void UnSelectGameObject()
+    public void UnSelectGameObject(GameObject go, bool canBeReturned)
     {
         var eventArgs = new GameObjectSelectedEventArgs(false);
         OnGameObjectSelected(this, eventArgs);
@@ -56,19 +69,56 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
         Cursor.lockState = CursorLockMode.None;
 
-        //This needs another class for this behavior
-/*        if (selectedGO != null)
+        if (go != null)
         {
-            if (PaperCanBeReturned(selectedGO.transform.position))
+            if (PaperCanBeReturned(go.transform.position, go, canBeReturned))
             {
-                selectedGO.gameObject.SetActive(false);
+                go.gameObject.SetActive(false);
             }
         }
 
-        if (selectableGO[0].activeInHierarchy == false && selectableGO[1].activeInHierarchy == false)
+        if (selectableGameObjects[0].activeInHierarchy == false && selectableGameObjects[1].activeInHierarchy == false)
         {
-            var eventArgs = new PapersReturnedEventArgs();
-            OnPapersReturned(this, eventArgs);
-        }*/
+            var paperReturnedEventArgs = new PapersReturnedEventArgs();
+            OnPapersReturned(this, paperReturnedEventArgs);
+        }
+    }
+
+
+    private bool PaperCanBeReturned(Vector3 pos, GameObject selectedGO, bool canBeReturned)
+    {
+        if (selectedGO != null)
+        {
+            for (int i = 0; i < selectedGO.transform.childCount; i++)
+            {
+                for (int j = 0; j < selectedGO.transform.GetChild(i).transform.childCount; j++)
+                {
+                    if (GetComponentInChildren<StampTest>() != null || canBeReturned)
+                    {
+                        Vector3[] v = new Vector3[4];
+                        returnArea.GetWorldCorners(v);
+
+                        if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void ActivateSelectable()
+    {
+        Invoke("ActivateSelectableGameObjects", 1f);
+    }
+
+    private void ActivateSelectableGameObjects()
+    {
+        foreach (var go in selectableGameObjects)
+        {
+            go.SetActive(true);
+        }
     }
 }

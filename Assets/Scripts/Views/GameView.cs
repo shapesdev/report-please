@@ -14,9 +14,6 @@ public class GameView : MonoBehaviour, IGameView
     [SerializeField]
     private TMP_Text dateText;
 
-    [SerializeField]
-    private LineManager lineDrawer;
-
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
     public event EventHandler<MousePressedEventArgs> OnMousePressed = (sender, e) => { };

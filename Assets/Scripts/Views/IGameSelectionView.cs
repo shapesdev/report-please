@@ -6,7 +6,9 @@ using UnityEngine;
 public interface IGameSelectionView : IOffsetView
 {
     GameObject SelectGameObject(bool mode);
-    void UnSelectGameObject();
+    void UnSelectGameObject(GameObject go, bool returned);
+    void ActivateSelectable();
 
     event EventHandler<GameObjectSelectedEventArgs> OnGameObjectSelected;
+    event EventHandler<PapersReturnedEventArgs> OnPapersReturned;
 }

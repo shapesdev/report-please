@@ -8,10 +8,6 @@ public class GameStampView : MonoBehaviour, IGameStampView
 {
     [SerializeField]
     private GameObject stampPanel;
-    [SerializeField]
-    private RectTransform returnArea;
-    [SerializeField]
-    private GameObject[] selectableGameObjects;
 
     public event EventHandler<CanBeReturnedEventArgs> OnReturned = (sender, e) => { };
     public event EventHandler<StampPressEventArgs> OnStampPressed = (sender, e) => { };
@@ -80,6 +76,22 @@ public class GameStampView : MonoBehaviour, IGameStampView
 
                 var eventArgs = new CanBeReturnedEventArgs(true);
                 OnReturned(this, eventArgs);
+            }
+        }
+    }
+
+    public void ActivateStampPanel()
+    {
+        // ADD ANIMATION FOR THE STAMP PANEL
+        foreach (Transform child in stampPanel.transform)
+        {
+            if (child.gameObject.activeInHierarchy)
+            {
+                child.gameObject.SetActive(false);
+            }
+            else
+            {
+                child.gameObject.SetActive(true);
             }
         }
     }

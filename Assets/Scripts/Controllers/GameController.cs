@@ -8,17 +8,17 @@ public class GameController
     private readonly IGameView view;
     private readonly IGameSelectionView selectionView;
     private readonly IGameStampView stampView;
-
-    private readonly LineManager lineManager;
+    private readonly ILineView lineView;
 
     private DataChecker dataChecker;
 
-    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView)
+    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineView lineView)
     {
         this.model = model;
         this.view = view;
         this.selectionView = selectionView;
         this.stampView = stampView;
+        this.lineView = lineView;
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
 
@@ -34,9 +34,25 @@ public class GameController
 
         selectionView.OnGameObjectSelected += SelectionView_OnGameObjectSelected;
         selectionView.OnOffsetSet += SelectionView_OnOffsetSet;
+        selectionView.OnPapersReturned += SelectionView_OnPapersReturned;     
 
         stampView.OnReturned += StampView_OnReturned;
         stampView.OnStampPressed += StampView_OnStampPressed;
+    }
+
+    private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
+    {
+        if (model.CurrentScenario + 1 < model.DaysWithScenarios[model.CurrentDay].Count)
+        {
+/*            var citation = dataChecker.CheckForCitations();
+            Debug.Log(citation.Item2);*/
+
+            model.CurrentScenario += 1;
+            stampView.Reset();
+            view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+
+            selectionView.ActivateSelectable();
+        }
     }
 
     private void StampView_OnStampPressed(object sender, StampPressEventArgs e)
@@ -72,20 +88,22 @@ public class GameController
 
     private void View_OnMouseReleased(object sender, MouseReleasedEventArgs e)
     {
-        selectionView.UnSelectGameObject();
+        selectionView.UnSelectGameObject(model.SelectedGameObject, model.CanBeReturned);
     }
 
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
         model.InspectorMode = !model.InspectorMode;
+        Debug.Log("INSPECTOR MODE IS:" + model.InspectorMode);
 
-        if(model.InspectorMode == true)
+        if (model.InspectorMode == true)
         {
             view.TurnOnInspectorMode();
         }
         else if(model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
+            lineView.ClearLine(true);
         }
     }
 
@@ -96,6 +114,7 @@ public class GameController
         if(go != null)
         {
             model.SelectedGameObject = go;
+            if(model.InspectorMode == true) { lineView.SelectField(model.SelectedGameObject); }
         }
     }
 
@@ -112,18 +131,5 @@ public class GameController
     private void LineManager_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
     {
         dataChecker.DoFieldsHaveCorrelation(e.firstField, e.secondField);
-    }
-
-    private void GraphicManager_OnPapersReturned(object sender, PapersReturnedEventArgs e)
-    {
-/*        if (currentScenario + 1 < dayData[currentDay].Count)
-        {
-            var citation = dataChecker.CheckForCitations();
-            Debug.Log(citation.Item2);
-
-            currentScenario++;
-            graphicManager.Reset();
-            dataChecker.SetScenario(dayData[currentDay][currentScenario]);
-        }*/
     }
 }

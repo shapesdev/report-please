@@ -16,9 +16,10 @@ public class GameFactory
         view = instance.GetComponent<GameView>();
         var selectionView = instance.GetComponentInChildren<GameSelectionView>();
         var stampView = instance.GetComponentInChildren<GameStampView>();
+        var lineView = instance.GetComponentInChildren<LineView>();
 
         model = new GameModel();
-        controller = new GameController(model, view, selectionView, stampView);
+        controller = new GameController(model, view, selectionView, stampView, lineView);
     }
 
     public void Unload()

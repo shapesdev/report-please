@@ -4880,7 +4880,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5416,7 +5416,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -8510,7 +8510,6 @@ MonoBehaviour:
   leftPanel: {fileID: 6143270260962274050}
   topPanel: {fileID: 6143270260175135406}
   dateText: {fileID: 6143270258859515210}
-  lineDrawer: {fileID: 0}
 --- !u!1 &6143270259578444470
 GameObject:
   m_ObjectHideFlags: 0
@@ -11980,7 +11979,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -14944,8 +14943,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GraphicManager, Assembly-CSharp
+      - m_Target: {fileID: 1704557628}
+        m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
         m_MethodName: ActivateStampPanel
         m_Mode: 1
         m_Arguments:
@@ -15711,7 +15710,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16024,7 +16023,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16580,6 +16579,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922a47cf6f93e9146a92eb7c0feb0261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectableGameObjects:
+  - {fileID: 6143270259616916290}
+  - {fileID: 6143270260824010313}
+  returnArea: {fileID: 6143270260170111599}
 --- !u!114 &1704557628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16593,10 +16596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stampPanel: {fileID: 6143270260235888053}
-  returnArea: {fileID: 6143270260170111599}
-  selectableGameObjects:
-  - {fileID: 6143270259616916290}
-  - {fileID: 6143270260824010313}
 --- !u!1 &6143270260367442609
 GameObject:
   m_ObjectHideFlags: 0
@@ -20139,7 +20138,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 25
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -20337,7 +20336,7 @@ GameObject:
   - component: {fileID: 6143270260774046374}
   - component: {fileID: 6143270260774046375}
   m_Layer: 0
-  m_Name: LineManager
+  m_Name: LineView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

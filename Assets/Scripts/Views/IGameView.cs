@@ -6,6 +6,7 @@ using UnityEngine;
 public interface IGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
+    void ShowScenario(IScenario scenario);
     void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject go);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
