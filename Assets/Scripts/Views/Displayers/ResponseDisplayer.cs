@@ -26,8 +26,8 @@ public class ResponseDisplayer : GeneralDisplayer
 
             caseId.text = response.GetCaseID().ToString();
             reply.text = response.GetEmail();
-            dateSent.text = response.GetDateSent().ToString("dd/MM/yyyy");
-            lastReplyDate.text = response.GetLastReplyDate().ToString("dd/MM/yyyy");
+            dateSent.text = response.GetDateSent().ToString("yyyy/MM/dd");
+            lastReplyDate.text = response.GetLastReplyDate().ToString("yyyy/MM/dd");
             emailSentFrom.text = response.GetEmailSentFrom();
             if (response.GetCloseType() == CloseType.Empty)
             {
@@ -44,7 +44,19 @@ public class ResponseDisplayer : GeneralDisplayer
                     status.text = "Status: Closed (" + response.GetCloseType() + ")";
                 }
             }
+
+            ConnectDataToFields(response);
         }
+    }
+
+    private void ConnectDataToFields(Response bug)
+    {
+        caseId.gameObject.GetComponent<FieldData>().SetData(bug.GetCaseID().ToString());
+        reply.gameObject.GetComponent<FieldData>().SetData(bug.GetEmail());
+        dateSent.gameObject.GetComponent<FieldData>().SetData(bug.GetDateSent().ToString("yyyy/MM/dd"));
+        lastReplyDate.gameObject.GetComponent<FieldData>().SetData(bug.GetLastReplyDate().ToString("yyyy/MM/dd"));
+        emailSentFrom.gameObject.GetComponent<FieldData>().SetData(bug.GetEmailSentFrom());
+        status.gameObject.GetComponent<FieldData>().SetData(bug.GetCloseType().ToString());
     }
 
     public override void RightDisplay(ReportType type)

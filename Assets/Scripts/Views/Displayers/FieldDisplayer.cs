@@ -22,6 +22,7 @@ public class FieldDisplayer : MonoBehaviour
             for(int i = 0; i < options.Length; i++)
             {
                 options[i].text = info.info[i].level + " - " + info.info[i].name;
+                options[i].gameObject.GetComponent<FieldData>().SetData(info.info[i].name);
             }
         }
         gameObject.SetActive(true);

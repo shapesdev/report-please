@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class LineView : MonoBehaviour, ILineView
+public class LineController : MonoBehaviour, ILineController
 {
     [SerializeField]
     private LineRenderer lineRenderer;
@@ -26,7 +26,6 @@ public class LineView : MonoBehaviour, ILineView
         if(firstSelection == null)
         {
             firstSelection = selectedGameObject;
-            Debug.Log("I'm here");
         }
         else if(secondSelection == null)
         {
@@ -34,10 +33,9 @@ public class LineView : MonoBehaviour, ILineView
             AddGameObjectEdgesToList(firstSelection);
             AddGameObjectEdgesToList(secondSelection);
             DrawLine();
-            Debug.Log("now I'm here");
 
-            /*            var eventArgs = new TwoFieldsSelectedEventArgs(firstSelection, secondSelection);
-                        OnTwoFieldsSelected(this, eventArgs);*/
+            var eventArgs = new TwoFieldsSelectedEventArgs(firstSelection, secondSelection);
+            OnTwoFieldsSelected(this, eventArgs);
         }
         else
         {
@@ -142,15 +140,12 @@ public class LineView : MonoBehaviour, ILineView
 
         var midPoints = GetMidPoints(positions.Item1, positions.Item2, 10);
 
-        Debug.Log(positions.Item1);
-        Debug.Log(positions.Item2);
-
         allPositions.Add(positions.Item1);
 
         foreach (var mid in midPoints)
         {
             allPositions.Add(mid);
-            Debug.Log(mid);
+            //Debug.Log(mid);
         }
 
         allPositions.Add(positions.Item2);

@@ -5,66 +5,58 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class DataChecker
+public class DataCheckController
 {
-    private class Relationship
-    {
-        public string first;
-        public string second;
-
-        public Relationship(string first, string second)
-        {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
-    private IScenario curScenario;
     private Tuple<bool, string> isScenarioWithDiscrepancy;
     private bool issueFound = false;
 
-    private List<Relationship> relationships;
-
-    public DataChecker()
+    public void Reset()
     {
-        SetUpRelationships();
+        issueFound = false;
     }
 
-    private void SetUpRelationships()
+    public Tuple<bool, bool> CheckFields(GameObject field1, GameObject field2, IScenario curScenario)
     {
-        relationships = new List<Relationship>();
+        var value1 = field1.GetComponent<FieldData>();
+        var value2 = field2.GetComponent<FieldData>();
 
-        relationships.Add(new Relationship("Name", "Name"));
-        relationships.Add(new Relationship("Email", "Email"));
-        relationships.Add(new Relationship("ExpireDate", "ValidID"));
-        relationships.Add(new Relationship("Reply", "EmptyLine"));
-        relationships.Add(new Relationship("Reply", "DoubleSpaces"));
-        relationships.Add(new Relationship("DateSent", "NotQualified"));
-        relationships.Add(new Relationship("Reply", "CaseID"));
-    }
-
-    public void SetScenario(IScenario scenario)
-    {
-        curScenario = scenario;
-    }
-
-    public bool DoFieldsHaveCorrelation(GameObject field1, GameObject field2)
-    {
-        foreach(var tags in relationships)
+        bool correlation = false;
+        bool discrepancy = false;
+    
+        if(field1.tag == field2.tag)
         {
-            if((tags.first == field1.tag && tags.second == field2.tag) || (tags.first == field2.tag && tags.second == field1.tag))
+            correlation = true;
+
+            if(field1.tag == "Email")
             {
-                return true;
+                var response = (Response)curScenario;
+
+                
             }
+
+            if(value1.GetData() != value2.GetData())
+            {
+                discrepancy = true;
+            }
+        }
+
+        return Tuple.Create(correlation, discrepancy);
+    }
+
+    private bool CheckEmail(Response response)
+    {
+        if(response.GetEmail() == response.GetTester().GetEmail())
+        {
+            return true;
         }
         return false;
     }
 
-    public Tuple<bool, string> CheckForCitations()
+    public Tuple<bool, string> CheckForCitations(IScenario curScenario)
     {
         if(curScenario.GetReportType() == ReportType.Response)
         {
-            isScenarioWithDiscrepancy = ResponseChecker();
+            isScenarioWithDiscrepancy = ResponseChecker(curScenario);
         }
         else if(curScenario.GetReportType() == ReportType.EditorBug)
         {
@@ -79,7 +71,7 @@ public class DataChecker
         return isScenarioWithDiscrepancy;
     }
 
-    private Tuple<bool, string> ResponseChecker()
+    private Tuple<bool, string> ResponseChecker(IScenario curScenario)
     {
         var response = (Response)curScenario;
         var chars = response.GetEmail().ToCharArray();
@@ -116,7 +108,7 @@ public class DataChecker
                 return Tuple.Create(true, citation);
             }
 
-            if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
+            if (CheckEmail(response) == false)
             {
                 string citation = "Report: Wrong email address";
                 return Tuple.Create(true, citation);
@@ -151,6 +143,8 @@ public class DataChecker
         string noCitation = "No citation";
         return Tuple.Create(false, noCitation);
     }
+
+
 
 /*    private void BugChecker(int day)
     {

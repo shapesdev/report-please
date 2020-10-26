@@ -11,14 +11,13 @@ TagManager:
   - Stamp
   - StampArea
   - Email
-  - EmptyLine
-  - Name
-  - CaseID
   - ExpireDate
-  - Reply
   - NotQualified
-  - DateSent
-  - DoubleSpaces
+  - TitlePlatform
+  - ExpectedSeverity
+  - Public
+  - ReproStepsOrder
+  - Areas
   layers:
   - Default
   - TransparentFX

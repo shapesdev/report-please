@@ -47,6 +47,7 @@ public class GameView : MonoBehaviour, IGameView
         foreach (var view in gamegeneralViews)
         {
             view.TurnOnInspectorMode();
+            dateText.raycastTarget = true;
         }
     }
 
@@ -55,6 +56,7 @@ public class GameView : MonoBehaviour, IGameView
         foreach (var view in gamegeneralViews)
         {
             view.TurnOffInspectorMode();
+            dateText.raycastTarget = false;
         }
     }
 
