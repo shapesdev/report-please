@@ -9,9 +9,12 @@ public class DataInitialization
 
     private Dictionary<DateTime, List<IScenario>> daysWithScenarios;
 
+    private List<Discrepancy> allRelationships;
+
     public DataInitialization()
     {
         daysWithScenarios = new Dictionary<DateTime, List<IScenario>>();
+        allRelationships = new List<Discrepancy>();
 
         DateTime dayOne = new DateTime(2020, 11, 10);
         DateTime dayTwo = new DateTime(2020, 11, 11);
@@ -27,11 +30,38 @@ public class DataInitialization
         InitializeDayTwo(dayTwo);
         InitializeDayThree(dayThree);
         InitializeDayFour(dayFour);
+        InitializeRelationships();
     }
 
     public Dictionary<DateTime, List<IScenario>> GetDayData()
     {
         return daysWithScenarios;
+    }
+
+    public List<Discrepancy> GetAllRelationships()
+    {
+        return allRelationships;
+    }
+
+    public void InitializeRelationships()
+    {
+        var replyName = new Discrepancy("Reply", "Name");
+        var replyID = new Discrepancy("Reply", "CaseID");
+        var replyNotSupported = new Discrepancy("Reply", "NotSupportedRule");
+        var replyEmptyLine = new Discrepancy("Reply", "EmptyLineRule");
+        var replyDoubleSpaces = new Discrepancy("Reply", "DoubleSpacesRule");
+        var email = new Discrepancy("Email", "Email");
+        var expireDate = new Discrepancy("ExpireDate", "ExpireDate");
+        var statusNotQualified = new Discrepancy("Status", "NotQualifiedRule");
+
+        allRelationships.Add(replyName);
+        allRelationships.Add(replyID);
+        allRelationships.Add(replyNotSupported);
+        allRelationships.Add(replyEmptyLine);
+        allRelationships.Add(replyDoubleSpaces);
+        allRelationships.Add(email);
+        allRelationships.Add(expireDate);
+        allRelationships.Add(statusNotQualified);
     }
 
     #region Day data initialization
@@ -48,7 +78,7 @@ public class DataInitialization
         "Looking forward to your reply.\n\n" +
         "Thanks\n"
         + tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
         Response response2 = new Response(1122778, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for getting in touch!\n\n" +
@@ -57,7 +87,7 @@ public class DataInitialization
         "If your problem still exists after updating, please submit a new bug report and we'll investigate for you.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
         Response response3 = new Response(1122779, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for reporting the issue.\n\n" +
@@ -68,7 +98,7 @@ public class DataInitialization
         "4. Describe the expected and actual results\n\n" +
         "Thanks,\n" +
         "Petras\n" +
-        "Diversity QA Team\n", tester1.GetEmail(), tester1);
+        "Diversity QA Team\n", tester1.GetEmail(), tester1, new Discrepancy("Reply", "Name"));
 
         Response response4 = new Response(1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
@@ -76,14 +106,14 @@ public class DataInitialization
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n\n\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, new Discrepancy("Reply", "EmptyLineRule"));
 
         Response response5 = new Response(1122781, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
         Response response6 = new Response(1244581, new DateTime(2020, 11, 5), new DateTime(2020, 11, 10), "Hi ,  \n\n" +
         "Thank  you  for  contacting Diversity  about  your  issue.\n\n" +
@@ -91,14 +121,14 @@ public class DataInitialization
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "DoubleSpacesRule"));
 
         Response response7 = new Response(1244582, new DateTime(2020, 11, 6), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step - by - step directions ? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2);
+        "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2, new Discrepancy("Email", "Email"));
 
         Response response8 = new Response(1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity about your issue.\n\n" +
@@ -106,21 +136,21 @@ public class DataInitialization
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
 
         Response response9 = new Response(1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://tracker.diversity.com/1244583\n\n" +
+        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://tracker.diversity.com/1244555\n\n" +
         "We highly appreciate your contribution.If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "CaseID"));
 
         Response response10 = new Response(1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for reporting the issue.We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
         "If you are still able to reproduce this issue using the mentioned package version, please respond to this email and the case will be reopened for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
@@ -148,7 +178,7 @@ public class DataInitialization
         "Please reach out to me if I can answer any questions or be of further help.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, null);
 
         Response response2 = new Response(1212957, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
@@ -156,14 +186,14 @@ public class DataInitialization
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified, new Discrepancy("Status", "NotQualifiedRule"));
 
         Response response3 = new Response(1212958, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step by step directions? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.NotQualified);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.NotQualified, null);
 
         Response response4 = new Response(1212959, new DateTime(2020, 11, 10), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request.\n\n" +
@@ -173,14 +203,14 @@ public class DataInitialization
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.Responded);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.Responded, null);
 
         Response response5 = new Response(1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("ExpireDate", "ExpireDate"));
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);

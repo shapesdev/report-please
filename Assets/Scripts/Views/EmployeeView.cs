@@ -20,11 +20,6 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
         email.text = tester.GetEmail();
         dateStarted.text = tester.GetStartedDate().ToString("yyyy/MM/dd");
         dateOfExpiry.text = tester.GetExpiryDate().ToString("yyyy/MM/dd");
-
-        fullName.gameObject.GetComponent<FieldData>().SetData(scenario.GetTester().GetName());
-        email.gameObject.GetComponent<FieldData>().SetData(scenario.GetTester().GetEmail());
-        dateStarted.gameObject.GetComponent<FieldData>().SetData(scenario.GetTester().GetStartedDate().ToString("yyyy/MM/dd"));
-        dateOfExpiry.gameObject.GetComponent<FieldData>().SetData(scenario.GetTester().GetExpiryDate().ToString("yyyy/MM/dd"));
     }
 
     public override void ChangeSizeToLeft()

@@ -15,41 +15,32 @@ public class DataCheckController
         issueFound = false;
     }
 
-    public Tuple<bool, bool> CheckFields(GameObject field1, GameObject field2, IScenario curScenario)
+    public Tuple<bool, bool> CheckFields(GameObject field1, GameObject field2, List<Discrepancy> discrepancies, Discrepancy discrepancy)
     {
-        var value1 = field1.GetComponent<FieldData>();
-        var value2 = field2.GetComponent<FieldData>();
-
         bool correlation = false;
-        bool discrepancy = false;
-    
-        if(field1.tag == field2.tag)
+        bool discrepancyFound = false;
+
+        foreach(var disc in discrepancies)
         {
-            correlation = true;
-
-            if(field1.tag == "Email")
+            if((disc.firstTag == field1.tag && disc.secondTag == field2.tag) || (disc.firstTag == field2.tag && disc.secondTag == field1.tag))
             {
-                var response = (Response)curScenario;
+                correlation = true;
 
-                
-            }
-
-            if(value1.GetData() != value2.GetData())
-            {
-                discrepancy = true;
+                break;
             }
         }
 
-        return Tuple.Create(correlation, discrepancy);
-    }
-
-    private bool CheckEmail(Response response)
-    {
-        if(response.GetEmail() == response.GetTester().GetEmail())
+        if(correlation && discrepancy != null)
         {
-            return true;
+            if ((discrepancy.firstTag == field1.tag && discrepancy.secondTag == field2.tag) ||
+                (discrepancy.firstTag == field2.tag && discrepancy.secondTag == field1.tag))
+            {
+                discrepancyFound = true;
+                issueFound = true;
+            }
         }
-        return false;
+
+        return Tuple.Create(correlation, discrepancyFound);
     }
 
     public Tuple<bool, string> CheckForCitations(IScenario curScenario)
@@ -108,7 +99,7 @@ public class DataCheckController
                 return Tuple.Create(true, citation);
             }
 
-            if (CheckEmail(response) == false)
+            if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
             {
                 string citation = "Report: Wrong email address";
                 return Tuple.Create(true, citation);

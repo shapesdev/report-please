@@ -46,4 +46,9 @@ public class PackageBug : Bug
     {
         return packageVersion;
     }
+
+    public override Discrepancy GetDiscrepancy()
+    {
+        return null;
+    }
 }

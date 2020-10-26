@@ -39,7 +39,6 @@ public class AreasDisplayer : MonoBehaviour
         for (int i = 0; i < areasTextPage1.Length; i++)
         {
             areasTextPage1[i].text = areas[i].area + " - " + areas[i].grabbag;
-            areasTextPage1[i].gameObject.GetComponent<FieldData>().SetData(areas[i].area + " " + areas[i].grabbag);
         }
 
         firstPage.SetActive(true);
@@ -54,7 +53,6 @@ public class AreasDisplayer : MonoBehaviour
         for (int i = 0; i < areasTextPage2.Length; i++, currentArea++)
         {
             areasTextPage2[i].text = areas[currentArea].area + " - " + areas[currentArea].grabbag;
-            areasTextPage2[i].gameObject.GetComponent<FieldData>().SetData(areas[currentArea].area + " " + areas[currentArea].grabbag);
         }
 
         secondPage.SetActive(true);

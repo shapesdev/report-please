@@ -28,6 +28,8 @@ public abstract class Bug : IScenario
 
     public abstract ReportType GetReportType();
 
+    public abstract Discrepancy GetDiscrepancy();
+
     public string GetTitle()
     {
         return title;

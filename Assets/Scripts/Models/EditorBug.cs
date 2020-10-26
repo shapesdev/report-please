@@ -27,6 +27,11 @@ public class EditorBug : Bug
         this.tester = tester;
     }
 
+    public override Discrepancy GetDiscrepancy()
+    {
+        return null;
+    }
+
     public override ReportType GetReportType()
     {
         return ReportType.EditorBug;

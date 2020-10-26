@@ -52,27 +52,7 @@ public class EditorBugDisplayer : GeneralDisplayer
             area.text = bug.GetArea().area;
             caseId.text = bug.GetCaseID().ToString();
             FAV.text = bug.GetFirstAffected();
-
-            ConnectDataToFields(bug);
         }
-    }
-
-    private void ConnectDataToFields(EditorBug bug)
-    {
-        title.gameObject.GetComponent<FieldData>().SetData(bug.GetTitle());
-        testerName.gameObject.GetComponent<FieldData>().SetData(bug.GetTesterName());
-        reproSteps.gameObject.GetComponent<FieldData>().SetData(bug.GetReproSteps());
-        expectedActual.gameObject.GetComponent<FieldData>().SetData(bug.GetExpectedActualResults());
-        reproducible.gameObject.GetComponent<FieldData>().SetData(bug.GetReproNoReproWith());
-        regression.gameObject.GetComponent<FieldData>().SetData(bug.IsRegression().ToString());
-        publicField.gameObject.GetComponent<FieldData>().SetData(bug.isPublic().ToString());
-        severity.gameObject.GetComponent<FieldData>().SetData(bug.GetSeverity().ToString());
-        platform.gameObject.GetComponent<FieldData>().SetData(bug.GetPlatformImportance().ToString());
-        userPrev.gameObject.GetComponent<FieldData>().SetData(bug.GetUserPrevalence().ToString());
-        grabbag.gameObject.GetComponent<FieldData>().SetData(bug.GetArea().grabbag);
-        area.gameObject.GetComponent<FieldData>().SetData(bug.GetArea().area);
-        caseId.gameObject.GetComponent<FieldData>().SetData(bug.GetCaseID().ToString());
-        FAV.gameObject.GetComponent<FieldData>().SetData(bug.GetFirstAffected());
     }
 
     public override void LeftDisplay(ReportType type)

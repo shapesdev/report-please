@@ -17,7 +17,6 @@ public class BasicRuleDisplayer : MonoBehaviour
             for(int i = 0; i < rules.Length; i++)
             {
                 rules[i].text = rulesList[i];
-                rules[i].gameObject.GetComponent<FieldData>().SetData(rulesList[i]);
             }
         }
         gameObject.SetActive(true);

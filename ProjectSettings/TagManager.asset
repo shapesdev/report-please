@@ -12,12 +12,20 @@ TagManager:
   - StampArea
   - Email
   - ExpireDate
-  - NotQualified
-  - TitlePlatform
-  - ExpectedSeverity
   - Public
+  - CaseID
+  - Name
+  - Reply
+  - Status
+  - NotSupportedRule
+  - EmptyLineRule
+  - DoubleSpacesRule
+  - CurrentDay
+  - TitlePlatform
   - ReproStepsOrder
+  - ExpectedSeverity
   - Areas
+  - NotQualifiedRule
   layers:
   - Default
   - TransparentFX

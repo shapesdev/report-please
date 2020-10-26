@@ -6,6 +6,7 @@ using System;
 public class GameModel: IGameModel
 {
     public Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
+    public List<Discrepancy> Discrepancies { get; }
     public GameGeneralView CurrentCard { get; set; }
     public DateTime CurrentDay { get; set; }
     public float CurrentPanelWidth { get; set; }
@@ -21,6 +22,8 @@ public class GameModel: IGameModel
     {
         DataInitialization dataInitialization = new DataInitialization();
         DaysWithScenarios = dataInitialization.GetDayData();
-        CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+        Discrepancies = dataInitialization.GetAllRelationships();
+        //CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+        CurrentDay = new DateTime(2020, 11, 10);
     }
 }

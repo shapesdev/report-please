@@ -13,8 +13,9 @@ public class Response : IScenario
     private Tester tester;
     private CloseType correctCloseType;
     private CloseType testerClosedType;
+    private Discrepancy discrepancy;
 
-    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester)
+    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, Discrepancy discrepancy)
     {
         caseID = id;
         lastUserReply = userReply;
@@ -22,9 +23,10 @@ public class Response : IScenario
         emailSentFrom = emailFrom;
         this.email = email;
         this.tester = tester;
+        this.discrepancy = discrepancy;
     }
 
-    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, CloseType testerClose, CloseType correctCloseType)
+    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, CloseType testerClose, CloseType correctCloseType, Discrepancy discrepancy)
     {
         caseID = id;
         lastUserReply = userReply;
@@ -34,6 +36,12 @@ public class Response : IScenario
         this.tester = tester;
         this.correctCloseType = correctCloseType;
         testerClosedType = testerClose;
+        this.discrepancy = discrepancy;
+    }
+
+    public Discrepancy GetDiscrepancy()
+    {
+        return discrepancy;
     }
 
     public ReportType GetReportType()

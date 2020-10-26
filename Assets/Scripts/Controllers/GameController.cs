@@ -44,11 +44,12 @@ public class GameController
 
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
+        var citation = dataCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+        Debug.Log(citation.Item2);
+        dataCheckController.Reset();
+
         if (model.CurrentScenario + 1 < model.DaysWithScenarios[model.CurrentDay].Count)
         {
-            var citation = dataCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
-            Debug.Log(citation.Item2);
-
             model.CurrentScenario += 1;
             stampView.Reset();
             view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
@@ -135,17 +136,18 @@ public class GameController
 
     private void LineView_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
     {
-        var values = dataCheckController.CheckFields(e.firstField, e.secondField, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+        var values = dataCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
+            [model.CurrentScenario].GetDiscrepancy());
 
         if(values.Item1 == true && values.Item2 == true)
         {
-            Debug.Log("There is a discrepancy");
+            Debug.Log("Discrepancy is found");
         }
         else if(values.Item1 == true)
         {
-            Debug.Log("Matching data");
+            Debug.Log("Matching Data");
         }
-        else if(values.Item1 == false)
+        else
         {
             Debug.Log("No Correlation");
         }
