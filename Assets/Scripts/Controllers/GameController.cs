@@ -10,7 +10,8 @@ public class GameController
     private readonly IGameStampView stampView;
     private readonly ILineController lineView;
 
-    private DataCheckController dataCheckController;
+    private FieldCheckController fieldCheckController;
+    private CitationCheckController citationCheckController;
 
     public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineView)
     {
@@ -22,7 +23,10 @@ public class GameController
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
 
-        dataCheckController = new DataCheckController();
+        fieldCheckController = new FieldCheckController();
+        citationCheckController = new CitationCheckController();
+
+        model.DiscrepancyFound = false;
 
         view.OnMousePressed += View_OnMousePressed;
         view.OnMouseReleased += View_OnMouseReleased;
@@ -44,9 +48,9 @@ public class GameController
 
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
-        var citation = dataCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
+        var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook, model.DiscrepancyFound);
         Debug.Log(citation.Item2);
-        dataCheckController.Reset();
+        model.DiscrepancyFound = false;
 
         if (model.CurrentScenario + 1 < model.DaysWithScenarios[model.CurrentDay].Count)
         {
@@ -136,10 +140,12 @@ public class GameController
 
     private void LineView_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
     {
-        var values = dataCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
-            [model.CurrentScenario].GetDiscrepancy());
+        var values = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
+            [model.CurrentScenario].GetDiscrepancy(), model.RuleBook);
 
-        if(values.Item1 == true && values.Item2 == true)
+        model.DiscrepancyFound = values.Item2;
+
+        if (values.Item1 == true && values.Item2 == true)
         {
             Debug.Log("Discrepancy is found");
         }

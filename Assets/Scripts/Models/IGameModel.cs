@@ -17,4 +17,6 @@ public interface IGameModel
     bool InspectorMode { get; set; }
     Vector3 Offset { get; set; }
     GameObject SelectedGameObject { get; set; }
+    RuleBookSO RuleBook { get; }
+    bool DiscrepancyFound { get; set; }
 }

@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 6143270258890145275}
   m_Layer: 5
   m_Name: PlatformImportance
-  m_TagString: TitlePlatform
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2738,7 +2738,7 @@ GameObject:
   - component: {fileID: 6143270259084399121}
   m_Layer: 5
   m_Name: Severity
-  m_TagString: ExpectedSeverity
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3857,7 +3857,7 @@ GameObject:
   - component: {fileID: 6143270259145341122}
   m_Layer: 5
   m_Name: Severity2
-  m_TagString: Untagged
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4178,7 +4178,7 @@ GameObject:
   - component: {fileID: 6143270259188643826}
   m_Layer: 5
   m_Name: Severity
-  m_TagString: ExpectedSeverity
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4661,7 +4661,7 @@ GameObject:
   - component: {fileID: 6143270259234111341}
   m_Layer: 5
   m_Name: Grabbag
-  m_TagString: Areas
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5465,7 +5465,7 @@ GameObject:
   - component: {fileID: 6143270259271178789}
   m_Layer: 5
   m_Name: Area
-  m_TagString: Areas
+  m_TagString: Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5599,7 +5599,7 @@ GameObject:
   - component: {fileID: 6143270259297980486}
   m_Layer: 5
   m_Name: Severity1
-  m_TagString: Untagged
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6001,7 +6001,7 @@ GameObject:
   - component: {fileID: 6143270259359446656}
   m_Layer: 5
   m_Name: Grabbag
-  m_TagString: Areas
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6269,7 +6269,7 @@ GameObject:
   - component: {fileID: 6143270259368984578}
   m_Layer: 5
   m_Name: Order
-  m_TagString: ReproStepsOrder
+  m_TagString: OrderRule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6403,7 +6403,7 @@ GameObject:
   - component: {fileID: 6143270259375681155}
   m_Layer: 5
   m_Name: ReproSteps
-  m_TagString: ReproStepsOrder
+  m_TagString: ReproSteps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6943,7 +6943,7 @@ GameObject:
   - component: {fileID: 6143270259386305238}
   m_Layer: 5
   m_Name: Public
-  m_TagString: Public
+  m_TagString: PublicRule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7290,7 +7290,7 @@ GameObject:
   - component: {fileID: 6143270259429211169}
   m_Layer: 5
   m_Name: Title
-  m_TagString: TitlePlatform
+  m_TagString: Title
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8094,7 +8094,7 @@ GameObject:
   - component: {fileID: 6143270259527246987}
   m_Layer: 5
   m_Name: Severity4
-  m_TagString: Untagged
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8707,7 +8707,7 @@ GameObject:
   - component: {fileID: 6143270259589041680}
   m_Layer: 5
   m_Name: FAV
-  m_TagString: Untagged
+  m_TagString: FAV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9906,7 +9906,7 @@ GameObject:
   - component: {fileID: 6143270259698721674}
   m_Layer: 5
   m_Name: Reproducible
-  m_TagString: Untagged
+  m_TagString: ReproWith
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11213,7 +11213,7 @@ GameObject:
   - component: {fileID: 6143270259850796692}
   m_Layer: 5
   m_Name: Regression
-  m_TagString: Untagged
+  m_TagString: Regression
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11481,7 +11481,7 @@ GameObject:
   - component: {fileID: 6143270259885494445}
   m_Layer: 5
   m_Name: Title
-  m_TagString: TitlePlatform
+  m_TagString: Title
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11616,7 +11616,7 @@ GameObject:
   - component: {fileID: 6143270259897579505}
   m_Layer: 5
   m_Name: ExpectedActual
-  m_TagString: ExpectedSeverity
+  m_TagString: Expected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11755,7 +11755,7 @@ GameObject:
   - component: {fileID: 6143270259921604783}
   m_Layer: 5
   m_Name: Reproducible
-  m_TagString: Untagged
+  m_TagString: ReproWith
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12661,7 +12661,7 @@ GameObject:
   - component: {fileID: 6143270260077211473}
   m_Layer: 5
   m_Name: Area1 (5)
-  m_TagString: Untagged
+  m_TagString: Areas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12929,7 +12929,7 @@ GameObject:
   - component: {fileID: 6143270260111653393}
   m_Layer: 5
   m_Name: Regression
-  m_TagString: Untagged
+  m_TagString: Regression
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13333,7 +13333,7 @@ GameObject:
   - component: {fileID: 6143270260128970516}
   m_Layer: 5
   m_Name: ReproSteps
-  m_TagString: ReproStepsOrder
+  m_TagString: ReproSteps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13482,7 +13482,7 @@ GameObject:
   - component: {fileID: 6143270260130039190}
   m_Layer: 5
   m_Name: Area
-  m_TagString: Areas
+  m_TagString: Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13503,8 +13503,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 226.29, y: 202}
-  m_SizeDelta: {x: 120, y: 47.220215}
+  m_AnchoredPosition: {x: 226.3, y: 199.76}
+  m_SizeDelta: {x: 122.51947, y: 51.69922}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6143270260130039189
 CanvasRenderer:
@@ -15491,7 +15491,7 @@ GameObject:
   - component: {fileID: 6143270260288081517}
   m_Layer: 5
   m_Name: FAV
-  m_TagString: Untagged
+  m_TagString: FAV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17206,7 +17206,7 @@ GameObject:
   - component: {fileID: 6143270260442587339}
   m_Layer: 5
   m_Name: Severity3
-  m_TagString: Untagged
+  m_TagString: Severity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18054,7 +18054,7 @@ GameObject:
   - component: {fileID: 6143270260510956342}
   m_Layer: 5
   m_Name: ExpectedActual
-  m_TagString: ExpectedSeverity
+  m_TagString: Expected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18466,7 +18466,7 @@ GameObject:
   - component: {fileID: 6143270260556735219}
   m_Layer: 5
   m_Name: PlatformImportance
-  m_TagString: TitlePlatform
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

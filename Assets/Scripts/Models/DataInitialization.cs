@@ -9,12 +9,12 @@ public class DataInitialization
 
     private Dictionary<DateTime, List<IScenario>> daysWithScenarios;
 
-    private List<Discrepancy> allRelationships;
+    private List<Discrepancy> allDiscrepancies;
 
     public DataInitialization()
     {
         daysWithScenarios = new Dictionary<DateTime, List<IScenario>>();
-        allRelationships = new List<Discrepancy>();
+        allDiscrepancies = new List<Discrepancy>();
 
         DateTime dayOne = new DateTime(2020, 11, 10);
         DateTime dayTwo = new DateTime(2020, 11, 11);
@@ -29,8 +29,8 @@ public class DataInitialization
         InitializeDayOne(dayOne);
         InitializeDayTwo(dayTwo);
         InitializeDayThree(dayThree);
-        InitializeDayFour(dayFour);
-        InitializeRelationships();
+        //InitializeDayFour(dayFour);
+        InitializeDiscrepancies();
     }
 
     public Dictionary<DateTime, List<IScenario>> GetDayData()
@@ -38,12 +38,12 @@ public class DataInitialization
         return daysWithScenarios;
     }
 
-    public List<Discrepancy> GetAllRelationships()
+    public List<Discrepancy> GetAllDiscrepancies()
     {
-        return allRelationships;
+        return allDiscrepancies;
     }
 
-    public void InitializeRelationships()
+    public void InitializeDiscrepancies()
     {
         var replyName = new Discrepancy("Reply", "Name");
         var replyID = new Discrepancy("Reply", "CaseID");
@@ -53,15 +53,31 @@ public class DataInitialization
         var email = new Discrepancy("Email", "Email");
         var expireDate = new Discrepancy("ExpireDate", "ExpireDate");
         var statusNotQualified = new Discrepancy("Status", "NotQualifiedRule");
+        var replyStatus = new Discrepancy("Reply", "Status");
+        var regressionFAV = new Discrepancy("FAV", "Regression");
+        var reproStepsOrder = new Discrepancy("ReproSteps", "OrderRule");
+        var publics = new Discrepancy("Public", "PublicRule");
+        var titlePlatform = new Discrepancy("Title", "Platform");
+        var areas = new Discrepancy("Area", "Areas");
+        var expectedSeverity = new Discrepancy("Expected", "Severity");
+        var favRepro = new Discrepancy("FAV", "ReproWith");
 
-        allRelationships.Add(replyName);
-        allRelationships.Add(replyID);
-        allRelationships.Add(replyNotSupported);
-        allRelationships.Add(replyEmptyLine);
-        allRelationships.Add(replyDoubleSpaces);
-        allRelationships.Add(email);
-        allRelationships.Add(expireDate);
-        allRelationships.Add(statusNotQualified);
+        allDiscrepancies.Add(replyName);
+        allDiscrepancies.Add(replyID);
+        allDiscrepancies.Add(replyNotSupported);
+        allDiscrepancies.Add(replyEmptyLine);
+        allDiscrepancies.Add(replyDoubleSpaces);
+        allDiscrepancies.Add(email);
+        allDiscrepancies.Add(expireDate);
+        allDiscrepancies.Add(statusNotQualified);
+        allDiscrepancies.Add(replyStatus);
+        allDiscrepancies.Add(regressionFAV);
+        allDiscrepancies.Add(reproStepsOrder);
+        allDiscrepancies.Add(publics);
+        allDiscrepancies.Add(titlePlatform);
+        allDiscrepancies.Add(areas);
+        allDiscrepancies.Add(expectedSeverity);
+        allDiscrepancies.Add(favRepro);
     }
 
     #region Day data initialization
@@ -140,17 +156,17 @@ public class DataInitialization
 
         Response response9 = new Response(1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://tracker.diversity.com/1244555\n\n" +
-        "We highly appreciate your contribution.If you have further questions, feel free to contact us.\n\n" +
+        "We highly appreciate your contribution. If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "CaseID"));
 
         Response response10 = new Response(1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "Thanks for reporting the issue.We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
+        "Thanks for reporting the issue. We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
         "If you are still able to reproduce this issue using the mentioned package version, please respond to this email and the case will be reopened for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded, null);
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
@@ -180,7 +196,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, null);
 
-        Response response2 = new Response(1212957, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response2 = new Response(1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
@@ -193,24 +209,24 @@ public class DataInitialization
         "Could you please attach a small project with step by step directions? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.NotQualified, null);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Empty, CloseType.Empty, null);
 
         Response response4 = new Response(1212959, new DateTime(2020, 11, 10), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request.\n\n" +
         "We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
-        "Unfortunately, feature requests are no longer being handled via bug reports.Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/.\n" +
+        "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/.\n" +
         "The forums are a great place for discussion, ideation, and inspiration between community members and Diversity team members.\n\n" +
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Responded, CloseType.Responded, null);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded, new Discrepancy("Reply", "Status"));
 
         Response response5 = new Response(1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("ExpireDate", "ExpireDate"));
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded, new Discrepancy("ExpireDate", "ExpireDate"));
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
@@ -237,7 +253,7 @@ public class DataInitialization
         "Actual result: Particles are not visible in the browser\n",
         "Reproducible with: 2019.4.0a7, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Not reproducible with: 2018.4.27f1, 2019.4.0a6", true, "FAV:\n2019.4.0a7, 2020.1, 2020.2",
-        true, 2, 1, 2, tester1);
+        true, 2, 1, 2, tester1, null, 2, 1);
 
         EditorBug editor2 = new EditorBug("Terrain's 'Pixel Error' value has no effect when Camera's Z position is set to 0",
         1540012, tester1.GetName(), new AreasNGrabbags { area = "Terrain", grabbag = "Terrain Grabbag" },
@@ -249,7 +265,7 @@ public class DataInitialization
         "Expected result: Tris value is changing accordingly\n" +
         "Actual result: Tris value is not updated\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3", false, "FAV:\n2018.4, 2020.2",
-        true, 3, 3, 2, tester1);
+        true, 3, 3, 2, tester1, null, 3, 3);
 
         EditorBug editor3 = new EditorBug("Editor Window loses focus when Color Picker is closed with a keyboard",
         1531214, tester1.GetName(), new AreasNGrabbags { area = "Window Management", grabbag = "Desktop Grabbag" },
@@ -263,7 +279,7 @@ public class DataInitialization
         "Actual result: Focus is no longer on the Repro window\n",
         "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Could not test with: 2018.4.27f1 (UIElements are not supported)",
-        false, "FAV:\n2018.4.27f1, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester1);
+        false, "FAV:\n2018.4.27f1, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester1, new Discrepancy("FAV", "Regression"), 3, 3);
 
         EditorBug editor4 = new EditorBug("Selection pop-up windows are not focused when opened",
         1675467, tester1.GetName(), new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" },
@@ -274,7 +290,7 @@ public class DataInitialization
         "3. When dropdown is opened enter any text and click outside the window\n",
         "Expected result: The entered text is selected and the window is focused\n" +
         "Actual result: The entered text is not selected and the window is not focused",
-        false, "FAV:\n2018.4, 2020.2", true, 4, 3, 3, tester1);
+        false, "FAV:\n2018.4, 2020.2", true, 4, 3, 3, tester1, new Discrepancy("ReproSteps", "OrderRule"), 4, 3);
 
         PackageBug package1 = new PackageBug("Probuilder objects receive distorted lighting in the Windows/Mac Player when using Realtime GI",
         1575123, tester1.GetName(), new AreasNGrabbags { area = "Probuilder", grabbag = "Scene Tooling Grabbag" },
@@ -289,7 +305,7 @@ public class DataInitialization
         "Actual result: Objects are not illuminated the same as in the Editor, the lighting on the objects is distorted\n",
         "Reproducible with: 4.3.0-preview.6 (2019.4.11f1), 4.3.1 (2020.1.6f1), 4.4.0-preview.1 (2020.2.0b3)\n" +
         "Not reproducible with: 4.2.3(2018.4.27f1), 4.3.0 - preview.4(2019.4.11f1)",
-        true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.3.0-preview.6", tester1);
+        true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.3.0-preview.6", tester1, new Discrepancy("Public", "PublicRule"), 2, 2);
 
         EditorBug editor5 = new EditorBug("Keyboard input is not detected in the Input Field when built on WebGL",
         1467154, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
@@ -302,7 +318,7 @@ public class DataInitialization
         "Expected result: Text appears in the Input Field, keyboard input (eg. CTRL+V) is registered\n" +
         "Actual result: No text appears in the Input Field, keyboard input (eg.CTRL + V) is not registered\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-        false, "FAV:\n2018.4, 2020.2", true, 3, 4, 2, tester1);
+        false, "FAV:\n2018.4, 2020.2", true, 3, 4, 2, tester1, new Discrepancy("Title", "Platform"), 3, 1);
 
         EditorBug editor6 = new EditorBug("NullReferenceException error is thrown if a sample in package.json does not exist",
          1644567, tester2.GetName(), new AreasNGrabbags { area = "Packman", grabbag = "Packman Grabbag" },
@@ -316,7 +332,7 @@ public class DataInitialization
          "Actual result: 'NullReferenceException: Object reference not set to an instance of an object' error is thrown in the Console log\n",
          "Reproducible with: 2020.2.0a12, 2020.2.0b3\n" +
          "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0a11",
-         true, "FAV:\n2020.2.0a12", true, 3, 3, 2, tester2);
+         true, "FAV:\n2020.2.0a12", true, 3, 3, 2, tester2, null, 3, 3);
 
         EditorBug editor7 = new EditorBug("Textures become black when they are converted with Graphics.ConvertTexture",
          1754664, tester2.GetName(), new AreasNGrabbags { area = "Texture", grabbag = "Texture Grabbag" },
@@ -330,9 +346,9 @@ public class DataInitialization
          "Expected result: Converted textures have a colorful pattern as the original textures\n" +
          "Actual result: Converted textures become black\n",
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-         false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2);
+         false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2, null, 3, 3);
 
-        EditorBug editor8 = new EditorBug("Collision geometry is not applied correctly to a Tilemap when Composite Collider's 2D 'Geometry Type' is set to Polygon",
+        EditorBug editor8 = new EditorBug("Collision geometry is not applied correctly when Collider's 2D 'Geometry Type' is set to Polygon",
          1542164, tester2.GetName(), new AreasNGrabbags { area = "Physics2D", grabbag = "Desktop Grabbag" },
          "How to reproduce:\n" +
          "1. Open the user's attached 'TileCollisionBug.zip' project\n" +
@@ -340,10 +356,10 @@ public class DataInitialization
          "3. Make sure the Scene view is visible\n" +
          "4. Select the 'Tilemap' GameObject in the Hierarchy window\n" +
          "5. Observe the Scene view\n",
-         "Expected result: Correct collision geometry is applied to the Tilemap, no tiles are left without a collider and there are no holes in the collider\n" +
-         "Actual result: Two colliders appear on the Tilemap, as the Tilemap gets wider the collider gets more inconsistent\n",
+         "Expected result: Correct collision geometry is applied to the Tilemap\n" +
+         "Actual result: Two colliders appear on the Tilemap\n",
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-         false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2);
+         false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Area", "Areas"), 3, 3);
 
         EditorBug editor9 = new EditorBug("ScriptableObjects are shown as MonoBehaviours in the Inspector's Narrow Selection section",
          1670414, tester2.GetName(), new AreasNGrabbags { area = "Asset Import Pipeline", grabbag = "Asset Pipeline V2 Grabbag" },
@@ -354,7 +370,7 @@ public class DataInitialization
          "Expected result: '4 Scriptable Objects' are in the Narrow the Selection section\n" +
          "Actual result: '4 Mono Behaviours' are in the Narrow the Selection section\n",
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-         false, "FAV:\n2018.4, 2020.2", true, 1, 3, 2, tester2);
+         false, "FAV:\n2018.4, 2020.2", true, 1, 3, 2, tester2, new Discrepancy("Expected", "Severity"), 4, 3);
 
         tempScenarioList.Add(editor1);
         tempScenarioList.Add(editor2);
@@ -370,7 +386,7 @@ public class DataInitialization
         daysWithScenarios.Add(day, tempScenarioList);
     }
 
-    private void InitializeDayFour(DateTime day)
+/*    private void InitializeDayFour(DateTime day)
     {
         tempScenarioList = new List<IScenario>();
 
@@ -527,6 +543,6 @@ public class DataInitialization
         tempScenarioList.Add(editor7);
 
         daysWithScenarios.Add(day, tempScenarioList);
-    }
+    }*/
     #endregion
 }

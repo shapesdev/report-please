@@ -21,11 +21,22 @@ TagManager:
   - EmptyLineRule
   - DoubleSpacesRule
   - CurrentDay
-  - TitlePlatform
   - ReproStepsOrder
   - ExpectedSeverity
   - Areas
   - NotQualifiedRule
+  - Platform
+  - Title
+  - DateSent
+  - FAV
+  - Regression
+  - ReproSteps
+  - OrderRule
+  - PublicRule
+  - Area
+  - Severity
+  - Expected
+  - ReproWith
   layers:
   - Default
   - TransparentFX

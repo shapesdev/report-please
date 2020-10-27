@@ -18,12 +18,16 @@ public class GameModel: IGameModel
     public Vector3 Offset { get; set; }
     public GameObject SelectedGameObject { get; set; }
 
-    public GameModel()
+    public RuleBookSO RuleBook { get; }
+    public bool DiscrepancyFound { get; set; }
+
+    public GameModel(RuleBookSO ruleBook)
     {
+        RuleBook = ruleBook;
         DataInitialization dataInitialization = new DataInitialization();
         DaysWithScenarios = dataInitialization.GetDayData();
-        Discrepancies = dataInitialization.GetAllRelationships();
+        Discrepancies = dataInitialization.GetAllDiscrepancies();
         //CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
-        CurrentDay = new DateTime(2020, 11, 10);
+        CurrentDay = new DateTime(2020, 11, 12);
     }
 }

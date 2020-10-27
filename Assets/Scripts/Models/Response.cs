@@ -88,4 +88,9 @@ public class Response : IScenario
     {
         return testerClosedType;
     }
+
+    public string GetFirstAffected()
+    {
+        return string.Empty;
+    }
 }
