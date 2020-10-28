@@ -104,39 +104,29 @@ public class CitationCheckController
         if(isPackage) { bug = (PackageBug)curScenario; }
         else { bug = (EditorBug)curScenario; }
 
-        var chars = bug.GetReproSteps().ToCharArray();
-        int spacesCount = 0;
         bool correctRegression = false;
         bool wrongFav = false;
 
         if (issueFound == false)
         {
-            foreach (var ch in chars)
-            {
-                if (ch == ' ')
-                {
-                    spacesCount++;
-                }
-                else
-                {
-                    spacesCount = 0;
-                }
-
-                if (spacesCount >= 2)
-                {
-                    break;
-                }
-            }
-
-            if (spacesCount >= 2)
-            {
-                string citation = "Report: Double spaces between letters";
-                return Tuple.Create(true, citation);
-            }
-
             if (bug.isPublic() != true)
             {
                 string citation = "Report: Is marked as Private";
+                return Tuple.Create(true, citation);
+            }
+            if(bug.GetTesterName() != bug.GetTester().GetName())
+            {
+                string citation = "Report: Wrong Tester Name";
+                return Tuple.Create(true, citation);
+            }
+            if(bug.GetTesterName() == string.Empty)
+            {
+                string citation = "Report: Empty Tester Name";
+                return Tuple.Create(true, citation);
+            }
+            if(bug.GetReproSteps().Contains("\n\n\n") || bug.GetReproNoReproWith().Contains("\n\n\n") || bug.GetExpectedActualResults().Contains("\n\n\n"))
+            {
+                string citation = "Report: Empty line between paragraphs";
                 return Tuple.Create(true, citation);
             }
             for(int i = 0; i < ruleBook.areas.Count; i++)
@@ -185,8 +175,48 @@ public class CitationCheckController
             {
                 if(!correctRegression)
                 {
-                    string citation = "Report: Wrong Regression field";
-                    return Tuple.Create(true, citation);
+                    if(isPackage)
+                    {
+                        var strings = bug.GetReproNoReproWith().Split(new[] { "\n" }, StringSplitOptions.None);
+
+                        var bugas = (PackageBug)bug;
+                        bool correctPackageRegression = false;
+
+                        string regressionVersion = string.Empty;
+
+                        foreach(var package in ruleBook.packagesInfo)
+                        {
+                            if(correctPackageRegression == false)
+                            {
+                                for (int i = package.versions.Length - 1; i >= 0; i--)
+                                {
+                                    if (strings[0].Contains(package.versions[i]))
+                                    {
+                                        regressionVersion = package.versions[i];
+                                    }
+                                    else
+                                    {
+                                        if (regressionVersion == bugas.GetPackageVersion())
+                                        {
+                                            correctPackageRegression = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(!correctPackageRegression)
+                        {
+                            string citation = "Report: Wrong Package Found Version";
+                            return Tuple.Create(true, citation);
+                        }
+                    }
+                    else
+                    {
+                        string citation = "Report: Wrong Regression field";
+                        return Tuple.Create(true, citation);
+                    }
                 }
             }
             if(!bug.IsRegression())

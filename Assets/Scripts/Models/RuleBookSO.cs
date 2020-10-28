@@ -24,6 +24,7 @@ public class RuleBookSO : ScriptableObject
     public List<AreasNGrabbags> areas;
     public List<ReportFieldInfo> reportFields;
     public List<Versions> versionInfo;
+    public List<Packages> packagesInfo;
 }
 
 [System.Serializable]
@@ -40,3 +41,9 @@ public class Versions
     public string[] versions;
 }
 
+[System.Serializable]
+public class Packages
+{
+    public string packageName;
+    public string[] versions;
+}
