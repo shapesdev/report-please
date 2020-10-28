@@ -26,17 +26,15 @@ public class AreasDisplayer : MonoBehaviour
 
         this.areas = areas;
 
-        for (int i = 0; i < areasTextPage1.Length; i++)
-        {
-            areasTextPage1[i].text = areas[i].area + " - " + areas[i].grabbag;
-        }
-
-        firstPage.SetActive(true);
+        OpenPageOne();
     }
 
     public void OpenPageOne()
     {
-        secondPage.SetActive(false);
+        if(secondPage.activeInHierarchy)
+        {
+            secondPage.SetActive(false);
+        }
 
         for (int i = 0; i < areasTextPage1.Length; i++)
         {

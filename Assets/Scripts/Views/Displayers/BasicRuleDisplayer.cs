@@ -32,7 +32,7 @@ public class BasicRuleDisplayer : MonoBehaviour
     {
         foreach (var rule in rules)
         {
-            rule.raycastTarget = false;
+            rule.raycastTarget = true;
         }
     }
 

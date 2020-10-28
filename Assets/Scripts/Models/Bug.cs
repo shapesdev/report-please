@@ -22,11 +22,26 @@ public abstract class Bug : IScenario
     protected int platformImportance;
     [Range(0, 4)]
     protected int userPrevalence;
+    protected int correctSeverity;
+    protected int correctPlatform;
 
     protected AreasNGrabbags area;
     protected Tester tester;
+    protected Discrepancy discrepancy;
 
     public abstract ReportType GetReportType();
+
+    public abstract Discrepancy GetDiscrepancy();
+
+    public int GetCorrectSeverity()
+    {
+        return correctSeverity;
+    }
+
+    public int GetCorrectPlatform()
+    {
+        return correctPlatform;
+    }
 
     public string GetTitle()
     {

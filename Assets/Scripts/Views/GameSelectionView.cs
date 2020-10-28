@@ -111,7 +111,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
     public void ActivateSelectable()
     {
-        Invoke("ActivateSelectableGameObjects", 1f);
+        Invoke("ActivateSelectableGameObjects", 1.5f);
     }
 
     private void ActivateSelectableGameObjects()

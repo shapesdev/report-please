@@ -8,7 +8,8 @@ public class PackageBug : Bug
     private string packageVersion;
 
     public PackageBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps, string expectActual, string reproWith,
-    bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion, Tester tester)
+    bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion, Tester tester, Discrepancy discrepancy, int correctSeverity,
+    int correctPlatform)
     {
         this.title = title;
         this.caseID = caseID;
@@ -30,6 +31,9 @@ public class PackageBug : Bug
         this.package = package;
         this.packageVersion = packageVersion;
         this.tester = tester;
+        this.discrepancy = discrepancy;
+        this.correctSeverity = correctSeverity;
+        this.correctPlatform = correctPlatform;
     }
 
     public override ReportType GetReportType()
@@ -45,5 +49,10 @@ public class PackageBug : Bug
     public string GetPackageVersion()
     {
         return packageVersion;
+    }
+
+    public override Discrepancy GetDiscrepancy()
+    {
+        return discrepancy;
     }
 }

@@ -6,6 +6,7 @@ using System;
 public class GameModel: IGameModel
 {
     public Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
+    public List<Discrepancy> Discrepancies { get; }
     public GameGeneralView CurrentCard { get; set; }
     public DateTime CurrentDay { get; set; }
     public float CurrentPanelWidth { get; set; }
@@ -17,10 +18,16 @@ public class GameModel: IGameModel
     public Vector3 Offset { get; set; }
     public GameObject SelectedGameObject { get; set; }
 
-    public GameModel()
+    public RuleBookSO RuleBook { get; }
+    public bool DiscrepancyFound { get; set; }
+
+    public GameModel(RuleBookSO ruleBook)
     {
+        RuleBook = ruleBook;
         DataInitialization dataInitialization = new DataInitialization();
         DaysWithScenarios = dataInitialization.GetDayData();
-        CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+        Discrepancies = dataInitialization.GetAllDiscrepancies();
+        //CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+        CurrentDay = new DateTime(2020, 11, 13);
     }
 }

@@ -26,8 +26,8 @@ public class ResponseDisplayer : GeneralDisplayer
 
             caseId.text = response.GetCaseID().ToString();
             reply.text = response.GetEmail();
-            dateSent.text = response.GetDateSent().ToString("dd/MM/yyyy");
-            lastReplyDate.text = response.GetLastReplyDate().ToString("dd/MM/yyyy");
+            dateSent.text = response.GetDateSent().ToString("yyyy/MM/dd");
+            lastReplyDate.text = response.GetLastReplyDate().ToString("yyyy/MM/dd");
             emailSentFrom.text = response.GetEmailSentFrom();
             if (response.GetCloseType() == CloseType.Empty)
             {

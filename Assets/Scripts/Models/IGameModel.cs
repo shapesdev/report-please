@@ -6,6 +6,7 @@ using UnityEngine;
 public interface IGameModel
 {
     Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
+    List<Discrepancy> Discrepancies { get; }
     GameGeneralView CurrentCard { get; set; }
     DateTime CurrentDay { get; set; }
     float CurrentPanelWidth { get; set; }
@@ -16,4 +17,6 @@ public interface IGameModel
     bool InspectorMode { get; set; }
     Vector3 Offset { get; set; }
     GameObject SelectedGameObject { get; set; }
+    RuleBookSO RuleBook { get; }
+    bool DiscrepancyFound { get; set; }
 }
