@@ -1881,7 +1881,7 @@ GameObject:
   - component: {fileID: 6143270258983504601}
   m_Layer: 5
   m_Name: AllVersions
-  m_TagString: Untagged
+  m_TagString: NotAllVersionRule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5063,7 +5063,7 @@ GameObject:
   - component: {fileID: 6143270259253676646}
   m_Layer: 5
   m_Name: PackageFoundVersion
-  m_TagString: Untagged
+  m_TagString: PackageFound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6135,7 +6135,7 @@ GameObject:
   - component: {fileID: 6143270259360583920}
   m_Layer: 5
   m_Name: Tester
-  m_TagString: Untagged
+  m_TagString: Name
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17608,7 +17608,7 @@ GameObject:
   - component: {fileID: 6143270260479436139}
   m_Layer: 5
   m_Name: Tester
-  m_TagString: Untagged
+  m_TagString: Name
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20336,7 +20336,7 @@ GameObject:
   - component: {fileID: 6143270260774046374}
   - component: {fileID: 6143270260774046375}
   m_Layer: 0
-  m_Name: LineView
+  m_Name: LineController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20388,7 +20388,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: acd07d2418b2e4d4c85c055393664ac4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20414,13 +20414,13 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.03580065
-        value: 0.12884653
+        time: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -20462,7 +20462,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1

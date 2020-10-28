@@ -42,6 +42,14 @@ public class FieldCheckController
                     break;
                 }
             }
+            else if (disc.firstTag == "FAV" || disc.secondTag == "FAV" && discrepancy != null)
+            {
+                if ((field1.tag == "FAV" && field2.tag == "ReproWith") || (field2.tag == "FAV" && field1.tag == "ReproWith") ||
+                    (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
+                {
+                    correlation = true;
+                }
+            }
         }
 
         if(correlation && discrepancy != null)
@@ -49,44 +57,15 @@ public class FieldCheckController
             if ((discrepancy.firstTag == field1.tag && discrepancy.secondTag == field2.tag) ||
                 (discrepancy.firstTag == field2.tag && discrepancy.secondTag == field1.tag))
             {
-                if(field1.tag == "Regression" || field2.tag == "Regression")
+                if ((field1.tag == "FAV" && field2.tag == "ReproWith") || (field2.tag == "FAV" && field1.tag == "ReproWith") ||
+                        (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
                 {
-                    var fav = field1.tag == "FAV" ? field1.GetComponent<TMP_Text>().text : field2.GetComponent<TMP_Text>().text;
-                    var regression = field2.tag == "Regression" ? field2.GetComponent<TMP_Text>().text : field1.GetComponent<TMP_Text>().text;
-
-                    bool containsAVersion = false;
-
-                    foreach (var stream in ruleBook.versionInfo)
-                    {
-                        for (int i = 0; i < stream.versions.Length; i++)
-                        {
-                            if (fav.Contains(stream.versions[i]))
-                            {
-                                containsAVersion = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (regression.Contains("Yes"))
-                    {
-                        if (containsAVersion == false)
-                        {
-                            discrepancyFound = true;
-                        }
-                    }
-                    if (regression.Contains("No"))
-                    {
-                        if (containsAVersion == true)
-                        {
-                            discrepancyFound = true;
-                        }
-                    }
+                    discrepancyFound = true;
                 }
                 else
                 {
                     discrepancyFound = true;
-                }
+                }     
             }
         }
 

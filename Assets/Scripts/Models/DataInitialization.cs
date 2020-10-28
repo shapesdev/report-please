@@ -29,7 +29,7 @@ public class DataInitialization
         InitializeDayOne(dayOne);
         InitializeDayTwo(dayTwo);
         InitializeDayThree(dayThree);
-        //InitializeDayFour(dayFour);
+        InitializeDayFour(dayFour);
         InitializeDiscrepancies();
     }
 
@@ -60,7 +60,13 @@ public class DataInitialization
         var titlePlatform = new Discrepancy("Title", "Platform");
         var areas = new Discrepancy("Area", "Areas");
         var expectedSeverity = new Discrepancy("Expected", "Severity");
-        var favRepro = new Discrepancy("FAV", "ReproWith");
+        var testerName = new Discrepancy("Name", "Name");
+        var reproWithVersionRule = new Discrepancy("ReproWith", "NotAllVersionRule");
+        var packageFoundRepro = new Discrepancy("PackageFound", "ReproWith");
+        var emptyLineRepro = new Discrepancy("EmptyLineRule", "ReproWith");
+        var emptyLineReproSteps = new Discrepancy("EmptyLineRule", "ReproSteps");
+        var emptyLineExpected = new Discrepancy("EmptyLineRule", "Expected");
+        var emptyLineReproWith = new Discrepancy("EmptyLineRule", "ReproWith");
 
         allDiscrepancies.Add(replyName);
         allDiscrepancies.Add(replyID);
@@ -77,7 +83,13 @@ public class DataInitialization
         allDiscrepancies.Add(titlePlatform);
         allDiscrepancies.Add(areas);
         allDiscrepancies.Add(expectedSeverity);
-        allDiscrepancies.Add(favRepro);
+        allDiscrepancies.Add(testerName);
+        allDiscrepancies.Add(reproWithVersionRule);
+        allDiscrepancies.Add(packageFoundRepro);
+        allDiscrepancies.Add(emptyLineRepro);
+        allDiscrepancies.Add(emptyLineReproSteps);
+        allDiscrepancies.Add(emptyLineReproWith);
+        allDiscrepancies.Add(emptyLineExpected);
     }
 
     #region Day data initialization
@@ -386,7 +398,7 @@ public class DataInitialization
         daysWithScenarios.Add(day, tempScenarioList);
     }
 
-/*    private void InitializeDayFour(DateTime day)
+    private void InitializeDayFour(DateTime day)
     {
         tempScenarioList = new List<IScenario>();
 
@@ -400,23 +412,22 @@ public class DataInitialization
         "3. Press Build\n",
         "Expected result: Project builds successfully\n" +
         "Actual result: Exceptions are thrown in the Console log\n",
-        "Reproducible with: 2020.1.0a19, 2020.1.6f1\n" +
-        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a18, 2020.2.0b3",
-        true, "FAV:\n2020.1.0a19", true, 2, 3, 2, tester1);
+        "Reproducible with: 2020.1.0a15, 2020.1.6f1\n" +
+        "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0a14, 2020.2.0b3",
+        true, "FAV:\n2020.1.0a15", true, 2, 3, 2, tester1, null, 2, 3);
 
-        EditorBug editor2 = new EditorBug("Multi-selecting and overwriting Prefab instances with changes does not apply changes to their outside Prefab assets", 1791012, tester1.GetName(),
+        EditorBug editor2 = new EditorBug("Multi-selecting and overwriting Prefab instances with changes does not apply changes to Prefab assets", 1791012, tester1.GetName(),
          new AreasNGrabbags { area = "Scene Management", grabbag = "Scene Management Grabbag" },
         "How to reproduce:\n" +
         "1. Open the user's attached 'Bug Project.zip' project\n" +
         "2. Type 't:boxcollider' in the Hierarchy window's search bar\n" +
         "3. Remove the Box Collider Component from all GameObjects in the Inspector\n" +
         "4. Select all parent GameObjects in the Hierarchy window\n" +
-        "5. Press Overrides -> Apply All in the Inspector window\n" +
-        "6. Observe the GameObjects in the Scene view\n",
+        "5. Press Overrides -> Apply All in the Inspector window\n",
         "Expected result: Box Collider Component was removed from all Prefab instances and from the original Prefab\n" +
         "Actual result: On some Prefab instances and on the original Prefab, the Box Collider Component was not removed\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1",
-        false, "FAV:\n2018.4, 2020.1", true, 3, 3, 2, tester1);
+        false, "FAV:\n2018.4, 2020.1", true, 3, 3, 2, tester1, new Discrepancy("ReproWith", "NotAllVersionRule"), 3, 3);
 
         EditorBug editor3 = new EditorBug("Multiple ListView's TextField items inherit the selected TextField's text when scrolling down/up in the window", 1874123, tester1.GetName(),
          new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" },
@@ -431,7 +442,7 @@ public class DataInitialization
         "Actual result: The selected TextField item with 'text' text keeps appearing in the window when scrolling down\n",
         "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Could not test with: 2018.4.27f1(UIElements are not supported)",
-        false, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, tester1);
+        false, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, tester1, null, 3, 3);
 
         PackageBug package1 = new PackageBug("Shader breaks when a % is added to an Enum keyword Entry's display name", 1781245, tester1.GetName(),
           new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" },
@@ -446,7 +457,7 @@ public class DataInitialization
          "Actual result: 'shader is not supported on this GPU' warning message is thrown in the Inspector\n",
          "Reproducible with: 7.3.1 (2019.4.11f1), 8.2.0 (2020.1.6f1), 10.0.0-preview.27 (2020.2.0b3)\n" +
          "Could not test with: 4.10.0-preview (2018.4.27f1) - Enum keyword not supported",
-         false, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0-preview.27", tester1);
+         false, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0-preview.27", tester1, null, 3, 3);
 
         EditorBug editor4 = new EditorBug("Tooltip and certain buttons in the Editor cause loss of focus on top level windows when VS or VS Code", 1578978, tester1.GetName(),
          new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" },
@@ -461,7 +472,7 @@ public class DataInitialization
         "Actual result: Tooltip appears, the opened application loses focus and now the Diversity Editor is in focus\n",
         "Reproducible with: 2020.1.1f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Not reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.0f1",
-        true, "FAV:\n2020.1.0a23, 2020.2", true, 3, 3, 2, tester1);
+        true, "FAV:\n2020.1.1f1, 2020.2", true, 3, 3, 2, tester1, null, 3, 3);
 
         EditorBug editor5 = new EditorBug("One extra item is added to the ListView when a ListView is bound to a SerializeReference List", 1679412, tester2.GetName(),
          new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" },
@@ -474,7 +485,7 @@ public class DataInitialization
         "Actual result: ListView has 3 items while the bound SerializeRefence List has only 2 items\n",
         "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Could not test with: 2018.4.27f1 (UIElements are not supported)",
-        true, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, tester2);
+        true, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Regression", "FAV"), 3, 3);
 
         PackageBug package2 = new PackageBug("InvalidCastException is thrown when a project is built with Windows/Mac Player and Development Build checked", 1785354, tester2.GetName(),
           new AreasNGrabbags { area = "Addressables Assets", grabbag = "Addressables Grabbag" },
@@ -488,7 +499,7 @@ public class DataInitialization
          "Actual result: 'InvalidCastException: Specified cast is not valid.' error message is thrown in the Development Console\n",
          "Reproducible with: 1.14.2 (2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3)\n" +
          "Not reproducible with: 1.13.1 (2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3)\n",
-         true, "FAV:\n2018.4, 2020.2", true, 4, 2, 2, "Addressables", "1.14.2", tester2);
+         true, "FAV:\n2018.4, 2020.2", true, 4, 2, 2, "Addressables", "1.14.2", tester2, null, 4, 2);
 
         EditorBug editor6 = new EditorBug("Turning off VSync in Windows Player in the Application.focusChanged callback causes another callback with focus equal to true", 1456564, tester2.GetName(),
          new AreasNGrabbags { area = "Windows", grabbag = "Desktop Grabbag" },
@@ -501,7 +512,7 @@ public class DataInitialization
         "Expected result: 'Focused' and 'VSync' text disappears and framerate text changes to 20\n" +
         "Actual result: 'Focused' and 'VSync' text doesn't disappear and framerate text doesn't change to 20 instead stays equal to the monitor's Hz\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-        false, "FAV:\n2018.4, 2020.2", true, 3, 2, 2, tester2);
+        false, "FAV:\n2018.4, 2020.2", true, 3, 2, 2, tester2, null, 3, 2);
 
         PackageBug package3 = new PackageBug("Hide Mobile Input value is true even when unchecked in the TMPro Input Field's Control Settings", 1864123, tester2.GetName(),
           new AreasNGrabbags { area = "Text", grabbag = "John the Text Guy" },
@@ -516,7 +527,7 @@ public class DataInitialization
          "Actual result: 'Hide Mobile Input' value is true\n",
          "Reproducible with: 2.1.1 (2019.4.11f1), 3.0.1 (2020.1.6f1, 2020.2.0b3)\n" +
          "Not reproducible with: 1.4.0-preview.1b (2018.4.27f1)",
-         true, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.1", tester2);
+         true, "FAV:\n2019.4, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.1", tester2, new Discrepancy("PackageFound", "ReproWith"), 3, 3);
 
         EditorBug editor7 = new EditorBug("OnApplicationQuit method is called before Application.wantsToQuit event is raised", 1785123, tester2.GetName(),
          new AreasNGrabbags { area = "Scripting", grabbag = "Scripting Grabbag" },
@@ -527,9 +538,9 @@ public class DataInitialization
         "4. Exit Play Mode\n" +
         "5. Observe the Console log\n",
         "Expected result: Application.wantsToQuit event is raised before OnApplicationQuit\n" +
-        "Actual result: OnApplicationQuit is called before Application.wantsToQuit event is raised\n",
+        "Actual result: OnApplicationQuit is called before Application.wantsToQuit event is raised\n\n\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-        false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2);
+        false, "FAV:\n2018.4, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("EmptyLineRule", "Expected"), 3, 3);
 
         tempScenarioList.Add(editor1);
         tempScenarioList.Add(editor2);
@@ -543,6 +554,6 @@ public class DataInitialization
         tempScenarioList.Add(editor7);
 
         daysWithScenarios.Add(day, tempScenarioList);
-    }*/
+    }
     #endregion
 }

@@ -37,6 +37,8 @@ TagManager:
   - Severity
   - Expected
   - ReproWith
+  - PackageFound
+  - NotAllVersionRule
   layers:
   - Default
   - TransparentFX

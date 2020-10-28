@@ -8,18 +8,18 @@ public class GameController
     private readonly IGameView view;
     private readonly IGameSelectionView selectionView;
     private readonly IGameStampView stampView;
-    private readonly ILineController lineView;
+    private readonly ILineController lineController;
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
 
-    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineView)
+    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
     {
         this.model = model;
         this.view = view;
         this.selectionView = selectionView;
         this.stampView = stampView;
-        this.lineView = lineView;
+        this.lineController = lineController;
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
 
@@ -43,7 +43,7 @@ public class GameController
         stampView.OnReturned += StampView_OnReturned;
         stampView.OnStampPressed += StampView_OnStampPressed;
 
-        lineView.OnTwoFieldsSelected += LineView_OnTwoFieldsSelected;
+        lineController.OnTwoFieldsSelected += LineView_OnTwoFieldsSelected;
     }
 
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
@@ -110,7 +110,7 @@ public class GameController
         else if(model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
-            lineView.ClearLine(true);
+            lineController.ClearLine(true);
         }
     }
 
@@ -123,7 +123,7 @@ public class GameController
             model.SelectedGameObject = go;
             if(model.InspectorMode == true)
             { 
-                lineView.SelectField(model.SelectedGameObject);
+                lineController.SelectField(model.SelectedGameObject);
             }
         }
     }

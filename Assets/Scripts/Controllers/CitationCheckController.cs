@@ -101,17 +101,13 @@ public class CitationCheckController
     {
         Bug bug;
 
-        if(isPackage)
-        {
-            bug = (PackageBug)curScenario;
-        }
-        else
-        {
-            bug = (EditorBug)curScenario;
-        }
+        if(isPackage) { bug = (PackageBug)curScenario; }
+        else { bug = (EditorBug)curScenario; }
 
         var chars = bug.GetReproSteps().ToCharArray();
         int spacesCount = 0;
+        bool correctRegression = false;
+        bool wrongFav = false;
 
         if (issueFound == false)
         {
@@ -140,7 +136,7 @@ public class CitationCheckController
 
             if (bug.isPublic() != true)
             {
-                string citation = "Report: is Private and not Public";
+                string citation = "Report: Is marked as Private";
                 return Tuple.Create(true, citation);
             }
             for(int i = 0; i < ruleBook.areas.Count; i++)
@@ -165,49 +161,51 @@ public class CitationCheckController
                 string citation = "Report: Wrong Report Order";
                 return Tuple.Create(true, citation);
             }
-            if(bug.IsRegression() == true)
+            foreach (var stream in ruleBook.versionInfo)
             {
-                bool containsAVersion = false;
-
-                foreach (var stream in ruleBook.versionInfo)
+                for (int i = 0; i < stream.versions.Length; i++)
                 {
-                    for(int i = 0; i < stream.versions.Length; i++)
+                    if (bug.GetFirstAffected().Contains(stream.versions[i]))
                     {
-                        if (bug.GetFirstAffected().Contains(stream.versions[i]))
+                        wrongFav = true;
+
+                        var strings = bug.GetReproNoReproWith().Split(new[] { "\n" }, StringSplitOptions.None);
+
+                        if (i > 1)
                         {
-                            containsAVersion = true;
-                            break;
+                            if (strings[0].Contains(stream.versions[i]) && strings[1].Contains(stream.versions[i - 1]))
+                            {
+                                correctRegression = true;
+                            }
                         }
                     }
                 }
-                if(containsAVersion == false)
+            }
+            if(bug.IsRegression())
+            {
+                if(!correctRegression)
+                {
+                    string citation = "Report: Wrong Regression field";
+                    return Tuple.Create(true, citation);
+                }
+            }
+            if(!bug.IsRegression())
+            {
+                if(wrongFav == true)
                 {
                     string citation = "Report: Wrong FAV Field";
                     return Tuple.Create(true, citation);
                 }
             }
-            if(bug.IsRegression() == false)
+            foreach(var stream in ruleBook.versionInfo)
             {
-                bool containsAVersion = false;
-
-                foreach (var stream in ruleBook.versionInfo)
+                if(!bug.GetReproNoReproWith().Contains(stream.stream))
                 {
-                    for (int i = 0; i < stream.versions.Length; i++)
-                    {
-                        if (bug.GetFirstAffected().Contains(stream.versions[i]))
-                        {
-                            containsAVersion = true;
-                            break;
-                        }
-                    }
-                }
-                if (containsAVersion == true)
-                {
-                    string citation = "Report: Wrong FAV Field";
+                    string citation = "Report: Not all versions tested";
                     return Tuple.Create(true, citation);
                 }
             }
-            if(bug.GetSeverity() != bug.GetCorrectSeverity())
+            if (bug.GetSeverity() != bug.GetCorrectSeverity())
             {
                 string citation = "Report: Wrong Severity";
                 return Tuple.Create(true, citation);
