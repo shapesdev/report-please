@@ -35,6 +35,7 @@ public class GameController
         view.OnOffsetSet += SelectionView_OnOffsetSet;
         view.OnSpaceBarPressed += View_OnSpaceBarPressed;
         view.OnOffsetChanged += View_OnOffsetChanged;
+        view.OnTabPressed += View_OnTabPressed;
 
         selectionView.OnGameObjectSelected += SelectionView_OnGameObjectSelected;
         selectionView.OnOffsetSet += SelectionView_OnOffsetSet;
@@ -73,6 +74,11 @@ public class GameController
     private void StampView_OnReturned(object sender, CanBeReturnedEventArgs e)
     {
         model.CanBeReturned = e.canBeReturned;
+    }
+
+    private void View_OnTabPressed(object sender, TabPressedEventArgs e)
+    {
+        stampView.ActivateStampPanel(model.InspectorMode);
     }
 
     private void View_OnOffsetChanged(object sender, OffsetValueEventArgs e)

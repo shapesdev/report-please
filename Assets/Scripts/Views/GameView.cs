@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameView : MonoBehaviour, IGameView
 {
@@ -16,6 +17,7 @@ public class GameView : MonoBehaviour, IGameView
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
+    public event EventHandler<TabPressedEventArgs> OnTabPressed = (sender, e) => { };
     public event EventHandler<MousePressedEventArgs> OnMousePressed = (sender, e) => { };
     public event EventHandler<MouseReleasedEventArgs> OnMouseReleased = (sender, e) => { };
     public event EventHandler<MouseHoldEventArgs> OnMouseHold = (sender, e) => { };
@@ -67,7 +69,11 @@ public class GameView : MonoBehaviour, IGameView
             var eventArgs = new SpaceBarPressedEventArgs();
             OnSpaceBarPressed(this, eventArgs);
         }
-
+        if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            var eventArgs = new TabPressedEventArgs();
+            OnTabPressed(this, eventArgs);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             var eventArgs = new MousePressedEventArgs();

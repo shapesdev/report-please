@@ -8,6 +8,7 @@ public interface IGameStampView
     void PlaceStamp(GameObject selectedGameObject, Sprite sprite);
     void Reset();
     void ChangeMode(bool value);
+    void ActivateStampPanel(bool value);
 
     event EventHandler<CanBeReturnedEventArgs> OnReturned;
     event EventHandler<StampPressEventArgs> OnStampPressed;

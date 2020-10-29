@@ -13,6 +13,7 @@ public interface IGameView : IOffsetView
 
     event EventHandler<DragRightEventArgs> OnDragRight;
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;
+    event EventHandler<TabPressedEventArgs> OnTabPressed;
     event EventHandler<MousePressedEventArgs> OnMousePressed;
     event EventHandler<MouseReleasedEventArgs> OnMouseReleased;
     event EventHandler<MouseHoldEventArgs> OnMouseHold;
