@@ -5,7 +5,7 @@ using TMPro;
 
 public class FieldCheckController
 {
-    public Tuple<bool, bool> CheckFields(GameObject field1, GameObject field2, List<Discrepancy> discrepancies, Discrepancy discrepancy, RuleBookSO ruleBook)
+    public Tuple<bool, bool> CheckFields(GameObject field1, GameObject field2, List<Discrepancy> discrepancies, Discrepancy discrepancy)
     {
         bool correlation = false;
         bool discrepancyFound = false;

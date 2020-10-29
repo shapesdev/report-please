@@ -205,7 +205,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -408,7 +408,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6143270258866309787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -424,7 +424,7 @@ RectTransform:
   - {fileID: 6143270260834233611}
   - {fileID: 6143270259760151923}
   m_Father: {fileID: 6143270260824010312}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8855,7 +8855,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6143270259595893934}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8908,6 +8908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 6143270259885494445}
   testerName: {fileID: 6143270259360583920}
+  testerLabel: {fileID: 6143270260373250889}
   reproSteps: {fileID: 6143270260128970516}
   expectedActual: {fileID: 6143270259897579505}
   reproducible: {fileID: 6143270259921604783}
@@ -9218,7 +9219,7 @@ RectTransform:
   m_Children:
   - {fileID: 6143270260297863932}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13991,7 +13992,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 0.0000019073}
+  m_AnchoredPosition: {x: -210, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6143270260188162403
@@ -14077,7 +14078,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1704557628}
         m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
-        m_MethodName: StampPress
+        m_MethodName: StampPlus
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 21300000, guid: 9bc4e5a233a49c142bc739f7e1dbd5c5, type: 3}
@@ -14251,7 +14252,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14597,7 +14598,7 @@ RectTransform:
   - {fileID: 6143270260162368533}
   - {fileID: 6143270259563214998}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14834,6 +14835,7 @@ GameObject:
   - component: {fileID: 6143270260235888049}
   - component: {fileID: 6143270260235888050}
   - component: {fileID: 6143270260235888051}
+  - component: {fileID: 2067134850}
   m_Layer: 5
   m_Name: StampPanel
   m_TagString: Untagged
@@ -14859,7 +14861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 500, y: -75}
+  m_AnchoredPosition: {x: 1317, y: -45}
   m_SizeDelta: {x: -1000, y: -850}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6143270260235888049
@@ -14955,6 +14957,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &2067134850
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143270260235888053}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98475f91de6465d41817bf4dc9eecb51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6143270260238658699
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,7 +15269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 0.0000019073}
+  m_AnchoredPosition: {x: 210, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6143270260278957283
@@ -15334,7 +15355,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1704557628}
         m_TargetAssemblyTypeName: GameStampView, Assembly-CSharp
-        m_MethodName: StampPress
+        m_MethodName: StampSiren
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 21300000, guid: e68f4d257a7d2e74eb18ebce0146729a, type: 3}
@@ -16491,13 +16512,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 6143270260774046392}
-  - {fileID: 6143270260198898275}
-  - {fileID: 6143270260175135405}
   - {fileID: 6143270260962274050}
-  - {fileID: 6143270259616916289}
+  - {fileID: 6143270260175135405}
+  - {fileID: 6143270260198898275}
   - {fileID: 6143270258859515211}
-  - {fileID: 6143270260824010312}
   - {fileID: 6143270260215953178}
+  - {fileID: 6143270260824010312}
+  - {fileID: 6143270259616916289}
   - {fileID: 6143270260235888052}
   m_Father: {fileID: 6143270259566252242}
   m_RootOrder: 0
@@ -16596,6 +16617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stampPanel: {fileID: 6143270260235888053}
+  stampPanelAnimator: {fileID: 2067134850}
 --- !u!1 &6143270260367442609
 GameObject:
   m_ObjectHideFlags: 0
@@ -20409,12 +20431,10 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -21019,9 +21039,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6143270258866309786}
-  - {fileID: 6143270259595893933}
   - {fileID: 6143270260887705020}
+  - {fileID: 6143270259595893933}
+  - {fileID: 6143270258866309786}
   m_Father: {fileID: 6143270260462774541}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21322,7 +21342,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6143270260887705021}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -21348,7 +21368,7 @@ RectTransform:
   - {fileID: 6143270259188643827}
   - {fileID: 6143270259764469958}
   m_Father: {fileID: 6143270260824010312}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21377,6 +21397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 6143270259429211169}
   testerName: {fileID: 6143270260479436139}
+  testerLabel: {fileID: 6143270260615586742}
   reproSteps: {fileID: 6143270259375681155}
   expectedActual: {fileID: 6143270260510956342}
   reproducible: {fileID: 6143270259698721674}
@@ -21705,7 +21726,7 @@ RectTransform:
   m_Children:
   - {fileID: 6143270260170111599}
   m_Father: {fileID: 6143270260462774541}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

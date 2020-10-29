@@ -5,7 +5,7 @@
 
 public enum Stamp
 {
-    SIREN, PLUS
+    Empty, SIREN, PLUS
 }
 
 public enum ReportType

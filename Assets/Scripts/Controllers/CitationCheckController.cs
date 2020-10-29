@@ -7,24 +7,24 @@ public class CitationCheckController
 {
     private Tuple<bool, string> isScenarioWithDiscrepancy;
 
-    public Tuple<bool, string> CheckForCitations(IScenario curScenario, RuleBookSO ruleBook, bool issueFound)
+    public Tuple<bool, string> CheckForCitations(IScenario curScenario, RuleBookSO ruleBook, bool issueFound, Stamp currentStamp)
     {
         if (curScenario.GetReportType() == ReportType.Response)
         {
-            isScenarioWithDiscrepancy = ResponseChecker(curScenario, issueFound);
+            isScenarioWithDiscrepancy = ResponseChecker(curScenario, issueFound, currentStamp);
         }
         else if (curScenario.GetReportType() == ReportType.EditorBug)
         {
-            isScenarioWithDiscrepancy = BugChecker(curScenario, issueFound, ruleBook, false);
+            isScenarioWithDiscrepancy = BugChecker(curScenario, issueFound, ruleBook, false, currentStamp);
         }
         else if (curScenario.GetReportType() == ReportType.PackageBug)
         {
-            isScenarioWithDiscrepancy = BugChecker(curScenario, issueFound, ruleBook, true);
+            isScenarioWithDiscrepancy = BugChecker(curScenario, issueFound, ruleBook, true, currentStamp);
         }
         return isScenarioWithDiscrepancy;
     }
 
-    private Tuple<bool, string> ResponseChecker(IScenario curScenario, bool issueFound)
+    private Tuple<bool, string> ResponseChecker(IScenario curScenario, bool issueFound, Stamp stamp)
     {
         var response = (Response)curScenario;
         var chars = response.GetEmail().ToCharArray();
@@ -48,22 +48,29 @@ public class CitationCheckController
                     break;
                 }
             }
-
+            if (stamp == Stamp.SIREN)
+            {
+                if (curScenario.GetDiscrepancy() == null)
+                {
+                    string citation = "Correct Report Denied";
+                    return Tuple.Create(true, citation);
+                }
+            }
             if (response.GetEmail().Contains("\n\n\n") || response.GetEmail().Contains("\n\n\n\n"))
             {
-                string citation = "Report: Two empty lines between paragraphs";
+                string citation = "Report: Two Empty Lines Between Paragraphs";
                 return Tuple.Create(true, citation);
             }
 
             if (spacesCount >= 2)
             {
-                string citation = "Report: Double spaces between letters";
+                string citation = "Report  : Double  Spaces  Between  Letters";
                 return Tuple.Create(true, citation);
             }
 
             if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
             {
-                string citation = "Report: Wrong email address";
+                string citation = "Report: Wrong Email Address";
                 return Tuple.Create(true, citation);
             }
             if (response.GetCloseType() == CloseType.NotQualified && (response.GetDateSent().Day - response.GetLastReplyDate().Day) >= 7)
@@ -73,17 +80,17 @@ public class CitationCheckController
             }
             if (response.WasItClosedCorrectly() == false)
             {
-                string citation = "Report: Closed incorrectly";
+                string citation = "Report: Closed Incorrectly";
                 return Tuple.Create(true, citation);
             }
             if (!response.GetEmail().Contains(response.GetTester().GetName()))
             {
-                string citation = "Report: Wrong tester name";
+                string citation = "Report: Wrong Tester Name";
                 return Tuple.Create(true, citation);
             }
             if (response.GetEmail().Contains("issuetracker") && !response.GetEmail().Contains(response.GetCaseID().ToString()))
             {
-                string citation = "Report: Wrong issue tracker link";
+                string citation = "Report: Wrong Issue Tracker Link";
                 return Tuple.Create(true, citation);
             }
             if (response.GetTester().GetExpiryDate() < response.GetDateSent())
@@ -92,12 +99,20 @@ public class CitationCheckController
                 return Tuple.Create(true, citation);
             }
         }
+        else if (issueFound)
+        {
+            if (stamp == Stamp.PLUS && curScenario.GetDiscrepancy() != null)
+            {
+                string citation = "Wrong Report Approved";
+                return Tuple.Create(true, citation);
+            }
+        }
 
-        string noCitation = "No citation";
+        string noCitation = "No Citation";
         return Tuple.Create(false, noCitation);
     }
 
-    private Tuple<bool, string> BugChecker(IScenario curScenario, bool issueFound, RuleBookSO ruleBook, bool isPackage)
+    private Tuple<bool, string> BugChecker(IScenario curScenario, bool issueFound, RuleBookSO ruleBook, bool isPackage, Stamp stamp)
     {
         Bug bug;
 
@@ -109,9 +124,17 @@ public class CitationCheckController
 
         if (issueFound == false)
         {
+            if (stamp == Stamp.SIREN)
+            {
+                if(curScenario.GetDiscrepancy() == null)
+                {
+                    string citation = "Correct Report Denied";
+                    return Tuple.Create(true, citation);
+                }
+            }
             if (bug.isPublic() != true)
             {
-                string citation = "Report: Is marked as Private";
+                string citation = "Report: Is Marked As Private";
                 return Tuple.Create(true, citation);
             }
             if(bug.GetTesterName() != bug.GetTester().GetName())
@@ -231,7 +254,7 @@ public class CitationCheckController
             {
                 if(!bug.GetReproNoReproWith().Contains(stream.stream))
                 {
-                    string citation = "Report: Not all versions tested";
+                    string citation = "Report: Not All Versions Tested";
                     return Tuple.Create(true, citation);
                 }
             }
@@ -240,9 +263,22 @@ public class CitationCheckController
                 string citation = "Report: Wrong Severity";
                 return Tuple.Create(true, citation);
             }
+            if (stamp == Stamp.PLUS && curScenario.GetDiscrepancy() != null)
+            {
+                string citation = "Wrong Report Approved";
+                return Tuple.Create(true, citation);
+            }
+        }
+        else if (issueFound)
+        {
+            if (stamp == Stamp.PLUS && curScenario.GetDiscrepancy() != null)
+            {
+                string citation = "Wrong Report Approved";
+                return Tuple.Create(true, citation);
+            }
         }
 
-        string noCitation = "No citation";
+        string noCitation = "No Citation";
         return Tuple.Create(false, noCitation);
     }
 }
