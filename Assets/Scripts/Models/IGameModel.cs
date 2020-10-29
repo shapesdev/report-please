@@ -19,4 +19,5 @@ public interface IGameModel
     GameObject SelectedGameObject { get; set; }
     RuleBookSO RuleBook { get; }
     bool DiscrepancyFound { get; set; }
+    Stamp CurrentStamp { get; set; }
 }

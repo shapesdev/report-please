@@ -8,6 +8,8 @@ public class EditorBugDisplayer : GeneralDisplayer
     [SerializeField]
     private TMP_Text testerName;
     [SerializeField]
+    private TMP_Text testerLabel;
+    [SerializeField]
     private TMP_Text reproSteps;
     [SerializeField]
     private TMP_Text expectedActual;
@@ -67,6 +69,7 @@ public class EditorBugDisplayer : GeneralDisplayer
 
     public override void TurnOnRaycast()
     {
+        testerLabel.raycastTarget = true;
         title.raycastTarget = true;
         testerName.raycastTarget = true;
         reproSteps.raycastTarget = true;
@@ -85,6 +88,7 @@ public class EditorBugDisplayer : GeneralDisplayer
 
     public override void TurnOffRaycast()
     {
+        testerLabel.raycastTarget = false;
         title.raycastTarget = false;
         testerName.raycastTarget = false;
         reproSteps.raycastTarget = false;

@@ -21,6 +21,8 @@ public class GameModel: IGameModel
     public RuleBookSO RuleBook { get; }
     public bool DiscrepancyFound { get; set; }
 
+    public Stamp CurrentStamp { get; set; }
+
     public GameModel(RuleBookSO ruleBook)
     {
         RuleBook = ruleBook;

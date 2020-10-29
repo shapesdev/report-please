@@ -8,13 +8,23 @@ public class GameStampView : MonoBehaviour, IGameStampView
 {
     [SerializeField]
     private GameObject stampPanel;
+    [SerializeField]
+    private Animator stampPanelAnimator;
+
+    private bool panelOpened = false;
 
     public event EventHandler<CanBeReturnedEventArgs> OnReturned = (sender, e) => { };
     public event EventHandler<StampPressEventArgs> OnStampPressed = (sender, e) => { };
 
-    public void StampPress(Sprite sprite)
+    public void StampPlus(Sprite sprite)
     {
-        var eventArgs = new StampPressEventArgs(sprite);
+        var eventArgs = new StampPressEventArgs(sprite, Stamp.PLUS);
+        OnStampPressed(this, eventArgs);
+    }
+
+    public void StampSiren(Sprite sprite)
+    {
+        var eventArgs = new StampPressEventArgs(sprite, Stamp.SIREN);
         OnStampPressed(this, eventArgs);
     }
 
@@ -82,17 +92,15 @@ public class GameStampView : MonoBehaviour, IGameStampView
 
     public void ActivateStampPanel()
     {
-        // ADD ANIMATION FOR THE STAMP PANEL
-        foreach (Transform child in stampPanel.transform)
+        if(panelOpened == false)
         {
-            if (child.gameObject.activeInHierarchy)
-            {
-                child.gameObject.SetActive(false);
-            }
-            else
-            {
-                child.gameObject.SetActive(true);
-            }
+            stampPanelAnimator.SetTrigger("OpenPanel");
+            panelOpened = !panelOpened;
+        }
+        else
+        {
+            stampPanelAnimator.SetTrigger("ClosePanel");
+            panelOpened = !panelOpened;
         }
     }
 

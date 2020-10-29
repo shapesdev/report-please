@@ -48,9 +48,11 @@ public class GameController
 
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
-        var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook, model.DiscrepancyFound);
+        var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
+            model.DiscrepancyFound, model.CurrentStamp);
         Debug.Log(citation.Item2);
         model.DiscrepancyFound = false;
+        model.CurrentStamp = Stamp.Empty;
 
         if (model.CurrentScenario + 1 < model.DaysWithScenarios[model.CurrentDay].Count)
         {
@@ -64,6 +66,7 @@ public class GameController
 
     private void StampView_OnStampPressed(object sender, StampPressEventArgs e)
     {
+        model.CurrentStamp = e.stampType;
         stampView.PlaceStamp(model.SelectedGameObject, e.sprite);
     }
 
@@ -141,7 +144,7 @@ public class GameController
     private void LineView_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
     {
         var values = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
-            [model.CurrentScenario].GetDiscrepancy(), model.RuleBook);
+            [model.CurrentScenario].GetDiscrepancy());
 
         model.DiscrepancyFound = values.Item2;
 
