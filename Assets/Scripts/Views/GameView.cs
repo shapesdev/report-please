@@ -8,6 +8,9 @@ public class GameView : MonoBehaviour, IGameView
     private IGameScenarioView[] gameScenarioViews;
     private IGameGeneralView[] gamegeneralViews;
 
+    private Image[] allImages;
+    private TextMeshProUGUI[] allTexts;
+
     [SerializeField]
     private RectTransform leftPanel;
     [SerializeField]
@@ -28,6 +31,9 @@ public class GameView : MonoBehaviour, IGameView
     {
         gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
         gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
+
+        allTexts = GetComponentsInChildren<TextMeshProUGUI>();
+        allImages = GetComponentsInChildren<Image>();
 
         ShowScenario(scenario);
         dateText.text = day.ToString("yyyy/MM/dd");
@@ -50,6 +56,17 @@ public class GameView : MonoBehaviour, IGameView
         {
             view.TurnOnInspectorMode();
             dateText.raycastTarget = true;
+            dateText.color = ColorHelper.instance.InspectorModeColor;
+        }
+
+        foreach(var img in allImages)
+        {
+            img.color = ColorHelper.instance.InspectorModeColor;
+        }
+
+        foreach(var txt in allTexts)
+        {
+            txt.color = ColorHelper.instance.InspectorModeColor;
         }
     }
 
@@ -59,6 +76,17 @@ public class GameView : MonoBehaviour, IGameView
         {
             view.TurnOffInspectorMode();
             dateText.raycastTarget = false;
+            dateText.color = ColorHelper.instance.NormalModeColor;
+        }
+
+        foreach (var img in allImages)
+        {
+            img.color = ColorHelper.instance.NormalModeColor;
+        }
+
+        foreach (var txt in allTexts)
+        {
+            txt.color = ColorHelper.instance.NormalModeColor;
         }
     }
 

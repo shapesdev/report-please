@@ -12,6 +12,8 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
     public TMP_Text dateOfExpiry;
     public Image picture;
 
+    public TMP_Text[] allTexts;
+
     public void Init(IScenario scenario)
     {
         var tester = scenario.GetTester();
@@ -46,19 +48,21 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
     {
         gameObject.GetComponent<Image>().raycastTarget = false;
 
-        fullName.raycastTarget = true;
-        email.raycastTarget = true;
-        dateStarted.raycastTarget = true;
-        dateOfExpiry.raycastTarget = true;
-}
+        foreach(var txt in allTexts)
+        {
+            txt.raycastTarget = true;
+            txt.color = ColorHelper.instance.InspectorModeColor;
+        }
+    }
 
     public override void TurnOffInspectorMode()
     {
         gameObject.GetComponent<Image>().raycastTarget = true;
 
-        fullName.raycastTarget = false;
-        email.raycastTarget = false;
-        dateStarted.raycastTarget = false;
-        dateOfExpiry.raycastTarget = false;
+        foreach (var txt in allTexts)
+        {
+            txt.raycastTarget = false;
+            txt.color = ColorHelper.instance.NormalModeColor;
+        }
     }
 }

@@ -43,6 +43,9 @@ public class PackageBugDisplayer : GeneralDisplayer
     [SerializeField]
     private TMP_Text packageVersion;
 
+    [SerializeField]
+    private TMP_Text[] allTexts;
+
     public override void Init(IScenario scenario)
     {
         if(scenario.GetReportType() == ReportType.PackageBug)
@@ -81,43 +84,19 @@ public class PackageBugDisplayer : GeneralDisplayer
 
     public override void TurnOnRaycast()
     {
-        testerLabel.raycastTarget = true;
-        title.raycastTarget = true;
-        testerName.raycastTarget = true;
-        reproSteps.raycastTarget = true;
-        expectedActual.raycastTarget = true;
-        reproducible.raycastTarget = true;
-        regression.raycastTarget = true;
-        publicField.raycastTarget = true;
-        severity.raycastTarget = true;
-        platform.raycastTarget = true;
-        userPrev.raycastTarget = true;
-        grabbag.raycastTarget = true;
-        area.raycastTarget = true;
-        caseId.raycastTarget = true;
-        FAV.raycastTarget = true;
-        package.raycastTarget = true;
-        packageVersion.raycastTarget = true;
+        foreach(var txt in allTexts)
+        {
+            txt.raycastTarget = true;
+            txt.color = ColorHelper.instance.InspectorModeColor;
+        }
     }
 
     public override void TurnOffRaycast()
     {
-        testerLabel.raycastTarget = false;
-        title.raycastTarget = false;
-        testerName.raycastTarget = false;
-        reproSteps.raycastTarget = false;
-        expectedActual.raycastTarget = false;
-        reproducible.raycastTarget = false;
-        regression.raycastTarget = false;
-        publicField.raycastTarget = false;
-        severity.raycastTarget = false;
-        platform.raycastTarget = false;
-        userPrev.raycastTarget = false;
-        grabbag.raycastTarget = false;
-        area.raycastTarget = false;
-        caseId.raycastTarget = false;
-        FAV.raycastTarget = false;
-        packageVersion.raycastTarget = false;
-        package.raycastTarget = false;
+        foreach (var txt in allTexts)
+        {
+            txt.raycastTarget = false;
+            txt.color = ColorHelper.instance.NormalModeColor;
+        }
     }
 }

@@ -83,6 +83,7 @@ public class AreasDisplayer : MonoBehaviour
             foreach (var text in areasTextPage1)
             {
                 text.raycastTarget = true;
+                text.color = ColorHelper.instance.InspectorModeColor;
             }
         }
         else if(secondPage.activeInHierarchy == true)
@@ -90,6 +91,7 @@ public class AreasDisplayer : MonoBehaviour
             foreach (var text in areasTextPage2)
             {
                 text.raycastTarget = true;
+                text.color = ColorHelper.instance.InspectorModeColor;
             }
         }
     }
@@ -101,6 +103,7 @@ public class AreasDisplayer : MonoBehaviour
             foreach (var text in areasTextPage1)
             {
                 text.raycastTarget = false;
+                text.color = ColorHelper.instance.NormalModeColor;
             }
         }
         else if (secondPage.activeInHierarchy == true)
@@ -108,6 +111,7 @@ public class AreasDisplayer : MonoBehaviour
             foreach (var text in areasTextPage2)
             {
                 text.raycastTarget = false;
+                text.color = ColorHelper.instance.NormalModeColor;
             }
         }
     }
