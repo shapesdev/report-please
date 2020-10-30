@@ -32,11 +32,15 @@ public class FieldDisplayer : MonoBehaviour
         title.raycastTarget = true;
         description.raycastTarget = true;
 
+        title.color = ColorHelper.instance.InspectorModeColor;
+        description.color = ColorHelper.instance.InspectorModeColor;
+
         if(options.Length > 0)
         {
             foreach (var option in options)
             {
                 option.raycastTarget = true;
+                option.color = ColorHelper.instance.InspectorModeColor;
             }
         }
     }
@@ -46,11 +50,15 @@ public class FieldDisplayer : MonoBehaviour
         title.raycastTarget = false;
         description.raycastTarget = false;
 
+        title.color = ColorHelper.instance.NormalModeColor;
+        description.color = ColorHelper.instance.NormalModeColor;
+
         if (options.Length > 0)
         {
             foreach (var option in options)
             {
                 option.raycastTarget = false;
+                option.color = ColorHelper.instance.NormalModeColor;
             }
         }
     }

@@ -18,6 +18,9 @@ public class ResponseDisplayer : GeneralDisplayer
     [SerializeField]
     private TMP_Text status;
 
+    [SerializeField]
+    private TMP_Text[] allTexts;
+
     public override void Init(IScenario scenario)
     {
         if(scenario.GetReportType() == ReportType.Response)
@@ -59,21 +62,19 @@ public class ResponseDisplayer : GeneralDisplayer
 
     public override void TurnOnRaycast()
     {
-        caseId.raycastTarget = true;
-        reply.raycastTarget = true;
-        dateSent.raycastTarget = true;
-        lastReplyDate.raycastTarget = true;
-        emailSentFrom.raycastTarget = true;
-        status.raycastTarget = true;
+        foreach(var txt in allTexts)
+        {
+            txt.raycastTarget = true;
+            txt.color = ColorHelper.instance.InspectorModeColor;
+        }
     }
 
     public override void TurnOffRaycast()
     {
-        caseId.raycastTarget = false;
-        reply.raycastTarget = false;
-        dateSent.raycastTarget = false;
-        lastReplyDate.raycastTarget = false;
-        emailSentFrom.raycastTarget = false;
-        status.raycastTarget = false;
+        foreach (var txt in allTexts)
+        {
+            txt.raycastTarget = false;
+            txt.color = ColorHelper.instance.NormalModeColor;
+        }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameController
@@ -62,6 +65,10 @@ public class GameController
             view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
 
             selectionView.ActivateSelectable();
+        }
+        else
+        {
+            App.instance.Load();
         }
     }
 

@@ -33,6 +33,7 @@ public class BasicRuleDisplayer : MonoBehaviour
         foreach (var rule in rules)
         {
             rule.raycastTarget = true;
+            rule.color = ColorHelper.instance.InspectorModeColor;
         }
     }
 
@@ -41,6 +42,7 @@ public class BasicRuleDisplayer : MonoBehaviour
         foreach(var rule in rules)
         {
             rule.raycastTarget = false;
+            rule.color = ColorHelper.instance.NormalModeColor;
         }
     }
 }

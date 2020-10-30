@@ -29,7 +29,6 @@ public class GameModel: IGameModel
         DataInitialization dataInitialization = new DataInitialization();
         DaysWithScenarios = dataInitialization.GetDayData();
         Discrepancies = dataInitialization.GetAllDiscrepancies();
-        //CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
-        CurrentDay = new DateTime(2020, 11, 13);
+        CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
     }
 }

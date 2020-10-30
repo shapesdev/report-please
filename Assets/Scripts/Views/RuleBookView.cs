@@ -8,6 +8,8 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     [SerializeField]
     private Image[] objectsWithRaycast;
     [SerializeField]
+    private Image homePageLeft;
+    [SerializeField]
     private Button[] buttons;
     [SerializeField]
     private GameObject homePage;
@@ -88,9 +90,12 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public override void TurnOnInspectorMode()
     {
+        homePageLeft.color = ColorHelper.instance.InspectorModeColor;
+
         foreach (var img in objectsWithRaycast)
         {
             img.raycastTarget = false;
+            img.color = ColorHelper.instance.InspectorModeColor;
         }
 
         foreach(var btn in buttons)
@@ -105,9 +110,12 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public override void TurnOffInspectorMode()
     {
+        homePageLeft.color = ColorHelper.instance.NormalModeColor;
+
         foreach (var img in objectsWithRaycast)
         {
             img.raycastTarget = true;
+            img.color = ColorHelper.instance.NormalModeColor;
         }
 
         foreach (var btn in buttons)

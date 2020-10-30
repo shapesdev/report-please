@@ -26,4 +26,13 @@ public class GameFactory
     {
         GameObject.Destroy(instance);
     }
+
+    public bool IsLoaded()
+    {
+        if (instance != null)
+        {
+            return true;
+        }
+        return false;
+    }
 }
