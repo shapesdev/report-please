@@ -85,11 +85,11 @@ public class LineController : MonoBehaviour, ILineController
     {
         if(clear)
         {
-            UnHighlightField(firstSelection);
+            if (firstSelection != null) { UnHighlightField(firstSelection); }
             firstSelection = null;
         }
 
-        UnHighlightField(secondSelection);
+        if(secondSelection != null) { UnHighlightField(secondSelection); }
         secondSelection = null;
         worldEdgePositions.Clear();
         lineRenderer.positionCount = 0;

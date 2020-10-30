@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class App : MonoBehaviour
 {
+    public static App instance;
+
     [SerializeField]
     private GameObject gamePrefab;
     [SerializeField]
@@ -13,7 +15,7 @@ public class App : MonoBehaviour
     private RuleBookSO ruleBook;
 
     private GameFactory gameFactory;
-
+    private MenuFactory menuFactory;
 
     private void Awake()
     {
@@ -22,7 +24,23 @@ public class App : MonoBehaviour
 
     private void Init()
     {
+        instance = this;
         gameFactory = new GameFactory();
-        gameFactory.Load(gamePrefab, ruleBook);
+        menuFactory = new MenuFactory();
+        menuFactory.Load(menuPrefab);
+    }
+
+    public void Load()
+    {
+        if(menuFactory.IsLoaded())
+        {
+            menuFactory.Unload();
+            gameFactory.Load(gamePrefab, ruleBook);
+        }
+        else if (gameFactory.IsLoaded())
+        {
+            gameFactory.Unload();
+            menuFactory.Load(menuPrefab);
+        }
     }
 }
