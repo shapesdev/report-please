@@ -20,6 +20,8 @@ public class AreasDisplayer : MonoBehaviour
 
     public event EventHandler<PageClosedEventArgs> OnPageBack = (sender, e) => { };
 
+    public static event Action OnTurnPage;
+
     public void DisplayAreasPageOne(List<AreasNGrabbags> areas)
     {
         gameObject.SetActive(true);
@@ -31,6 +33,8 @@ public class AreasDisplayer : MonoBehaviour
 
     public void OpenPageOne()
     {
+        OnTurnPage?.Invoke();
+
         if(secondPage.activeInHierarchy)
         {
             secondPage.SetActive(false);
@@ -46,6 +50,8 @@ public class AreasDisplayer : MonoBehaviour
 
     public void OpenPageTwo()
     {
+        OnTurnPage?.Invoke();
+
         firstPage.SetActive(false);
 
         int currentArea = areasTextPage1.Length;

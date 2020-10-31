@@ -16,6 +16,8 @@ public class LineController : MonoBehaviour, ILineController
 
     private List<Vector3> worldEdgePositions;
 
+    public static event Action<int> OnHighlight;
+
     public event EventHandler<TwoFieldsSelectedEventArgs> OnTwoFieldsSelected = (sender, e) => { };
 
     private void Start()
@@ -30,7 +32,7 @@ public class LineController : MonoBehaviour, ILineController
             firstSelection = selectedGameObject;
             HighlightField(firstSelection);
         }
-        else if(secondSelection == null)
+        else if(secondSelection == null && selectedGameObject != firstSelection)
         {
             secondSelection = selectedGameObject;
             HighlightField(secondSelection);
@@ -44,15 +46,28 @@ public class LineController : MonoBehaviour, ILineController
             var eventArgs = new TwoFieldsSelectedEventArgs(firstSelection, secondSelection);
             OnTwoFieldsSelected(this, eventArgs);
         }
+        else if(secondSelection == null && selectedGameObject == firstSelection)
+        {
+            UnHighlightField(firstSelection);
+            firstSelection = null;
+            ClearLine(false);
+        }
         else
         {
+            UnHighlightField(firstSelection);
+            UnHighlightField(secondSelection);
+
             firstSelection = selectedGameObject;
+            secondSelection = null;
+            HighlightField(firstSelection);
             ClearLine(false);
         }
     }
 
     private void HighlightField(GameObject selection)
     {
+        OnHighlight?.Invoke(0);
+
         var text = selection.GetComponent<TMP_Text>();
 
         if (text == null)
@@ -68,6 +83,8 @@ public class LineController : MonoBehaviour, ILineController
 
     private void UnHighlightField(GameObject selection)
     {
+        OnHighlight?.Invoke(1);
+
         var text = selection.GetComponent<TMP_Text>();
 
         if (text == null)

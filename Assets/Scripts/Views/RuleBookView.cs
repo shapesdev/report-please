@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,8 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     [SerializeField]
     private ReportFieldsDisplayer reportFieldsDisplayer;
 
+    public static event Action OnTurnPage;
+
     private bool changeSize;
 
     public void OnEnable()
@@ -35,6 +38,7 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     {
         DeactiveAllChildren();
         homePage.SetActive(true);
+        OnTurnPage?.Invoke();
     }
 
     public override void ChangeSizeToLeft()
@@ -63,6 +67,7 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     {
         DeactiveAllChildren();
         basicRuleDisplayer.DisplayRules(ruleBook.basicRules);
+        OnTurnPage?.Invoke();
     }
 
     public void OpenAreas()
@@ -75,6 +80,7 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     {
         DeactiveAllChildren();
         reportFieldsDisplayer.DisplayReportFields(ruleBook.reportFields);
+        OnTurnPage?.Invoke();
     }
 
     private void DeactiveAllChildren()

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 320fd822058ec634b8aa7764d12ae8a9, type: 3}
+  m_Name: Sound Effects
+  m_EditorClassIdentifier: 
+  stampPlaceSounds:
+  - {fileID: 8300000, guid: 50771ff899a70c647907edec8ae33c70, type: 3}
+  - {fileID: 8300000, guid: 7913a9f1b49c5874198c6016e5cd7676, type: 3}
+  inspectorSounds:
+  - {fileID: 8300000, guid: 4e346486416512349b09bfb4e62ab759, type: 3}
+  - {fileID: 8300000, guid: 65041731642bb474daee74c4ee0aa8be, type: 3}
+  stampOpenSounds:
+  - {fileID: 8300000, guid: 8e4c09a16cd50664d8a00b460cc6fd10, type: 3}
+  - {fileID: 8300000, guid: f0a62fc54c5802f4a8635ec64e098727, type: 3}
+  highlightSounds:
+  - {fileID: 8300000, guid: 65015ccff6aadc54fb5712aff8f24b05, type: 3}
+  - {fileID: 8300000, guid: a6d77de00b6a5cf4aa4bf956a6cb8220, type: 3}
+  paperDragSounds:
+  - {fileID: 8300000, guid: 6650575020d2d7f4da5ec9d54ae18c45, type: 3}
+  - {fileID: 8300000, guid: 557021e180b91b94b9c83372e8f05f67, type: 3}
+  citationSound: {fileID: 8300000, guid: ebd2266ed47ae524ea5da3eb3ba34041, type: 3}
+  discrepancySound: {fileID: 8300000, guid: a6c63b6fc9bb9df49a463b68d544bc22, type: 3}
+  turnPageSound: {fileID: 8300000, guid: a6e6717afd5ad2c47ad76cbca9b8a669, type: 3}
