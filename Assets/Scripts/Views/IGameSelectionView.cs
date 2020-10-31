@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IGameSelectionView : IOffsetView
 {
     GameObject SelectGameObject(bool mode);
-    void UnSelectGameObject(GameObject go, bool returned);
+    void UnSelectGameObject(GameObject go, bool returned, bool inspector);
     void ActivateSelectable();
     void ChangeMode(bool value);
 

@@ -20,6 +20,8 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
     public event EventHandler<PapersReturnedEventArgs> OnPapersReturned = (sender, e) => { };
 
+    public static event Action<int> OnPaperDrag;
+
     private void Start()
     {
         GetComponent<Canvas>().worldCamera = Camera.main;
@@ -40,6 +42,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         {
             if(results[0].gameObject.tag == "Selectable")
             {
+                OnPaperDrag?.Invoke(0);
                 BringGameObjectToFront(results[0].gameObject);
                 return results[0].gameObject;
             }
@@ -59,13 +62,18 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         OnGameObjectSelected(this, eventArgs);
     }
 
-    public void UnSelectGameObject(GameObject go, bool canBeReturned)
+    public void UnSelectGameObject(GameObject go, bool canBeReturned, bool inspector)
     {
         var eventArgs = new GameObjectSelectedEventArgs(false);
         OnGameObjectSelected(this, eventArgs);
 
         var eventArgs2 = new OffsetSetEventArgs(false);
         OnOffsetSet(this, eventArgs2);
+
+/*        if(inspector == false && go != null)
+        {
+            OnPaperDrag?.Invoke(1);
+        }*/
 
         Cursor.lockState = CursorLockMode.None;
 

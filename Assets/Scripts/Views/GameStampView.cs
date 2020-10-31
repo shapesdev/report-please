@@ -16,6 +16,9 @@ public class GameStampView : MonoBehaviour, IGameStampView
     public event EventHandler<CanBeReturnedEventArgs> OnReturned = (sender, e) => { };
     public event EventHandler<StampPressEventArgs> OnStampPressed = (sender, e) => { };
 
+    public static event Action<int> OnStampPanelOpen;
+    public static event Action<bool> OnStampPlaced;
+
     public void StampPlus(Sprite sprite)
     {
         var eventArgs = new StampPressEventArgs(sprite, Stamp.PLUS);
@@ -64,6 +67,8 @@ public class GameStampView : MonoBehaviour, IGameStampView
 
             if (selectedGameObject.transform.childCount > 1 && test == null)
             {
+                OnStampPlaced?.Invoke(false);
+
                 var stamp = new GameObject("Stamp");
                 stamp.AddComponent<Image>();
                 stamp.AddComponent<StampTest>();
@@ -87,6 +92,10 @@ public class GameStampView : MonoBehaviour, IGameStampView
                 var eventArgs = new CanBeReturnedEventArgs(true);
                 OnReturned(this, eventArgs);
             }
+            else
+            {
+                OnStampPlaced?.Invoke(true);
+            }
         }
     }
 
@@ -98,11 +107,13 @@ public class GameStampView : MonoBehaviour, IGameStampView
             {
                 stampPanelAnimator.SetTrigger("OpenPanel");
                 panelOpened = !panelOpened;
+                OnStampPanelOpen?.Invoke(0);
             }
             else
             {
                 stampPanelAnimator.SetTrigger("ClosePanel");
                 panelOpened = !panelOpened;
+                OnStampPanelOpen?.Invoke(1);
             }
         }
     }

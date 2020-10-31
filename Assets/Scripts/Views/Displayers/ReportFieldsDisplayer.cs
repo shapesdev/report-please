@@ -15,6 +15,8 @@ public class ReportFieldsDisplayer : MonoBehaviour
 
     public event EventHandler<PageClosedEventArgs> OnPageBack = (sender, e) => { };
 
+    public static event Action OnTurnPage;
+
     public void DisplayReportFields(List<ReportFieldInfo> list)
     {
         gameObject.SetActive(true);
@@ -29,12 +31,16 @@ public class ReportFieldsDisplayer : MonoBehaviour
 
     public void OpenPageTwo()
     {
+        OnTurnPage?.Invoke();
+
         firstPage.SetActive(false);
         secondPage.SetActive(true);
     }
 
     public void GoBackToPageOne()
     {
+        OnTurnPage?.Invoke();
+
         firstPage.SetActive(true);
         secondPage.SetActive(false);
     }

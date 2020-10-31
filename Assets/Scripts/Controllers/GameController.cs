@@ -16,6 +16,12 @@ public class GameController
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
 
+    public static event Action<int> OnGameInitialized;
+    public static event Action<int> OnInspectorMode;
+
+    public static event Action OnDiscrepancy;
+    public static event Action OnCitation;
+
     public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
     {
         this.model = model;
@@ -48,12 +54,20 @@ public class GameController
         stampView.OnStampPressed += StampView_OnStampPressed;
 
         lineController.OnTwoFieldsSelected += LineView_OnTwoFieldsSelected;
+
+        OnGameInitialized?.Invoke(1);
     }
 
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
             model.DiscrepancyFound, model.CurrentStamp);
+
+        if(citation.Item1 == true)
+        {
+            OnCitation?.Invoke();
+        }
+
         Debug.Log(citation.Item2);
         model.DiscrepancyFound = false;
         model.CurrentStamp = Stamp.Empty;
@@ -111,7 +125,7 @@ public class GameController
 
     private void View_OnMouseReleased(object sender, MouseReleasedEventArgs e)
     {
-        selectionView.UnSelectGameObject(model.SelectedGameObject, model.CanBeReturned);
+        selectionView.UnSelectGameObject(model.SelectedGameObject, model.CanBeReturned, model.InspectorMode);
     }
 
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
@@ -122,11 +136,13 @@ public class GameController
         if (model.InspectorMode == true)
         {
             view.TurnOnInspectorMode();
+            OnInspectorMode?.Invoke(0);
         }
         else if(model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
             lineController.ClearLine(true);
+            OnInspectorMode?.Invoke(1);
         }
     }
 
@@ -140,6 +156,11 @@ public class GameController
             if(model.InspectorMode == true)
             { 
                 lineController.SelectField(model.SelectedGameObject);
+
+                if (model.SelectedGameObject == go)
+                {
+                    model.SelectedGameObject = null;
+                }
             }
         }
     }
@@ -160,6 +181,8 @@ public class GameController
             [model.CurrentScenario].GetDiscrepancy());
 
         model.DiscrepancyFound = values.Item2;
+
+        OnDiscrepancy?.Invoke();
 
         if (values.Item1 == true && values.Item2 == true)
         {
