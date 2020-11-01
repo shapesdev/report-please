@@ -9,6 +9,8 @@ public class MenuView : MonoBehaviour, IMenuView
     private GameObject titleScreen;
     [SerializeField]
     private GameObject mainMenuScreen;
+    [SerializeField]
+    private GameObject optionsPanel;
 
     public event EventHandler<StoryButtonPressedEventArgs> OnStoryButtonPressed = (sender, e) => { };
 
@@ -25,5 +27,15 @@ public class MenuView : MonoBehaviour, IMenuView
     {
         var eventArgs = new StoryButtonPressedEventArgs();
         OnStoryButtonPressed(this, eventArgs);
+    }
+
+    public void OpenOptions()
+    {
+        optionsPanel.SetActive(true);
+    }
+
+    public void CloseOptions()
+    {
+        optionsPanel.SetActive(false);
     }
 }

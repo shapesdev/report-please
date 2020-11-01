@@ -61,12 +61,18 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach(var img in allImages)
         {
-            img.color = ColorHelper.instance.InspectorModeColor;
+            if(img.color.a > 0.8f)
+            {
+                img.color = ColorHelper.instance.InspectorModeColor;
+            }
         }
 
         foreach(var txt in allTexts)
         {
-            txt.color = ColorHelper.instance.InspectorModeColor;
+            if(txt.color.a > 0.8f)
+            {
+                txt.color = ColorHelper.instance.InspectorModeColor;
+            }
         }
     }
 
@@ -81,12 +87,18 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach (var img in allImages)
         {
-            img.color = ColorHelper.instance.NormalModeColor;
+            if(img.color.a > 0.8f)
+            {
+                img.color = ColorHelper.instance.NormalModeColor;
+            }
         }
 
         foreach (var txt in allTexts)
         {
-            txt.color = ColorHelper.instance.NormalModeColor;
+            if (txt.color.a > 0.8f)
+            {
+                txt.color = ColorHelper.instance.NormalModeColor;
+            }
         }
     }
 

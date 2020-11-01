@@ -10,6 +10,10 @@ public class GameStampView : MonoBehaviour, IGameStampView
     private GameObject stampPanel;
     [SerializeField]
     private Animator stampPanelAnimator;
+    [SerializeField]
+    private Animator sirenAnimator;
+    [SerializeField]
+    private Animator plusAnimator;
 
     bool panelOpened = false;
 
@@ -23,12 +27,14 @@ public class GameStampView : MonoBehaviour, IGameStampView
     {
         var eventArgs = new StampPressEventArgs(sprite, Stamp.PLUS);
         OnStampPressed(this, eventArgs);
+        plusAnimator.SetTrigger("Press");
     }
 
     public void StampSiren(Sprite sprite)
     {
         var eventArgs = new StampPressEventArgs(sprite, Stamp.SIREN);
         OnStampPressed(this, eventArgs);
+        sirenAnimator.SetTrigger("Press");
     }
 
     private bool StampCanBePlaced(GameObject selectedGO, Vector3 pos)
