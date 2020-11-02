@@ -32,6 +32,8 @@ public class AudioHelper : MonoBehaviour
         RuleBookView.OnTurnPage += PlayTurnPageSound;
         AreasDisplayer.OnTurnPage += PlayTurnPageSound;
         ReportFieldsDisplayer.OnTurnPage += PlayTurnPageSound;
+
+        TextWriterModel.OnTextWrite += PlayTextWriteSound;
     }
 
     private void OnDisable()
@@ -53,6 +55,8 @@ public class AudioHelper : MonoBehaviour
         RuleBookView.OnTurnPage -= PlayTurnPageSound;
         AreasDisplayer.OnTurnPage -= PlayTurnPageSound;
         ReportFieldsDisplayer.OnTurnPage -= PlayTurnPageSound;
+
+        TextWriterModel.OnTextWrite -= PlayTextWriteSound;
     }
 
     private void PlayMusic(int value)
@@ -147,6 +151,12 @@ public class AudioHelper : MonoBehaviour
     private void PlayTurnPageSound()
     {
         soundSource.clip = soundEffects.turnPageSound;
+        soundSource.Play();
+    }
+
+    private void PlayTextWriteSound()
+    {
+        soundSource.clip = soundEffects.textWriteSound;
         soundSource.Play();
     }
 }

@@ -86,7 +86,7 @@ MonoBehaviour:
     description: If the functionality is working in earlier versions, but is broken
       in newer ones
     info: []
-  - field: First Affected Versions (FAV)
+  - field: First Affected Versions
     description: What versions are affected by the bug
     info: []
   - field: Tester

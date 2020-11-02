@@ -30,3 +30,4 @@ MonoBehaviour:
   citationSound: {fileID: 8300000, guid: ebd2266ed47ae524ea5da3eb3ba34041, type: 3}
   discrepancySound: {fileID: 8300000, guid: a6c63b6fc9bb9df49a463b68d544bc22, type: 3}
   turnPageSound: {fileID: 8300000, guid: a6e6717afd5ad2c47ad76cbca9b8a669, type: 3}
+  textWriteSound: {fileID: 8300000, guid: d50d563f40761b54e9da350f733c88b0, type: 3}

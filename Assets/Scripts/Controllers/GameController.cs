@@ -66,6 +66,7 @@ public class GameController
         if(citation.Item1 == true)
         {
             OnCitation?.Invoke();
+            view.EnableCitation(citation.Item2);
         }
 
         Debug.Log(citation.Item2);

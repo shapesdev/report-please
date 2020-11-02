@@ -17,6 +17,10 @@ public class GameView : MonoBehaviour, IGameView
     private GameObject topPanel;
     [SerializeField]
     private TMP_Text dateText;
+    [SerializeField]
+    private Text introDateText;
+    [SerializeField]
+    private Text citationText;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
@@ -40,6 +44,8 @@ public class GameView : MonoBehaviour, IGameView
 
         dateText.gameObject.transform.SetAsLastSibling();
         topPanel.transform.SetAsLastSibling();
+
+        TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.07f);
     }
 
     public void ShowScenario(IScenario scenario)
@@ -48,6 +54,18 @@ public class GameView : MonoBehaviour, IGameView
         {
             view.Init(scenario);
         }
+    }
+
+    public void EnableCitation(string citation)
+    {
+        citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
+        citationText.transform.parent.gameObject.SetActive(true);
+        Invoke("DisableCitation", 5f);
+    }
+
+    private void DisableCitation()
+    {
+        citationText.transform.parent.gameObject.SetActive(false);
     }
 
     public void TurnOnInspectorMode()
@@ -61,12 +79,18 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach(var img in allImages)
         {
-            img.color = ColorHelper.instance.InspectorModeColor;
+            if(img.color.a > 0.8f)
+            {
+                img.color = ColorHelper.instance.InspectorModeColor;
+            }
         }
 
         foreach(var txt in allTexts)
         {
-            txt.color = ColorHelper.instance.InspectorModeColor;
+            if(txt.color.a > 0.8f)
+            {
+                txt.color = ColorHelper.instance.InspectorModeColor;
+            }
         }
     }
 
@@ -81,12 +105,18 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach (var img in allImages)
         {
-            img.color = ColorHelper.instance.NormalModeColor;
+            if(img.color.a > 0.8f)
+            {
+                img.color = ColorHelper.instance.NormalModeColor;
+            }
         }
 
         foreach (var txt in allTexts)
         {
-            txt.color = ColorHelper.instance.NormalModeColor;
+            if (txt.color.a > 0.8f)
+            {
+                txt.color = ColorHelper.instance.NormalModeColor;
+            }
         }
     }
 

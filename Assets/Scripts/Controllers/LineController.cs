@@ -102,8 +102,24 @@ public class LineController : MonoBehaviour, ILineController
     {
         if(clear)
         {
-            if (firstSelection != null) { UnHighlightField(firstSelection); }
-            firstSelection = null;
+            if (firstSelection != null)
+            {
+                var text = firstSelection.GetComponent<TMP_Text>();
+                if(text != null)
+                {
+                    text.color = ColorHelper.instance.NormalModeColor;
+                }
+                firstSelection = null;
+            }
+            if(secondSelection != null)
+            {
+                var text = secondSelection.GetComponent<TMP_Text>();
+                if (text != null)
+                {
+                    text.color = ColorHelper.instance.NormalModeColor;
+                }
+                secondSelection = null;
+            }
         }
 
         if(secondSelection != null) { UnHighlightField(secondSelection); }
