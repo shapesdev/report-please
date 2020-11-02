@@ -22,6 +22,8 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     private AreasDisplayer areasDisplayer;
     [SerializeField]
     private ReportFieldsDisplayer reportFieldsDisplayer;
+    [SerializeField]
+    private Text[] buttonsTexts;
 
     public static event Action OnTurnPage;
 
@@ -104,6 +106,11 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
             img.color = ColorHelper.instance.InspectorModeColor;
         }
 
+        foreach(var btnText in buttonsTexts)
+        {
+            btnText.color = ColorHelper.instance.InspectorModeColor;
+        }
+
         foreach(var btn in buttons)
         {
             btn.interactable = false;
@@ -122,6 +129,11 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
         {
             img.raycastTarget = true;
             img.color = ColorHelper.instance.NormalModeColor;
+        }
+
+        foreach (var btnText in buttonsTexts)
+        {
+            btnText.color = ColorHelper.instance.NormalModeColor;
         }
 
         foreach (var btn in buttons)
