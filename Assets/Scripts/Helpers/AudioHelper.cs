@@ -34,6 +34,8 @@ public class AudioHelper : MonoBehaviour
         ReportFieldsDisplayer.OnTurnPage += PlayTurnPageSound;
 
         TextWriterModel.OnTextWrite += PlayTextWriteSound;
+
+        GameView.OnEndDay += PlayMusic;
     }
 
     private void OnDisable()
@@ -57,6 +59,8 @@ public class AudioHelper : MonoBehaviour
         ReportFieldsDisplayer.OnTurnPage -= PlayTurnPageSound;
 
         TextWriterModel.OnTextWrite -= PlayTextWriteSound;
+
+        GameView.OnEndDay -= PlayMusic;
     }
 
     private void PlayMusic(int value)

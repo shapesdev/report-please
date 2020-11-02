@@ -43,4 +43,18 @@ public class App : MonoBehaviour
             menuFactory.Load(menuPrefab);
         }
     }
+
+    public void LoadNextDay()
+    {
+        if (PlayerPrefs.GetInt("CurrentDay") < 13)
+        {
+            PlayerPrefs.SetInt("CurrentDay", PlayerPrefs.GetInt("CurrentDay") + 1);
+            gameFactory.Unload();
+            gameFactory.Load(gamePrefab, ruleBook);
+        }
+        else
+        {
+            Load();
+        }
+    }
 }

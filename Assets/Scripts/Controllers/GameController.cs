@@ -83,7 +83,7 @@ public class GameController
         }
         else
         {
-            App.instance.Load();
+            view.ShowEndDay();
         }
     }
 
