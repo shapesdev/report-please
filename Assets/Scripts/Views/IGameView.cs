@@ -10,6 +10,7 @@ public interface IGameView : IOffsetView
     void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject go);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
+    void EnableCitation(string text);
 
     event EventHandler<DragRightEventArgs> OnDragRight;
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;
