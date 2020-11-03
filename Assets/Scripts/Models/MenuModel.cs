@@ -9,6 +9,13 @@ public class MenuModel : IMenuModel
 
     public MenuModel()
     {
-        //PlayerPrefs.DeleteAll();
+        if (PlayerPrefs.GetInt("CurrentDay") == 0)
+        {
+            CurrentDay = new DateTime(2020, 11, 10);
+        }
+        else
+        {
+            CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+        }
     }
 }

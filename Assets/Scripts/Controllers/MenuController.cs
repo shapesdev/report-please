@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
-using System.Linq;
 
 public class MenuController
 {
@@ -23,15 +20,12 @@ public class MenuController
 
     private void View_OnStoryButtonPressed(object sender, StoryButtonPressedEventArgs e)
     {
-        if (PlayerPrefs.GetInt("CurrentDay") == 0)
+        if (model.CurrentDay.Day == 10)
         {
-            model.CurrentDay = new DateTime(2020, 11, 10);
-            PlayerPrefs.SetInt("CurrentDay", model.CurrentDay.Day);
             App.instance.Load();
         }
         else
         {
-            model.CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
             view.ShowContinuePanel(model.CurrentDay);
         }
     }

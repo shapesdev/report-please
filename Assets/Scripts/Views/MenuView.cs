@@ -35,9 +35,10 @@ public class MenuView : MonoBehaviour, IMenuView
         if(PlayerPrefs.GetFloat("MusicVol") != 0)
         {
             soundSlider.value = PlayerPrefs.GetFloat("SoundVol");
-            soundMixer.SetFloat("SoundVol", Mathf.Log10(soundSlider.value) * 20);
-
             musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
+
+            // Formule taikoma norint paversti reikšmes i decibelų reikšmę
+            soundMixer.SetFloat("SoundVol", Mathf.Log10(soundSlider.value) * 20);
             musicMixer.SetFloat("MusicVol", Mathf.Log10(musicSlider.value) * 20);
         }
     }
@@ -55,6 +56,11 @@ public class MenuView : MonoBehaviour, IMenuView
     {
         var eventArgs = new StoryButtonPressedEventArgs();
         OnStoryButtonPressed(this, eventArgs);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void ShowContinuePanel(DateTime time)
@@ -91,14 +97,12 @@ public class MenuView : MonoBehaviour, IMenuView
 
     public void ChangeSoundVolume(float sliderValue)
     {
-        // Formule taikoma paversti i dB reiksme
         soundMixer.SetFloat("SoundVol", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("SoundVol", sliderValue);
     }
 
     public void ChangeMusicVolume(float sliderValue)
     {
-        // Formule taikoma paversti i dB reiksme
         musicMixer.SetFloat("MusicVol", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MusicVol", sliderValue);
     }
