@@ -139,7 +139,7 @@ public class CitationCheckController
                 else if (curScenario.GetDiscrepancy() != null)
                 {
                     string citation = "No Citation";
-                    return Tuple.Create(true, citation);
+                    return Tuple.Create(false, citation);
                 }
             }
             if (bug.isPublic() != true)
