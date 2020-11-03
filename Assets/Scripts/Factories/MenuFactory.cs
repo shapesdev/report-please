@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MenuFactory
 {
@@ -20,17 +18,11 @@ public class MenuFactory
         controller = new MenuController(model, view);
     }
 
-    public void Unload()
-    {
-        GameObject.Destroy(instance);
-    }
+    public void Unload() { GameObject.Destroy(instance); }
 
     public bool IsLoaded()
     {
-        if(instance != null)
-        {
-            return true;
-        }
+        if(instance != null) { return true; }
         return false;
     }
 }

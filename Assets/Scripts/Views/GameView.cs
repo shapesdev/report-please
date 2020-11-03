@@ -2,6 +2,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class GameView : MonoBehaviour, IGameView
 {
@@ -21,6 +24,11 @@ public class GameView : MonoBehaviour, IGameView
     private Text introDateText;
     [SerializeField]
     private Text citationText;
+    [SerializeField]
+    private GameObject nextDayGameObject;
+
+    private PlayableDirector director;
+    public AudioSource source;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
@@ -31,8 +39,26 @@ public class GameView : MonoBehaviour, IGameView
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
     public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
 
+    public static event Action<int> OnEndDay;
+
     public void Init(DateTime day, IScenario scenario)
     {
+        director = GetComponent<PlayableDirector>();
+
+        if (director != null)
+        {
+            TimelineAsset timelineAsset = (TimelineAsset)director.playableAsset;
+
+            foreach (PlayableBinding output in timelineAsset.outputs)
+            {
+                if (output.streamName == "Audio Track")
+                {
+                    director.SetGenericBinding(output.sourceObject, source);
+                }
+            }
+            director.Play();
+        }
+
         gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
         gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
 
@@ -44,8 +70,9 @@ public class GameView : MonoBehaviour, IGameView
 
         dateText.gameObject.transform.SetAsLastSibling();
         topPanel.transform.SetAsLastSibling();
+        nextDayGameObject.transform.SetAsLastSibling();
 
-        TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.07f);
+        TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.08f);
     }
 
     public void ShowScenario(IScenario scenario)
@@ -122,35 +149,97 @@ public class GameView : MonoBehaviour, IGameView
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if(nextDayGameObject.activeInHierarchy == false)
         {
-            var eventArgs = new SpaceBarPressedEventArgs();
-            OnSpaceBarPressed(this, eventArgs);
-        }
-        if(Input.GetKeyUp(KeyCode.Tab))
-        {
-            var eventArgs = new TabPressedEventArgs();
-            OnTabPressed(this, eventArgs);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            var eventArgs = new MousePressedEventArgs();
-            OnMousePressed(this, eventArgs);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            var eventArgs = new MouseReleasedEventArgs();
-            OnMouseReleased(this, eventArgs);
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                var eventArgs = new SpaceBarPressedEventArgs();
+                OnSpaceBarPressed(this, eventArgs);
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                var eventArgs = new TabPressedEventArgs();
+                OnTabPressed(this, eventArgs);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                var eventArgs = new MousePressedEventArgs();
+                OnMousePressed(this, eventArgs);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                var eventArgs = new MouseReleasedEventArgs();
+                OnMouseReleased(this, eventArgs);
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if(nextDayGameObject.activeInHierarchy == false)
         {
-            var eventArgs = new MouseHoldEventArgs();
-            OnMouseHold(this, eventArgs);
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                var eventArgs = new MouseHoldEventArgs();
+                OnMouseHold(this, eventArgs);
+            }
         }
+    }
+
+    public void ShowEndDay(int day)
+    {
+        if(nextDayGameObject.activeInHierarchy == false)
+        {
+            StartCoroutine(DisplayEndScreen(day));
+        }
+    }
+
+    IEnumerator DisplayEndScreen(int day)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(2f);
+
+            nextDayGameObject.SetActive(true);
+            OnEndDay?.Invoke(0);
+
+            yield return new WaitForSeconds(1.5f);
+
+            if (day == 12)
+            {
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day + 
+                    "\n" + "You have finished the game", 0.08f);
+            }
+            else
+            {
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day, 0.08f);
+            }
+
+            yield return new WaitForSeconds(2f);
+
+            if(day == 12)
+            {
+                nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
+                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
+            }
+            else
+            {
+                nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
+                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
+            }
+
+            break;
+        }
+    }
+
+    public void PlayNextDay()
+    {
+        App.instance.LoadNextDay();
+    }
+
+    public void GoBackToMainMenu()
+    {
+        App.instance.Load();
     }
 
     public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)

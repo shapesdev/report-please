@@ -56,7 +56,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
     private void BringGameObjectToFront(GameObject go)
     {
-        go?.transform.SetSiblingIndex(transform.childCount - 4);
+        go?.transform.SetSiblingIndex(transform.childCount - (transform.childCount / 2));
 
         var eventArgs = new GameObjectSelectedEventArgs(true);
         OnGameObjectSelected(this, eventArgs);

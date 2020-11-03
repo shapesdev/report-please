@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class App : MonoBehaviour
 {
@@ -41,6 +38,19 @@ public class App : MonoBehaviour
         {
             gameFactory.Unload();
             menuFactory.Load(menuPrefab);
+        }
+    }
+
+    public void LoadNextDay()
+    {
+        if (PlayerPrefs.GetInt("CurrentDay") < 14)
+        {
+            gameFactory.Unload();
+            gameFactory.Load(gamePrefab, ruleBook);
+        }
+        else
+        {
+            Load();
         }
     }
 }

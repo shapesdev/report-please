@@ -9,10 +9,9 @@ public class MenuModel : IMenuModel
 
     public MenuModel()
     {
-        if(PlayerPrefs.GetInt("CurrentDay") == 0)
+        if (PlayerPrefs.GetInt("CurrentDay") == 0)
         {
             CurrentDay = new DateTime(2020, 11, 10);
-            PlayerPrefs.SetInt("CurrentDay", CurrentDay.Day);
         }
         else
         {
