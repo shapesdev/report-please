@@ -83,7 +83,8 @@ public class GameController
         }
         else
         {
-            view.ShowEndDay();
+            view.ShowEndDay(model.CurrentDay.Day);
+            model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
         }
     }
 

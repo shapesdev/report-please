@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class GameView : MonoBehaviour, IGameView
 {
@@ -25,6 +27,9 @@ public class GameView : MonoBehaviour, IGameView
     [SerializeField]
     private GameObject nextDayGameObject;
 
+    private PlayableDirector director;
+    public AudioSource source;
+
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
     public event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed = (sender, e) => { };
     public event EventHandler<TabPressedEventArgs> OnTabPressed = (sender, e) => { };
@@ -38,6 +43,22 @@ public class GameView : MonoBehaviour, IGameView
 
     public void Init(DateTime day, IScenario scenario)
     {
+        director = GetComponent<PlayableDirector>();
+
+        if (director != null)
+        {
+            TimelineAsset timelineAsset = (TimelineAsset)director.playableAsset;
+
+            foreach (PlayableBinding output in timelineAsset.outputs)
+            {
+                if (output.streamName == "Audio Track")
+                {
+                    director.SetGenericBinding(output.sourceObject, source);
+                }
+            }
+            director.Play();
+        }
+
         gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
         gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
 
@@ -165,15 +186,15 @@ public class GameView : MonoBehaviour, IGameView
         }
     }
 
-    public void ShowEndDay()
+    public void ShowEndDay(int day)
     {
         if(nextDayGameObject.activeInHierarchy == false)
         {
-            StartCoroutine(DisplayEndScreen());
+            StartCoroutine(DisplayEndScreen(day));
         }
     }
 
-    IEnumerator DisplayEndScreen()
+    IEnumerator DisplayEndScreen(int day)
     {
         while(true)
         {
@@ -184,24 +205,28 @@ public class GameView : MonoBehaviour, IGameView
 
             yield return new WaitForSeconds(1.5f);
 
-            if (PlayerPrefs.GetInt("CurrentDay") == 13)
+            if (day == 12)
             {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + PlayerPrefs.GetInt("CurrentDay") + 
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day + 
                     "\n" + "You have finished the game", 0.08f);
             }
             else
             {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + PlayerPrefs.GetInt("CurrentDay"), 0.08f);
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day, 0.08f);
             }
 
             yield return new WaitForSeconds(2f);
 
-            if(PlayerPrefs.GetInt("CurrentDay") == 13)
+            if(day == 12)
             {
-                nextDayGameObject.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = "Go back to Main menu";
+                nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
+                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             }
-
-            nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
+            else
+            {
+                nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
+                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
+            }
 
             break;
         }
@@ -210,6 +235,11 @@ public class GameView : MonoBehaviour, IGameView
     public void PlayNextDay()
     {
         App.instance.LoadNextDay();
+    }
+
+    public void GoBackToMainMenu()
+    {
+        App.instance.Load();
     }
 
     public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)

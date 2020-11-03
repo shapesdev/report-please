@@ -23,14 +23,16 @@ public class MenuController
 
     private void View_OnStoryButtonPressed(object sender, StoryButtonPressedEventArgs e)
     {
-        if(model.CurrentDay.Day == 10)
+        if (PlayerPrefs.GetInt("CurrentDay") == 0)
         {
-            Debug.Log("Show something lol");
+            model.CurrentDay = new DateTime(2020, 11, 10);
+            PlayerPrefs.SetInt("CurrentDay", model.CurrentDay.Day);
             App.instance.Load();
         }
         else
         {
-            App.instance.Load();
+            model.CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
+            view.ShowContinuePanel(model.CurrentDay);
         }
     }
 }

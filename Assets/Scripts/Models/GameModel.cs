@@ -5,10 +5,21 @@ using System;
 
 public class GameModel: IGameModel
 {
+    private DateTime currentDay;
+
     public Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
     public List<Discrepancy> Discrepancies { get; }
     public GameGeneralView CurrentCard { get; set; }
-    public DateTime CurrentDay { get; set; }
+    public DateTime CurrentDay { get
+        {
+            return currentDay;
+        }
+        set
+        {
+            currentDay = value;
+            PlayerPrefs.SetInt("CurrentDay", currentDay.Day);
+        }
+    }
     public float CurrentPanelWidth { get; set; }
     public int CurrentScenario { get; set; } = 0;
     public bool Selected { get; set; }

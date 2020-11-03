@@ -11,7 +11,7 @@ public interface IGameView : IOffsetView
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
-    void ShowEndDay();
+    void ShowEndDay(int day);
 
     event EventHandler<DragRightEventArgs> OnDragRight;
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;

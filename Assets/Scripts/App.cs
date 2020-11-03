@@ -46,9 +46,8 @@ public class App : MonoBehaviour
 
     public void LoadNextDay()
     {
-        if (PlayerPrefs.GetInt("CurrentDay") < 13)
+        if (PlayerPrefs.GetInt("CurrentDay") < 14)
         {
-            PlayerPrefs.SetInt("CurrentDay", PlayerPrefs.GetInt("CurrentDay") + 1);
             gameFactory.Unload();
             gameFactory.Load(gamePrefab, ruleBook);
         }
