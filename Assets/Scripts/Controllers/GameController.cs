@@ -84,7 +84,10 @@ public class GameController
         else
         {
             view.ShowEndDay(model.CurrentDay.Day);
-            model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
+            if(model.CurrentDay.Day != 13)
+            {
+                model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
+            }
         }
     }
 
@@ -143,8 +146,9 @@ public class GameController
         else if(model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
-            lineController.ClearLine(true);
+            lineController.ClearLine(true);          
             OnInspectorMode?.Invoke(1);
+            view.TurnOffFieldText();
         }
     }
 
@@ -182,6 +186,7 @@ public class GameController
         var values = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
             [model.CurrentScenario].GetDiscrepancy());
 
+
         model.DiscrepancyFound = values.Item2;
 
         OnDiscrepancy?.Invoke();
@@ -189,14 +194,17 @@ public class GameController
         if (values.Item1 == true && values.Item2 == true)
         {
             Debug.Log("Discrepancy is found");
+            view.DisplayFieldText("Discrepancy found");
         }
         else if(values.Item1 == true)
         {
             Debug.Log("Matching Data");
+            view.DisplayFieldText("Matching Data");
         }
         else
         {
             Debug.Log("No Correlation");
+            view.DisplayFieldText("No correlation");
         }
     }
 }
