@@ -136,11 +136,6 @@ public class CitationCheckController
                     string citation = "Correct Report Denied";
                     return Tuple.Create(true, citation);
                 }
-                else if (curScenario.GetDiscrepancy() != null)
-                {
-                    string citation = "No Citation";
-                    return Tuple.Create(false, citation);
-                }
             }
             if (bug.isPublic() != true)
             {

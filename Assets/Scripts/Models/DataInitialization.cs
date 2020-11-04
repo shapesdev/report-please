@@ -167,7 +167,7 @@ public class DataInitialization
         "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
 
         Response response9 = new Response(1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
-        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://tracker.diversity.com/1244555\n\n" +
+        "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://issuetracker.diversity.com/1244555\n\n" +
         "We highly appreciate your contribution. If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
@@ -202,7 +202,7 @@ public class DataInitialization
         Tester tester2 = new Tester("Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
 
         Response response1 = new Response(1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
-        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://tracker.diversity.com/1212956\n\n" +
+        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.diversity.com/1212956\n\n" +
         "Please reach out to me if I can answer any questions or be of further help.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
