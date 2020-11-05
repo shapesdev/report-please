@@ -27,6 +27,8 @@ public class GameView : MonoBehaviour, IGameView
     [SerializeField]
     private GameObject nextDayGameObject;
 
+    public Text fieldCheckerText;
+
     private PlayableDirector director;
     public AudioSource source;
 
@@ -73,6 +75,19 @@ public class GameView : MonoBehaviour, IGameView
         nextDayGameObject.transform.SetAsLastSibling();
 
         TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.08f);
+    }
+
+    public void DisplayFieldText(string value)
+    {
+        fieldCheckerText.text = value;
+        fieldCheckerText.color = ColorHelper.instance.NormalModeColor;
+
+        Invoke("TurnOffFieldText", 1f);
+    }
+
+    public void TurnOffFieldText()
+    {
+        fieldCheckerText.text = "";
     }
 
     public void ShowScenario(IScenario scenario)
@@ -205,7 +220,7 @@ public class GameView : MonoBehaviour, IGameView
 
             yield return new WaitForSeconds(1.5f);
 
-            if (day == 12)
+            if (day == 13)
             {
                 TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day + 
                     "\n" + "You have finished the game", 0.08f);
@@ -217,7 +232,7 @@ public class GameView : MonoBehaviour, IGameView
 
             yield return new WaitForSeconds(2f);
 
-            if(day == 12)
+            if(day == 13)
             {
                 nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
                 nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
