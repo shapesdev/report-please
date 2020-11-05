@@ -48,6 +48,7 @@ public class FieldCheckController
                     (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
                 {
                     correlation = true;
+                    Debug.Log(correlation);
                 }
             }
         }
@@ -57,15 +58,12 @@ public class FieldCheckController
             if ((discrepancy.firstTag == field1.tag && discrepancy.secondTag == field2.tag) ||
                 (discrepancy.firstTag == field2.tag && discrepancy.secondTag == field1.tag))
             {
-                if ((field1.tag == "FAV" && field2.tag == "ReproWith") || (field2.tag == "FAV" && field1.tag == "ReproWith") ||
-                        (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
-                {
-                    discrepancyFound = true;
-                }
-                else
-                {
-                    discrepancyFound = true;
-                }     
+                discrepancyFound = true;
+            }
+            else if ((field1.tag == "FAV" && field2.tag == "ReproWith") || (field2.tag == "FAV" && field1.tag == "ReproWith") ||
+        (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
+            {
+                discrepancyFound = true;
             }
         }
 
