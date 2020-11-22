@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class GameModel: IGameModel
+public class StoryGameModel: IStoryGameModel
 {
     private DateTime currentDay;
 
     public Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
     public List<Discrepancy> Discrepancies { get; }
-    public GameGeneralView CurrentCard { get; set; }
+    public GameGeneralView CurrentGeneralView { get; set; }
     public DateTime CurrentDay { get
         {
             return currentDay;
@@ -28,13 +28,12 @@ public class GameModel: IGameModel
     public bool InspectorMode { get; set; }
     public Vector3 Offset { get; set; }
     public GameObject SelectedGameObject { get; set; }
-
     public RuleBookSO RuleBook { get; }
     public bool DiscrepancyFound { get; set; }
 
     public Stamp CurrentStamp { get; set; }
 
-    public GameModel(RuleBookSO ruleBook)
+    public StoryGameModel(RuleBookSO ruleBook)
     {
         RuleBook = ruleBook;
         DataInitialization dataInitialization = new DataInitialization();

@@ -6,11 +6,11 @@ using UnityEngine;
 public class DragRightEventArgs : EventArgs
 {
     public float panelWidth;
-    public GameGeneralView card;
+    public GameGeneralView generalView;
 
-    public DragRightEventArgs(float width, GameGeneralView card)
+    public DragRightEventArgs(float width, GameGeneralView generalView)
     {
         panelWidth = width;
-        this.card = card;
+        this.generalView = generalView;
     }
 }

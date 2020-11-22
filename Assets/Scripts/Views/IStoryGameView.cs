@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameView : IOffsetView
+public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
     void ShowScenario(IScenario scenario);

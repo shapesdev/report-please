@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-public class GameView : MonoBehaviour, IGameView
+public class StoryGameView : MonoBehaviour, IStoryGameView
 {
     private IGameScenarioView[] gameScenarioViews;
     private IGameGeneralView[] gamegeneralViews;
@@ -19,14 +19,14 @@ public class GameView : MonoBehaviour, IGameView
     [SerializeField]
     private GameObject topPanel;
     [SerializeField]
+    private GameObject nextDayGameObject;
+
+    [SerializeField]
     private TMP_Text dateText;
     [SerializeField]
     private Text introDateText;
     [SerializeField]
     private Text citationText;
-    [SerializeField]
-    private GameObject nextDayGameObject;
-
     public Text fieldCheckerText;
 
     private PlayableDirector director;
@@ -121,6 +121,8 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach(var img in allImages)
         {
+            img.raycastTarget = false;
+
             if(img.color.a > 0.8f)
             {
                 img.color = ColorHelper.instance.InspectorModeColor;
@@ -147,7 +149,9 @@ public class GameView : MonoBehaviour, IGameView
 
         foreach (var img in allImages)
         {
-            if(img.color.a > 0.8f)
+            img.raycastTarget = true;
+
+            if (img.color.a > 0.8f)
             {
                 img.color = ColorHelper.instance.NormalModeColor;
             }
@@ -164,7 +168,7 @@ public class GameView : MonoBehaviour, IGameView
 
     private void Update()
     {
-        if(nextDayGameObject.activeInHierarchy == false)
+        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing)
         {
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -191,7 +195,7 @@ public class GameView : MonoBehaviour, IGameView
 
     private void FixedUpdate()
     {
-        if(nextDayGameObject.activeInHierarchy == false)
+        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing)
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
@@ -199,6 +203,12 @@ public class GameView : MonoBehaviour, IGameView
                 OnMouseHold(this, eventArgs);
             }
         }
+    }
+
+    public void OpenCloseStampPanel()
+    {
+        var eventArgs = new TabPressedEventArgs();
+        OnTabPressed(this, eventArgs);
     }
 
     public void ShowEndDay(int day)
@@ -263,7 +273,6 @@ public class GameView : MonoBehaviour, IGameView
         {
             if (offsetSet == false)
             {
-                Cursor.lockState = CursorLockMode.Confined;
                 offset = Input.mousePosition - selectedGO.transform.localPosition;
 
                 var offsetValueEventArgs = new OffsetValueEventArgs(offset);
@@ -273,19 +282,28 @@ public class GameView : MonoBehaviour, IGameView
                 OnOffsetSet(this, offsetEventArgs);
             }
 
-            if (Input.mousePosition.y <= Screen.height - 300f && Input.mousePosition.y >= 0f)
-            {
-#if UNITY_STANDALONE_OSX
-        if(Input.mousePosition.x <= Screen.width && Input.mousePosition.x >= 0f)
-        {
-            selectedGO.transform.localPosition = Input.mousePosition - offset;
-        }
-#endif
+            Vector3 mousePos = Vector3.zero;
 
-#if UNITY_STANDALONE_WIN
-                selectedGO.transform.localPosition = Input.mousePosition - offset;
-#endif
+            if(Input.mousePosition.x > Screen.width - 1200f)
+            {
+                var yMax = Screen.height - 300f;
+                var xMax = Screen.width;
+
+                mousePos.y = Mathf.Clamp(Input.mousePosition.y, 0f, yMax);
+                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
             }
+            else
+            {
+                var yMax = Screen.height - 300f;
+                var yMin = 200f;
+                var xMax = Screen.width;
+
+                mousePos.y = Mathf.Clamp(Input.mousePosition.y, yMin, yMax);
+                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
+            }
+
+            selectedGO.transform.localPosition = mousePos - offset;
+
             var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<GameGeneralView>());
             OnDragRight(this, eventArgs);
         }

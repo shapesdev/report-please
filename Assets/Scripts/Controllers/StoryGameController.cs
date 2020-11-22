@@ -5,10 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GameController
+public class StoryGameController
 {
-    private readonly IGameModel model;
-    private readonly IGameView view;
+    private readonly IStoryGameModel model;
+    private readonly IStoryGameView view;
     private readonly IGameSelectionView selectionView;
     private readonly IGameStampView stampView;
     private readonly ILineController lineController;
@@ -22,7 +22,7 @@ public class GameController
     public static event Action OnDiscrepancy;
     public static event Action OnCitation;
 
-    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
+    public StoryGameController(IStoryGameModel model, IStoryGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
     {
         this.model = model;
         this.view = view;
@@ -114,10 +114,10 @@ public class GameController
 
     private void View_OnDragRight(object sender, DragRightEventArgs e)
     {
-        model.CurrentCard = e.card;
+        model.CurrentGeneralView = e.generalView;
         model.CurrentPanelWidth = e.panelWidth;
 
-        model.CurrentCard.Check(model.CurrentPanelWidth);
+        model.CurrentGeneralView.Check(model.CurrentPanelWidth);
     }
 
     private void View_OnMouseHold(object sender, MouseHoldEventArgs e)
