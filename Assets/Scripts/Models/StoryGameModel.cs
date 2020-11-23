@@ -30,8 +30,9 @@ public class StoryGameModel: IStoryGameModel
     public GameObject SelectedGameObject { get; set; }
     public RuleBookSO RuleBook { get; }
     public bool DiscrepancyFound { get; set; }
-
     public Stamp CurrentStamp { get; set; }
+    public int CurrentScore { get; set; }
+    public int MaxScore { get; set; }
 
     public StoryGameModel(RuleBookSO ruleBook)
     {

@@ -20,6 +20,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     private GameObject topPanel;
     [SerializeField]
     private GameObject nextDayGameObject;
+    [SerializeField]
+    private GameObject pausePanel;
 
     [SerializeField]
     private TMP_Text dateText;
@@ -42,6 +44,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
 
     public static event Action<int> OnEndDay;
+    public static event Action<bool> OnPause;
 
     public void Init(DateTime day, IScenario scenario)
     {
@@ -72,7 +75,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
         dateText.gameObject.transform.SetAsLastSibling();
         topPanel.transform.SetAsLastSibling();
-        nextDayGameObject.transform.SetAsLastSibling();
+        nextDayGameObject.transform.parent.SetAsLastSibling();
 
         TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.08f);
     }
@@ -166,9 +169,29 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         }
     }
 
+    public void OpenClosePausePanel()
+    {
+        if (pausePanel.activeInHierarchy == false)
+        {
+            pausePanel.SetActive(true);
+            OnPause.Invoke(true);
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+            OnPause.Invoke(false);
+        }
+    }
+
+
     private void Update()
     {
-        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing)
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            OpenClosePausePanel();
+        }
+
+        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing && pausePanel.activeInHierarchy == false)
         {
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -195,7 +218,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
     private void FixedUpdate()
     {
-        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing)
+        if(nextDayGameObject.activeInHierarchy == false && director.state != PlayState.Playing && pausePanel.activeInHierarchy == false)
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
@@ -211,15 +234,15 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         OnTabPressed(this, eventArgs);
     }
 
-    public void ShowEndDay(int day)
+    public void ShowEndDay(int day, int score, int maxScore)
     {
         if(nextDayGameObject.activeInHierarchy == false)
         {
-            StartCoroutine(DisplayEndScreen(day));
+            StartCoroutine(DisplayEndScreen(day, score, maxScore));
         }
     }
 
-    IEnumerator DisplayEndScreen(int day)
+    IEnumerator DisplayEndScreen(int day, int score, int maxScore)
     {
         while(true)
         {
@@ -232,12 +255,13 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
             if (day == 13)
             {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day + 
-                    "\n" + "You have finished the game", 0.08f);
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "You finished the last day " + day + 
+                    "\n\n" + "SCORE: " + score + "/" + maxScore, 0.08f);
             }
             else
             {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day, 0.08f);
+                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day
+                    + "\n\nSCORE: " + score + "/" + maxScore, 0.08f);
             }
 
             yield return new WaitForSeconds(2f);
@@ -264,6 +288,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
     public void GoBackToMainMenu()
     {
+        OnPause.Invoke(false);
         App.instance.Load();
     }
 

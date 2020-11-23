@@ -6,6 +6,7 @@ using UnityEngine;
 public class Response : IScenario
 {
     private int caseID;
+    private string title;
     private DateTime lastUserReply;
     private DateTime dateSent;
     private string emailSentFrom;
@@ -15,8 +16,9 @@ public class Response : IScenario
     private CloseType testerClosedType;
     private Discrepancy discrepancy;
 
-    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, Discrepancy discrepancy)
+    public Response(string title, int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, Discrepancy discrepancy)
     {
+        this.title = title;
         caseID = id;
         lastUserReply = userReply;
         dateSent = testerSent;
@@ -26,8 +28,9 @@ public class Response : IScenario
         this.discrepancy = discrepancy;
     }
 
-    public Response(int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, CloseType testerClose, CloseType correctCloseType, Discrepancy discrepancy)
+    public Response(string title, int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, CloseType testerClose, CloseType correctCloseType, Discrepancy discrepancy)
     {
+        this.title = title;
         caseID = id;
         lastUserReply = userReply;
         dateSent = testerSent;
@@ -92,5 +95,10 @@ public class Response : IScenario
     public string GetFirstAffected()
     {
         return string.Empty;
+    }
+
+    public string GetTitle()
+    {
+        return title;
     }
 }

@@ -11,7 +11,7 @@ public interface IStoryGameView : IOffsetView
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
-    void ShowEndDay(int day);
+    void ShowEndDay(int day, int curScore, int maxScore);
     void DisplayFieldText(string value);
     void TurnOffFieldText();
 

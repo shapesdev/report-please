@@ -15,6 +15,7 @@ public class StoryGameController
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
+    private StatsHelper statsHelper;
 
     public static event Action<int> OnGameInitialized;
     public static event Action<int> OnInspectorMode;
@@ -34,8 +35,10 @@ public class StoryGameController
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
+        statsHelper = new StatsHelper();
 
         model.DiscrepancyFound = false;
+        model.MaxScore = model.DaysWithScenarios[model.CurrentDay].Count * 10;
 
         view.OnMousePressed += View_OnMousePressed;
         view.OnMouseReleased += View_OnMouseReleased;
@@ -61,15 +64,30 @@ public class StoryGameController
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
-            model.DiscrepancyFound, model.CurrentStamp);
+            model.CurrentStamp);
+
+        int score = 0;
 
         if(citation.Item1 == true)
         {
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
+
+            if(model.DiscrepancyFound == true)
+            {
+                score = 5;
+            }
+        }
+        else
+        {
+            score = 10;
         }
 
-        Debug.Log(citation.Item2);
+        model.CurrentScore += score;
+
+        statsHelper.AddLevel(new ScenarioStats(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetCaseID(),
+            model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTitle(), citation.Item2, score));
+
         model.DiscrepancyFound = false;
         model.CurrentStamp = Stamp.Empty;
 
@@ -83,7 +101,9 @@ public class StoryGameController
         }
         else
         {
-            view.ShowEndDay(model.CurrentDay.Day);
+            statsHelper.SaveLevels();
+            view.ShowEndDay(model.CurrentDay.Day, model.CurrentScore, model.MaxScore);
+
             if(model.CurrentDay.Day != 13)
             {
                 model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
@@ -136,7 +156,6 @@ public class StoryGameController
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
         model.InspectorMode = !model.InspectorMode;
-        Debug.Log("INSPECTOR MODE IS:" + model.InspectorMode);
 
         if (model.InspectorMode == true)
         {
@@ -186,24 +205,19 @@ public class StoryGameController
         var values = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
             [model.CurrentScenario].GetDiscrepancy());
 
-
         model.DiscrepancyFound = values.Item2;
-
         OnDiscrepancy?.Invoke();
 
         if (values.Item1 == true && values.Item2 == true)
         {
-            Debug.Log("Discrepancy is found");
             view.DisplayFieldText("Discrepancy found");
         }
         else if(values.Item1 == true)
         {
-            Debug.Log("Matching Data");
             view.DisplayFieldText("Matching Data");
         }
         else
         {
-            Debug.Log("No Correlation");
             view.DisplayFieldText("No correlation");
         }
     }

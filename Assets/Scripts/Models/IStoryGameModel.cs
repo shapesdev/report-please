@@ -20,4 +20,6 @@ public interface IStoryGameModel
     RuleBookSO RuleBook { get; }
     bool DiscrepancyFound { get; set; }
     Stamp CurrentStamp { get; set; }
+    int CurrentScore { get; set; }
+    int MaxScore { get; set; }
 }

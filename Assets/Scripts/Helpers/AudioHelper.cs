@@ -35,6 +35,7 @@ public class AudioHelper : MonoBehaviour
         TextWriterModel.OnTextWrite += PlayTextWriteSound;
 
         StoryGameView.OnEndDay += PlayMusic;
+        StoryGameView.OnPause += MuteUnMuteMusic;
     }
 
     private void OnDisable()
@@ -60,6 +61,19 @@ public class AudioHelper : MonoBehaviour
         TextWriterModel.OnTextWrite -= PlayTextWriteSound;
 
         StoryGameView.OnEndDay -= PlayMusic;
+        StoryGameView.OnPause -= MuteUnMuteMusic;
+    }
+
+    private void MuteUnMuteMusic(bool value)
+    {
+        if(value == true)
+        {
+            musicSource.volume = 0;
+        }
+        else
+        {
+            musicSource.volume = 1;
+        }
     }
 
     private void PlayMusic(int value)
