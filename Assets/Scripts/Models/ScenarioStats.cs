@@ -6,17 +6,18 @@ using System;
 [System.Serializable]
 public class ScenarioStats
 {
-    public DateTime day;
-    public int caseID { get; set; }
-    public string caseTitle { get; set; }
-    public string citation { get; set; }
-    public int score { get; set; }
+    public string day;
+    public int caseID;
+    public string caseTitle;
+    public string citation;
+    public int score;
 
-    public ScenarioStats(DateTime day, int caseID, string caseTitle, string citation, int score)
+    public ScenarioStats(string day, int caseID, string caseTitle, string citation, int score)
     {
         this.day = day;
         this.caseID = caseID;
         this.caseTitle = caseTitle;
+        this.citation = citation;
         this.score = score;
     }
 }

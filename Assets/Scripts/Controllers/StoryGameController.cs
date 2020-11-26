@@ -85,7 +85,7 @@ public class StoryGameController
 
         model.CurrentScore += score;
 
-        statsHelper.AddLevel(new ScenarioStats(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetCaseID(),
+        statsHelper.AddLevel(new ScenarioStats(model.CurrentDay.ToString("MMMM dd, yyyy"), model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetCaseID(),
             model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTitle(), citation.Item2, score));
 
         model.DiscrepancyFound = false;

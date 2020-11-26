@@ -7,4 +7,9 @@ using UnityEngine;
 public class LevelStats
 {
     public List<ScenarioStats> levels;
+
+    public LevelStats()
+    {
+        levels = new List<ScenarioStats>();
+    }
 }

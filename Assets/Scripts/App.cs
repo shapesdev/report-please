@@ -16,6 +16,7 @@ public class App : MonoBehaviour
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         Init();
     }
 

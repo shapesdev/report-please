@@ -8,7 +8,7 @@ public class StatsHelper
 
     public StatsHelper()
     {
-        if(PlayerPrefs.GetString("Stats") == "")
+        if(PlayerPrefs.GetString("Stats") == string.Empty)
         {
             LoadDefaultStats();
         }
