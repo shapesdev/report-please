@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameView : IOffsetView
+public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
     void ShowScenario(IScenario scenario);
@@ -11,7 +11,7 @@ public interface IGameView : IOffsetView
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
-    void ShowEndDay(int day);
+    void ShowEndDay(int day, int curScore, int maxScore);
     void DisplayFieldText(string value);
     void TurnOffFieldText();
 

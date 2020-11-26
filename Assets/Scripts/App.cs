@@ -5,24 +5,25 @@ public class App : MonoBehaviour
     public static App instance;
 
     [SerializeField]
-    private GameObject gamePrefab;
+    private GameObject storyGamePrefab;
     [SerializeField]
     private GameObject menuPrefab;
     [SerializeField]
     private RuleBookSO ruleBook;
 
-    private GameFactory gameFactory;
+    private StoryGameFactory storyGameFactory;
     private MenuFactory menuFactory;
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         Init();
     }
 
     private void Init()
     {
         instance = this;
-        gameFactory = new GameFactory();
+        storyGameFactory = new StoryGameFactory();
         menuFactory = new MenuFactory();
         menuFactory.Load(menuPrefab);
     }
@@ -32,11 +33,11 @@ public class App : MonoBehaviour
         if(menuFactory.IsLoaded())
         {
             menuFactory.Unload();
-            gameFactory.Load(gamePrefab, ruleBook);
+            storyGameFactory.Load(storyGamePrefab, ruleBook);
         }
-        else if (gameFactory.IsLoaded())
+        else if (storyGameFactory.IsLoaded())
         {
-            gameFactory.Unload();
+            storyGameFactory.Unload();
             menuFactory.Load(menuPrefab);
         }
     }
@@ -45,8 +46,8 @@ public class App : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("CurrentDay") < 14)
         {
-            gameFactory.Unload();
-            gameFactory.Load(gamePrefab, ruleBook);
+            storyGameFactory.Unload();
+            storyGameFactory.Load(storyGamePrefab, ruleBook);
         }
         else
         {

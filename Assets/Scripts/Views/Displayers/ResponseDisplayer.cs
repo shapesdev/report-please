@@ -17,6 +17,8 @@ public class ResponseDisplayer : GeneralDisplayer
     private TMP_Text emailSentFrom;
     [SerializeField]
     private TMP_Text status;
+    [SerializeField]
+    private TMP_Text title;
 
     [SerializeField]
     private TMP_Text[] allTexts;
@@ -27,17 +29,27 @@ public class ResponseDisplayer : GeneralDisplayer
         {
             var response = (Response)scenario;
 
-            caseId.text = response.GetCaseID().ToString();
+            title.text = response.GetTitle();
+            caseId.text = "Case id: " + response.GetCaseID().ToString();
             reply.text = response.GetEmail();
             dateSent.text = response.GetDateSent().ToString("yyyy/MM/dd");
             lastReplyDate.text = response.GetLastReplyDate().ToString("yyyy/MM/dd");
             emailSentFrom.text = response.GetEmailSentFrom();
             if (response.GetCloseType() == CloseType.Empty)
             {
-                status.text = "Status: Active (New)";
+                status.text = "";
             }
             else
             {
+                if(response.GetCloseType() == CloseType.PendingInformation)
+                {
+                    status.text = "Status: Pending Information";
+                }
+                if(response.GetCloseType() == CloseType.Active)
+                {
+                    status.text = "Status: Active (New)";
+                }
+
                 if (response.GetCloseType() == CloseType.NotQualified)
                 {
                     status.text = "Status: Closed (Not Qualified)";

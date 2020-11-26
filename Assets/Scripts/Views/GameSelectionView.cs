@@ -70,18 +70,23 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         var eventArgs2 = new OffsetSetEventArgs(false);
         OnOffsetSet(this, eventArgs2);
 
-/*        if(inspector == false && go != null)
-        {
-            OnPaperDrag?.Invoke(1);
-        }*/
-
-        Cursor.lockState = CursorLockMode.None;
-
         if (go != null)
         {
-            if (PaperCanBeReturned(go.transform.position, go, canBeReturned))
+            Vector3[] v = new Vector3[4];
+            returnArea.GetWorldCorners(v);
+
+            if (go.transform.position.x >= v[0].x && go.transform.position.x <= v[3].x
+                && go.transform.position.y >= v[0].y && go.transform.position.y <= v[1].y)
             {
-                go.gameObject.SetActive(false);
+                if (PaperCanBeReturned(go.transform.position, go, canBeReturned))
+                {
+
+                    go.gameObject.SetActive(false);
+                }
+                else
+                {
+                    go.transform.localPosition = new Vector3(-600, -320, 0);
+                }
             }
         }
 
@@ -103,13 +108,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
                 {
                     if (GetComponentInChildren<StampTest>() != null || canBeReturned)
                     {
-                        Vector3[] v = new Vector3[4];
-                        returnArea.GetWorldCorners(v);
-
-                        if (pos.x >= v[0].x && pos.x <= v[3].x && pos.y >= v[0].y && pos.y <= v[1].y)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
@@ -126,6 +125,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
     {
         foreach (var go in selectableGameObjects)
         {
+            go.transform.localPosition = new Vector3(-600, -320, 0);
             go.SetActive(true);
         }
     }

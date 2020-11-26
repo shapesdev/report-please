@@ -14,10 +14,10 @@ public class AudioHelper : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.OnGameInitialized += PlayMusic;
-        GameController.OnInspectorMode += PlayInspectorSound;
-        GameController.OnDiscrepancy += PlayDiscrepancySound;
-        GameController.OnCitation += PlayCitationSound;
+        StoryGameController.OnGameInitialized += PlayMusic;
+        StoryGameController.OnInspectorMode += PlayInspectorSound;
+        StoryGameController.OnDiscrepancy += PlayDiscrepancySound;
+        StoryGameController.OnCitation += PlayCitationSound;
 
         MenuController.OnMenuInitialized += PlayMusic;
 
@@ -34,15 +34,16 @@ public class AudioHelper : MonoBehaviour
 
         TextWriterModel.OnTextWrite += PlayTextWriteSound;
 
-        GameView.OnEndDay += PlayMusic;
+        StoryGameView.OnEndDay += PlayMusic;
+        StoryGameView.OnPause += MuteUnMuteMusic;
     }
 
     private void OnDisable()
     {
-        GameController.OnGameInitialized -= PlayMusic;
-        GameController.OnInspectorMode -= PlayInspectorSound;
-        GameController.OnDiscrepancy -= PlayDiscrepancySound;
-        GameController.OnCitation -= PlayCitationSound;
+        StoryGameController.OnGameInitialized -= PlayMusic;
+        StoryGameController.OnInspectorMode -= PlayInspectorSound;
+        StoryGameController.OnDiscrepancy -= PlayDiscrepancySound;
+        StoryGameController.OnCitation -= PlayCitationSound;
 
         MenuController.OnMenuInitialized -= PlayMusic;
 
@@ -59,7 +60,20 @@ public class AudioHelper : MonoBehaviour
 
         TextWriterModel.OnTextWrite -= PlayTextWriteSound;
 
-        GameView.OnEndDay -= PlayMusic;
+        StoryGameView.OnEndDay -= PlayMusic;
+        StoryGameView.OnPause -= MuteUnMuteMusic;
+    }
+
+    private void MuteUnMuteMusic(bool value)
+    {
+        if(value == true)
+        {
+            musicSource.volume = 0;
+        }
+        else
+        {
+            musicSource.volume = 1;
+        }
     }
 
     private void PlayMusic(int value)

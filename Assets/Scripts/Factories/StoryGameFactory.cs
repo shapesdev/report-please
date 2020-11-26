@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class GameFactory
+public class StoryGameFactory
 {
-    public GameController controller { get; private set; }
-    public GameModel model { get; private set; }
-    public GameView view { get; private set; }
+    public StoryGameController controller { get; private set; }
+    public StoryGameModel model { get; private set; }
+    public StoryGameView view { get; private set; }
 
     private GameObject instance;
 
@@ -13,13 +13,13 @@ public class GameFactory
     {
         instance = GameObject.Instantiate(gamePrefab);
 
-        view = instance.GetComponent<GameView>();
+        view = instance.GetComponent<StoryGameView>();
         var selectionView = instance.GetComponentInChildren<GameSelectionView>();
         var stampView = instance.GetComponentInChildren<GameStampView>();
         var lineView = instance.GetComponentInChildren<LineController>();
 
-        model = new GameModel(ruleBook);
-        controller = new GameController(model, view, selectionView, stampView, lineView);
+        model = new StoryGameModel(ruleBook);
+        controller = new StoryGameController(model, view, selectionView, stampView, lineView);
     }
 
     public void Unload()

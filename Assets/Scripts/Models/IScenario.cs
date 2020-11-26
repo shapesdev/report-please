@@ -7,4 +7,6 @@ public interface IScenario
     ReportType GetReportType();
     Tester GetTester();
     Discrepancy GetDiscrepancy();
+    int GetCaseID();
+    string GetTitle();
 }

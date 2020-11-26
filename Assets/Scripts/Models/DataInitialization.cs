@@ -100,7 +100,7 @@ public class DataInitialization
         Tester tester1 = new Tester("Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25));
         Tester tester2 = new Tester("Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
 
-        Response response1 = new Response(1122777, new DateTime(2020, 11, 3), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response1 = new Response("Cursor is visible during Play Mode", 1122777, new DateTime(2020, 11, 3), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
         "Sadly I couldn't reproduce the issue. Would it be possible for you to provide a video format of the issue, so we could reproduce it on our side?\n\n" +
         "Looking forward to your reply.\n\n" +
@@ -108,7 +108,7 @@ public class DataInitialization
         + tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
-        Response response2 = new Response(1122778, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response2 = new Response("2017.4 Diversity keeps crashing when opened", 1122778, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for getting in touch!\n\n" +
         "We no longer support Diversity versions lower than Diversity 2019.4 except for Diversity 2018.4 LTS (long - term support) version.\n\n" +
         "Please update to the newest stable version here: https://diversity.com/get-diversity/update\n\n" +
@@ -117,7 +117,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
-        Response response3 = new Response(1122779, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response3 = new Response("Diversity stopped working", 1122779, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for reporting the issue.\n\n" +
         "Could you please give us more details by doing the following steps:\n\n" +
         "1. Attach an example project\n" +
@@ -128,7 +128,7 @@ public class DataInitialization
         "Petras\n" +
         "Diversity QA Team\n", tester1.GetEmail(), tester1, new Discrepancy("Reply", "Name"));
 
-        Response response4 = new Response(1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response4 = new Response("Please add more tutorials in Diversity", 1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
         "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/. The forums are a great place for discussion, ideation, and inspiration between community members and Diversity team members.\n\n" +
         "If you have any further questions, feel free to contact our team.\n\n" +
@@ -136,14 +136,14 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, new Discrepancy("Reply", "EmptyLineRule"));
 
-        Response response5 = new Response(1122781, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response5 = new Response("Builder 3D Pack is broken when imported in Diversity", 1122781, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
-        Response response6 = new Response(1244581, new DateTime(2020, 11, 5), new DateTime(2020, 11, 10), "Hi ,  \n\n" +
+        Response response6 = new Response("Buttons are not interactable in the Diversity Editor", 1244581, new DateTime(2020, 11, 5), new DateTime(2020, 11, 10), "Hi ,  \n\n" +
         "Thank  you  for  contacting Diversity  about  your  issue.\n\n" +
         "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue?\n\n" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
@@ -151,14 +151,14 @@ public class DataInitialization
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "DoubleSpacesRule"));
 
-        Response response7 = new Response(1244582, new DateTime(2020, 11, 6), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response7 = new Response("Particles are broken", 1244582, new DateTime(2020, 11, 6), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step - by - step directions ? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2, new Discrepancy("Email", "Email"));
 
-        Response response8 = new Response(1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response8 = new Response("My project crashed when I was browsing Internet Explorer", 1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity about your issue.\n\n" +
         "Unfortunately, we are not able to reproduce it. Are you still experiencing this problem or was it a one time issue ?\n\n" +
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
@@ -166,19 +166,19 @@ public class DataInitialization
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
 
-        Response response9 = new Response(1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response9 = new Response("Diversity crashes when switching Build target to WebGL", 1244584, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "We successfully reproduced this issue, it will be possible to follow the progress on a chosen resolution in our public Issue Tracker, once the report is processed: https://issuetracker.diversity.com/1244555\n\n" +
         "We highly appreciate your contribution. If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
         "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "CaseID"));
 
-        Response response10 = new Response(1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response10 = new Response("ProKitchen 4.4.0 is totally broken !!!!?!", 1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thanks for reporting the issue. We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
         "If you are still able to reproduce this issue using the mentioned package version, please respond to this email and the case will be reopened for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded, null);
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, null);
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
@@ -201,14 +201,14 @@ public class DataInitialization
         Tester tester1 = new Tester("Justinas", "Paulauskas", "j.paulauskas@diversity.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25));
         Tester tester2 = new Tester("Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
 
-        Response response1 = new Response(1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response1 = new Response("Input system actions not detected", 1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.diversity.com/1212956\n\n" +
         "Please reach out to me if I can answer any questions or be of further help.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, null);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, new Discrepancy("Reply", "CaseID"));
 
-        Response response2 = new Response(1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response2 = new Response("Diversity just crashed, fix pls", 1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
@@ -216,14 +216,14 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified, new Discrepancy("Status", "NotQualifiedRule"));
 
-        Response response3 = new Response(1212958, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response3 = new Response("UI is not showing in Diversity in Play Mode", 1212958, new DateTime(2020, 11, 4), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step by step directions? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Empty, CloseType.Empty, null);
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.PendingInformation, CloseType.PendingInformation, null);
 
-        Response response4 = new Response(1212959, new DateTime(2020, 11, 10), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response4 = new Response("Camera Component should support stacking", 1212959, new DateTime(2020, 11, 10), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request.\n\n" +
         "We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
         "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/.\n" +
@@ -233,7 +233,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded, new Discrepancy("Reply", "Status"));
 
-        Response response5 = new Response(1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response5 = new Response("Starter Pack 3D Ultimate errors in Diversity", 1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +

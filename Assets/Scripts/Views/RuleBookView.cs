@@ -27,8 +27,6 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public static event Action OnTurnPage;
 
-    private bool changeSize;
-
     public void OnEnable()
     {
         areasDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
@@ -45,24 +43,14 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public override void ChangeSizeToLeft()
     {
-        if(changeSize == true)
-        {
-            gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
-            changeSize = false;
-
-            DeactiveAllChildren();
-        }
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
+        DeactiveAllChildren();
     }
 
     public override void ChangeSizeToRight()
     {
-        if(changeSize == false)
-        {
-            gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
-            changeSize = true;
-
-            homePage.SetActive(true);
-        }
+        gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
+        homePage.SetActive(true);
     }
 
     public void OpenBasicRules()
@@ -98,23 +86,7 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public override void TurnOnInspectorMode()
     {
-        homePageLeft.color = ColorHelper.instance.InspectorModeColor;
-
-        foreach (var img in objectsWithRaycast)
-        {
-            img.raycastTarget = false;
-            img.color = ColorHelper.instance.InspectorModeColor;
-        }
-
-        foreach(var btnText in buttonsTexts)
-        {
-            btnText.color = ColorHelper.instance.InspectorModeColor;
-        }
-
-        foreach(var btn in buttons)
-        {
-            btn.interactable = false;
-        }
+        SwitchModes(false, ColorHelper.instance.InspectorModeColor);
 
         basicRuleDisplayer.TurnOnInspectorMode();
         areasDisplayer.TurnOnInspectorMode();
@@ -123,26 +95,31 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public override void TurnOffInspectorMode()
     {
-        homePageLeft.color = ColorHelper.instance.NormalModeColor;
-
-        foreach (var img in objectsWithRaycast)
-        {
-            img.raycastTarget = true;
-            img.color = ColorHelper.instance.NormalModeColor;
-        }
-
-        foreach (var btnText in buttonsTexts)
-        {
-            btnText.color = ColorHelper.instance.NormalModeColor;
-        }
-
-        foreach (var btn in buttons)
-        {
-            btn.interactable = true;
-        }
+        SwitchModes(true, ColorHelper.instance.NormalModeColor);
 
         basicRuleDisplayer.TurnOffInspectorMode();
         areasDisplayer.TurnOffInspectorMode();
         reportFieldsDisplayer.TurnOffInspectorMode();
+    }
+
+    private void SwitchModes(bool value, Color color)
+    {
+        homePageLeft.color = color;
+
+        foreach (var img in objectsWithRaycast)
+        {
+            img.raycastTarget = value;
+            img.color = color;
+        }
+
+        foreach (var btnText in buttonsTexts)
+        {
+            btnText.color = color;
+        }
+
+        foreach (var btn in buttons)
+        {
+            btn.interactable = value;
+        }
     }
 }

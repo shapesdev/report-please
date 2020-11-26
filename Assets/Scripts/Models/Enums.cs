@@ -1,6 +1,6 @@
 ﻿public enum CloseType
 {
-    Empty, NotQualified, Responded, Duplicate
+    Empty, NotQualified, Responded, Duplicate, PendingInformation, Active
 }
 
 public enum Stamp

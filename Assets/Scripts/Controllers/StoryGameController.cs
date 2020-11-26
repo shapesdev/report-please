@@ -5,16 +5,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GameController
+public class StoryGameController
 {
-    private readonly IGameModel model;
-    private readonly IGameView view;
+    private readonly IStoryGameModel model;
+    private readonly IStoryGameView view;
     private readonly IGameSelectionView selectionView;
     private readonly IGameStampView stampView;
     private readonly ILineController lineController;
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
+    private StatsHelper statsHelper;
 
     public static event Action<int> OnGameInitialized;
     public static event Action<int> OnInspectorMode;
@@ -22,7 +23,7 @@ public class GameController
     public static event Action OnDiscrepancy;
     public static event Action OnCitation;
 
-    public GameController(IGameModel model, IGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
+    public StoryGameController(IStoryGameModel model, IStoryGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineController lineController)
     {
         this.model = model;
         this.view = view;
@@ -34,8 +35,10 @@ public class GameController
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
+        statsHelper = new StatsHelper();
 
         model.DiscrepancyFound = false;
+        model.MaxScore = model.DaysWithScenarios[model.CurrentDay].Count * 10;
 
         view.OnMousePressed += View_OnMousePressed;
         view.OnMouseReleased += View_OnMouseReleased;
@@ -61,15 +64,30 @@ public class GameController
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
-            model.DiscrepancyFound, model.CurrentStamp);
+            model.CurrentStamp);
+
+        int score = 0;
 
         if(citation.Item1 == true)
         {
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
+
+            if(model.DiscrepancyFound == true)
+            {
+                score = 5;
+            }
+        }
+        else
+        {
+            score = 10;
         }
 
-        Debug.Log(citation.Item2);
+        model.CurrentScore += score;
+
+        statsHelper.AddLevel(new ScenarioStats(model.CurrentDay.ToString("MMMM dd, yyyy"), model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetCaseID(),
+            model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTitle(), citation.Item2, score));
+
         model.DiscrepancyFound = false;
         model.CurrentStamp = Stamp.Empty;
 
@@ -83,7 +101,9 @@ public class GameController
         }
         else
         {
-            view.ShowEndDay(model.CurrentDay.Day);
+            statsHelper.SaveLevels();
+            view.ShowEndDay(model.CurrentDay.Day, model.CurrentScore, model.MaxScore);
+
             if(model.CurrentDay.Day != 13)
             {
                 model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
@@ -114,10 +134,10 @@ public class GameController
 
     private void View_OnDragRight(object sender, DragRightEventArgs e)
     {
-        model.CurrentCard = e.card;
+        model.CurrentGeneralView = e.generalView;
         model.CurrentPanelWidth = e.panelWidth;
 
-        model.CurrentCard.Check(model.CurrentPanelWidth);
+        model.CurrentGeneralView.Check(model.CurrentPanelWidth);
     }
 
     private void View_OnMouseHold(object sender, MouseHoldEventArgs e)
@@ -136,7 +156,6 @@ public class GameController
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
         model.InspectorMode = !model.InspectorMode;
-        Debug.Log("INSPECTOR MODE IS:" + model.InspectorMode);
 
         if (model.InspectorMode == true)
         {
@@ -186,24 +205,19 @@ public class GameController
         var values = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
             [model.CurrentScenario].GetDiscrepancy());
 
-
         model.DiscrepancyFound = values.Item2;
-
         OnDiscrepancy?.Invoke();
 
         if (values.Item1 == true && values.Item2 == true)
         {
-            Debug.Log("Discrepancy is found");
             view.DisplayFieldText("Discrepancy found");
         }
         else if(values.Item1 == true)
         {
-            Debug.Log("Matching Data");
             view.DisplayFieldText("Matching Data");
         }
         else
         {
-            Debug.Log("No Correlation");
             view.DisplayFieldText("No correlation");
         }
     }

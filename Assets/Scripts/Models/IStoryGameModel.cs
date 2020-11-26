@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameModel
+public interface IStoryGameModel
 {
     Dictionary<DateTime, List<IScenario>> DaysWithScenarios { get; }
     List<Discrepancy> Discrepancies { get; }
-    GameGeneralView CurrentCard { get; set; }
+    GameGeneralView CurrentGeneralView { get; set; }
     DateTime CurrentDay { get; set; }
     float CurrentPanelWidth { get; set; }
     int CurrentScenario { get; set; }
@@ -20,4 +20,6 @@ public interface IGameModel
     RuleBookSO RuleBook { get; }
     bool DiscrepancyFound { get; set; }
     Stamp CurrentStamp { get; set; }
+    int CurrentScore { get; set; }
+    int MaxScore { get; set; }
 }
