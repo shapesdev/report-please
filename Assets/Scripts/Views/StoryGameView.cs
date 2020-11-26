@@ -12,24 +12,17 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     private IGameGeneralView[] gamegeneralViews;
 
     private Image[] allImages;
-    private TextMeshProUGUI[] allTexts;
+    public RectTransform leftPanel;
 
-    [SerializeField]
-    private RectTransform leftPanel;
-    [SerializeField]
-    private GameObject topPanel;
-    [SerializeField]
-    private GameObject nextDayGameObject;
-    [SerializeField]
-    private GameObject pausePanel;
+    public GameObject topPanel;
+    public GameObject nextDayGameObject;
+    public GameObject pausePanel;
+    public GameObject citationPrefab;
 
-    [SerializeField]
-    private TMP_Text dateText;
-    [SerializeField]
-    private Text introDateText;
-    [SerializeField]
-    private Text citationText;
+    public TMP_Text dateText;
+    public Text introDateText;
     public Text fieldCheckerText;
+    private TextMeshProUGUI[] allTexts;
 
     private PlayableDirector director;
     public AudioSource source;
@@ -103,60 +96,37 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
     public void EnableCitation(string citation)
     {
+        var go = Instantiate(citationPrefab, transform.GetChild(0).transform);
+        var citationText = go.GetComponentInChildren<Text>();
         citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
-        citationText.transform.parent.gameObject.SetActive(true);
-        Invoke("DisableCitation", 5f);
-    }
-
-    private void DisableCitation()
-    {
-        citationText.transform.parent.gameObject.SetActive(false);
     }
 
     public void TurnOnInspectorMode()
     {
-        foreach (var view in gamegeneralViews)
-        {
-            view.TurnOnInspectorMode();
-            dateText.raycastTarget = true;
-            dateText.color = ColorHelper.instance.InspectorModeColor;
-        }
-
-        foreach(var img in allImages)
-        {
-            img.raycastTarget = false;
-
-            if(img.color.a > 0.8f)
-            {
-                img.color = ColorHelper.instance.InspectorModeColor;
-            }
-        }
-
-        foreach(var txt in allTexts)
-        {
-            if(txt.color.a > 0.8f)
-            {
-                txt.color = ColorHelper.instance.InspectorModeColor;
-            }
-        }
+        SwitchModes(true, ColorHelper.instance.InspectorModeColor);
     }
 
     public void TurnOffInspectorMode()
     {
+        SwitchModes(false, ColorHelper.instance.NormalModeColor);
+    }
+
+    private void SwitchModes(bool value, Color color)
+    {
         foreach (var view in gamegeneralViews)
         {
             view.TurnOffInspectorMode();
-            dateText.raycastTarget = false;
-            dateText.color = ColorHelper.instance.NormalModeColor;
+            dateText.raycastTarget = value;
+            dateText.color = color;
         }
 
         foreach (var img in allImages)
         {
-            img.raycastTarget = true;
+            img.raycastTarget = !value;
 
             if (img.color.a > 0.8f)
             {
-                img.color = ColorHelper.instance.NormalModeColor;
+                img.color = color;
             }
         }
 
@@ -164,7 +134,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         {
             if (txt.color.a > 0.8f)
             {
-                txt.color = ColorHelper.instance.NormalModeColor;
+                txt.color = color;
             }
         }
     }
