@@ -260,14 +260,13 @@ public class LineController : MonoBehaviour, ILineController
         /* Formula for finding the Midpoint between two points */
         Vector3 midPos = new Vector3((positions.Item1.x + positions.Item2.x) / 2, (positions.Item1.y + positions.Item2.y) / 2, 0);
 
-        allPositions.Add(positions.Item1);
+        var xDiff = Vector3.Distance(new Vector3(positions.Item1.x, 0, 0), new Vector3(positions.Item2.x, 0, 0));
+        var yDiff = Vector3.Distance(new Vector3(0, positions.Item1.y, 0), new Vector3(0, positions.Item2.y, 0));
 
-        if(Vector3.Distance(positions.Item2, positions.Item1) > 1f)
-        {
-            allPositions.Add(new Vector3(midPos.x, positions.Item1.y, 0));
-            allPositions.Add(midPos);
-            allPositions.Add(new Vector3(midPos.x, positions.Item2.y, 0));
-        }
+        allPositions.Add(positions.Item1);
+        allPositions.Add(new Vector3(midPos.x, positions.Item1.y, 0));
+        allPositions.Add(midPos);
+        allPositions.Add(new Vector3(midPos.x, positions.Item2.y, 0));
         allPositions.Add(positions.Item2);
 
         return allPositions;

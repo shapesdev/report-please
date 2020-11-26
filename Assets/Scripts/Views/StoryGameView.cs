@@ -5,11 +5,12 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using System.Collections.Generic;
 
 public class StoryGameView : MonoBehaviour, IStoryGameView
 {
     private IGameScenarioView[] gameScenarioViews;
-    private IGameGeneralView[] gamegeneralViews;
+    private List<IGameGeneralView> gamegeneralViews;
 
     private Image[] allImages;
     public RectTransform leftPanel;
@@ -42,6 +43,22 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public void Init(DateTime day, IScenario scenario)
     {
         director = GetComponent<PlayableDirector>();
+        gamegeneralViews = new List<IGameGeneralView>();
+
+        gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
+        var generalViews = GetComponentsInChildren<IGameGeneralView>();
+
+        allTexts = GetComponentsInChildren<TextMeshProUGUI>();
+        allImages = GetComponentsInChildren<Image>();
+
+        dateText.gameObject.transform.SetAsLastSibling();
+        topPanel.transform.SetAsLastSibling();
+        nextDayGameObject.transform.parent.SetAsLastSibling();
+
+        foreach (var view in generalViews)
+        {
+            gamegeneralViews.Add(view);
+        }
 
         if (director != null)
         {
@@ -57,18 +74,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             director.Play();
         }
 
-        gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
-        gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
-
-        allTexts = GetComponentsInChildren<TextMeshProUGUI>();
-        allImages = GetComponentsInChildren<Image>();
-
         ShowScenario(scenario);
         dateText.text = day.ToString("yyyy/MM/dd");
-
-        dateText.gameObject.transform.SetAsLastSibling();
-        topPanel.transform.SetAsLastSibling();
-        nextDayGameObject.transform.parent.SetAsLastSibling();
 
         TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.08f);
     }
@@ -78,7 +85,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         fieldCheckerText.text = value;
         fieldCheckerText.color = ColorHelper.instance.NormalModeColor;
 
-        Invoke("TurnOffFieldText", 1f);
+        Invoke("TurnOffFieldText", 1.5f);
     }
 
     public void TurnOffFieldText()
@@ -98,6 +105,9 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     {
         var go = Instantiate(citationPrefab, transform.GetChild(0).transform);
         go?.transform.SetSiblingIndex(transform.GetChild(0).childCount - 5);
+
+        gamegeneralViews.Add(go.GetComponent<IGameGeneralView>());
+
         var citationText = go.GetComponentInChildren<Text>();
         citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
     }
