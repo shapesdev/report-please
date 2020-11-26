@@ -97,6 +97,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public void EnableCitation(string citation)
     {
         var go = Instantiate(citationPrefab, transform.GetChild(0).transform);
+        go?.transform.SetSiblingIndex(transform.GetChild(0).childCount - 5);
         var citationText = go.GetComponentInChildren<Text>();
         citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
     }
@@ -104,21 +105,27 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public void TurnOnInspectorMode()
     {
         SwitchModes(true, ColorHelper.instance.InspectorModeColor);
+
+        foreach (var view in gamegeneralViews)
+        {
+            view.TurnOnInspectorMode();
+        }
     }
 
     public void TurnOffInspectorMode()
     {
         SwitchModes(false, ColorHelper.instance.NormalModeColor);
+
+        foreach (var view in gamegeneralViews)
+        {
+            view.TurnOffInspectorMode();
+        }
     }
 
     private void SwitchModes(bool value, Color color)
     {
-        foreach (var view in gamegeneralViews)
-        {
-            view.TurnOffInspectorMode();
-            dateText.raycastTarget = value;
-            dateText.color = color;
-        }
+        dateText.raycastTarget = value;
+        dateText.color = color;
 
         foreach (var img in allImages)
         {

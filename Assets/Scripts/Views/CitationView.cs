@@ -33,7 +33,7 @@ public class CitationView : GameGeneralView
     {
         gameObject.GetComponent<Image>().raycastTarget = false;
 
-        citationText.raycastTarget = true;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.InspectorModeColor;
         citationText.color = ColorHelper.instance.InspectorModeColor;
     }
 
@@ -41,7 +41,7 @@ public class CitationView : GameGeneralView
     {
         gameObject.GetComponent<Image>().raycastTarget = true;
 
-        citationText.raycastTarget = true;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.NormalModeColor;
         citationText.color = ColorHelper.instance.NormalModeColor;
     }
 }
