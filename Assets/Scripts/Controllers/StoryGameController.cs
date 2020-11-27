@@ -33,12 +33,11 @@ public class StoryGameController
         this.stampView = stampView;
         this.lineView = lineView;
 
-        view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
-
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
         statsHelper = new StatsSerializeHelper();
 
+        view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
         view.OnMousePressed += View_OnMousePressed;
         view.OnMouseReleased += View_OnMouseReleased;
         view.OnMouseHold += View_OnMouseHold;
@@ -47,6 +46,8 @@ public class StoryGameController
         view.OnOffsetChanged += View_OnOffsetChanged;
         view.OnTabPressed += View_OnTabPressed;
 
+        model.OnHighlight += Model_OnHighlight;
+
         selectionView.OnGameObjectSelected += SelectionView_OnGameObjectSelected;
         selectionView.OnOffsetSet += SelectionView_OnOffsetSet;
         selectionView.OnPapersReturned += SelectionView_OnPapersReturned;
@@ -54,10 +55,15 @@ public class StoryGameController
         stampView.OnReturned += StampView_OnReturned;
         stampView.OnStampPressed += StampView_OnStampPressed;
 
-        lineView.OnTwoFieldsSelected += LineView_OnTwoFieldsSelected;
-
         OnGameInitialized?.Invoke(1);
     }
+
+    #region Model Callbacks
+    private void Model_OnHighlight(object sender, HighlightEventArgs e)
+    {
+        lineView.CheckFieldHighlight(e.isHighlight, e.goToHighlight, model.InspectorMode);
+    }
+    #endregion
 
     #region SelectionView Callbacks
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
@@ -106,7 +112,10 @@ public class StoryGameController
         }
     }
     private void SelectionView_OnOffsetSet(object sender, OffsetSetEventArgs e) { model.OffsetSet = e.offsetSet; }
-    private void SelectionView_OnGameObjectSelected(object sender, GameObjectSelectedEventArgs e) { model.Selected = e.selected; }
+    private void SelectionView_OnGameObjectSelected(object sender, GameObjectSelectedEventArgs e)
+    {
+        model.Selected = e.selected;
+    }
     #endregion
 
     #region StampView Callbacks
@@ -161,7 +170,7 @@ public class StoryGameController
         else if(model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
-            lineView.ClearLine(true);          
+            ClearLine(true);
             OnInspectorMode?.Invoke(1);
             view.TurnOffFieldText();
         }
@@ -174,16 +183,65 @@ public class StoryGameController
         if(go != null)
         {
             model.SelectedGameObject = go;
-            if(model.InspectorMode == true)
-            { 
-                lineView.SelectField(model.SelectedGameObject);
 
-                if (model.SelectedGameObject == go)
-                {
-                    model.SelectedGameObject = null;
-                }
+            if(model.InspectorMode == true)
+            {
+                SelectField(go);
             }
         }
+    }
+    #endregion
+
+    #region Line Renderer Logic
+    private void SelectField(GameObject selectedGameObject)
+    {
+        if (model.FirstSelection == null)
+        {
+            model.FirstSelection = selectedGameObject;
+        }
+        else if (model.SecondSelection == null && selectedGameObject != model.FirstSelection)
+        {
+            model.SecondSelection = selectedGameObject;
+            model.AddSelectionEdgesToList();
+
+            lineView.DrawLine(model.GetAllLinePositions(), model.WorldEdgePositions);
+            TwoFieldsSelected();
+        }
+        else if (model.SecondSelection == null && selectedGameObject == model.FirstSelection)
+        {
+            model.FirstSelection = null;
+            ClearLine(false);
+        }
+        else
+        {
+            ClearLine(true);
+            model.FirstSelection = selectedGameObject;
+        }
+    }
+
+    private void ClearLine(bool clear)
+    {
+        if(clear)
+        {
+            if (model.FirstSelection != null) { model.FirstSelection = null; }
+            if (model.SecondSelection != null) { model.SecondSelection = null; }
+        }
+
+        model.WorldEdgePositions.Clear();
+        lineView.ClearLines();
+    }
+
+    private void TwoFieldsSelected()
+    {
+        var fieldValues = fieldCheckController.CheckFields(model.FirstSelection, model.SecondSelection, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
+            [model.CurrentScenario].GetDiscrepancy());
+
+        model.DiscrepancyFound = fieldValues.Item2;
+        OnDiscrepancy?.Invoke();
+
+        if (fieldValues.Item1 == true && fieldValues.Item2 == true) { view.DisplayFieldText("Discrepancy found"); }
+        else if (fieldValues.Item1 == true) { view.DisplayFieldText("Matching Data"); }
+        else { view.DisplayFieldText("No correlation"); }
     }
     #endregion
 }
