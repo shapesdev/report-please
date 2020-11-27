@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public interface ILineController
+public interface ILineView
 {
     void SelectField(GameObject go);
     void ClearLine(bool value);

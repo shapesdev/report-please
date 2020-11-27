@@ -55,10 +55,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         topPanel.transform.SetAsLastSibling();
         nextDayGameObject.transform.parent.SetAsLastSibling();
 
-        foreach (var view in generalViews)
-        {
-            gamegeneralViews.Add(view);
-        }
+        foreach (var view in generalViews) { gamegeneralViews.Add(view); }
 
         if (director != null)
         {
@@ -209,7 +206,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                var eventArgs = new MouseHoldEventArgs();
+                var eventArgs = new MouseHoldEventArgs(leftPanel.rect.width);
                 OnMouseHold(this, eventArgs);
             }
         }
@@ -277,47 +274,5 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     {
         OnPause.Invoke(false);
         App.instance.Load();
-    }
-
-    public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)
-    {
-        if (selectedGO != null)
-        {
-            if (offsetSet == false)
-            {
-                offset = Input.mousePosition - selectedGO.transform.localPosition;
-
-                var offsetValueEventArgs = new OffsetValueEventArgs(offset);
-                OnOffsetChanged(this, offsetValueEventArgs);
-
-                var offsetEventArgs = new OffsetSetEventArgs(true);
-                OnOffsetSet(this, offsetEventArgs);
-            }
-
-            Vector3 mousePos = Vector3.zero;
-
-            if(Input.mousePosition.x > Screen.width - 1200f)
-            {
-                var yMax = Screen.height - 300f;
-                var xMax = Screen.width;
-
-                mousePos.y = Mathf.Clamp(Input.mousePosition.y, 0f, yMax);
-                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
-            }
-            else
-            {
-                var yMax = Screen.height - 300f;
-                var yMin = 200f;
-                var xMax = Screen.width;
-
-                mousePos.y = Mathf.Clamp(Input.mousePosition.y, yMin, yMax);
-                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
-            }
-
-            selectedGO.transform.localPosition = mousePos - offset;
-
-            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<GameGeneralView>());
-            OnDragRight(this, eventArgs);
-        }
     }
 }

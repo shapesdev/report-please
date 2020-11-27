@@ -16,7 +16,7 @@ public class StoryGameFactory
         view = instance.GetComponent<StoryGameView>();
         var selectionView = instance.GetComponentInChildren<GameSelectionView>();
         var stampView = instance.GetComponentInChildren<GameStampView>();
-        var lineView = instance.GetComponentInChildren<LineController>();
+        var lineView = instance.GetComponentInChildren<LineView>();
 
         model = new StoryGameModel(ruleBook);
         controller = new StoryGameController(model, view, selectionView, stampView, lineView);

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class LineController : MonoBehaviour, ILineController
+public class LineView : MonoBehaviour, ILineView
 {
     [SerializeField]
     private LineRenderer lineRenderer;

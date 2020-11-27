@@ -22,4 +22,6 @@ public interface IStoryGameModel
     Stamp CurrentStamp { get; set; }
     int CurrentScore { get; set; }
     int MaxScore { get; set; }
+
+    void UpdateSelectedGameObjectPosition(float width);
 }

@@ -5,5 +5,10 @@ using System;
 
 public class MouseHoldEventArgs : EventArgs
 {
+    public float width;
 
+    public MouseHoldEventArgs(float width)
+    {
+        this.width = width;
+    }
 }

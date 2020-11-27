@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,10 +10,10 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
     private PointerEventData pointerEvent;
     private EventSystem eventSystem;
 
-    [SerializeField]
-    private GameObject[] selectableGameObjects;
-    [SerializeField]
-    private RectTransform returnArea;
+    public GameObject[] selectableGameObjects;
+    public RectTransform returnArea;
+
+    private Image returnAreaImage;
 
     public event EventHandler<GameObjectSelectedEventArgs> OnGameObjectSelected = (sender, e) => { };
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
@@ -27,15 +26,15 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         GetComponent<Canvas>().worldCamera = Camera.main;
         graphicRaycaster = GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
+        returnAreaImage = returnArea.gameObject.GetComponent<Image>();
     }
 
     public GameObject SelectGameObject(bool inspectorMode)
     {
         pointerEvent = new PointerEventData(eventSystem);
-        pointerEvent.position = Input.mousePosition;
-
         List<RaycastResult> results = new List<RaycastResult>();
 
+        pointerEvent.position = Input.mousePosition;
         graphicRaycaster.Raycast(pointerEvent, results);
 
         if (results.Count > 0)
@@ -80,7 +79,6 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             {
                 if (PaperCanBeReturned(go.transform.position, go, canBeReturned))
                 {
-
                     go.gameObject.SetActive(false);
                 }
                 else
@@ -116,10 +114,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         return false;
     }
 
-    public void ActivateSelectable()
-    {
-        Invoke("ActivateSelectableGameObjects", 1.5f);
-    }
+    public void ActivateSelectable() { Invoke("ActivateSelectableGameObjects", 1.5f); }
 
     private void ActivateSelectableGameObjects()
     {
@@ -132,13 +127,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
     public void ChangeMode(bool value)
     {
-        if(value == false)
-        {
-            returnArea.gameObject.GetComponent<Image>().raycastTarget = true;
-        }
-        else
-        {
-            returnArea.gameObject.GetComponent<Image>().raycastTarget = false;
-        }
+        if(value == false) { returnAreaImage.raycastTarget = true; }
+        else { returnAreaImage.raycastTarget = false; }
     }
 }
