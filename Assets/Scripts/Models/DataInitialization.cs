@@ -43,7 +43,7 @@ public class DataInitialization
         return allDiscrepancies;
     }
 
-    public void InitializeDiscrepancies()
+    private void InitializeDiscrepancies()
     {
         var replyName = new Discrepancy("Reply", "Name");
         var replyID = new Discrepancy("Reply", "CaseID");
