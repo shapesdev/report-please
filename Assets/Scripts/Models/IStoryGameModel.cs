@@ -22,4 +22,13 @@ public interface IStoryGameModel
     Stamp CurrentStamp { get; set; }
     int CurrentScore { get; set; }
     int MaxScore { get; set; }
+    GameObject FirstSelection { get; set; }
+    GameObject SecondSelection { get; set; }
+    List<Vector3> WorldEdgePositions { get; set; }
+
+    void UpdateSelectedGameObjectPosition(float width);
+    void AddSelectionEdgesToList();
+    List<Vector3> GetAllLinePositions();
+
+    event EventHandler<HighlightEventArgs> OnHighlight;
 }

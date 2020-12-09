@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsHelper
+public class StatsSerializeHelper
 {
     private LevelStats levelStats;
 
-    public StatsHelper()
+    public StatsSerializeHelper()
     {
         if(PlayerPrefs.GetString("Stats") == string.Empty)
         {

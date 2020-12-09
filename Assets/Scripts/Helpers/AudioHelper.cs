@@ -26,7 +26,7 @@ public class AudioHelper : MonoBehaviour
 
         GameSelectionView.OnPaperDrag += PlayPaperDragSounds;
 
-        LineController.OnHighlight += PlayHighlightSounds;
+        LineView.OnHighlight += PlayHighlightSounds;
 
         RuleBookView.OnTurnPage += PlayTurnPageSound;
         AreasDisplayer.OnTurnPage += PlayTurnPageSound;
@@ -52,7 +52,7 @@ public class AudioHelper : MonoBehaviour
 
         GameSelectionView.OnPaperDrag -= PlayPaperDragSounds;
 
-        LineController.OnHighlight -= PlayHighlightSounds;
+        LineView.OnHighlight -= PlayHighlightSounds;
 
         RuleBookView.OnTurnPage -= PlayTurnPageSound;
         AreasDisplayer.OnTurnPage -= PlayTurnPageSound;

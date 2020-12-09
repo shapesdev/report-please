@@ -7,7 +7,6 @@ public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
     void ShowScenario(IScenario scenario);
-    void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject go);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
@@ -15,7 +14,6 @@ public interface IStoryGameView : IOffsetView
     void DisplayFieldText(string value);
     void TurnOffFieldText();
 
-    event EventHandler<DragRightEventArgs> OnDragRight;
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;
     event EventHandler<TabPressedEventArgs> OnTabPressed;
     event EventHandler<MousePressedEventArgs> OnMousePressed;

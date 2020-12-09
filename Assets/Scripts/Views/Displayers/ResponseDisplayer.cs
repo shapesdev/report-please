@@ -30,7 +30,7 @@ public class ResponseDisplayer : GeneralDisplayer
             var response = (Response)scenario;
 
             title.text = response.GetTitle();
-            caseId.text = "Case id: " + response.GetCaseID().ToString();
+            caseId.text = response.GetCaseID().ToString();
             reply.text = response.GetEmail();
             dateSent.text = response.GetDateSent().ToString("yyyy/MM/dd");
             lastReplyDate.text = response.GetLastReplyDate().ToString("yyyy/MM/dd");

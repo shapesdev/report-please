@@ -5,31 +5,25 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using System.Collections.Generic;
 
 public class StoryGameView : MonoBehaviour, IStoryGameView
 {
     private IGameScenarioView[] gameScenarioViews;
-    private IGameGeneralView[] gamegeneralViews;
+    private List<IGameGeneralView> gamegeneralViews;
 
     private Image[] allImages;
-    private TextMeshProUGUI[] allTexts;
+    public RectTransform leftPanel;
 
-    [SerializeField]
-    private RectTransform leftPanel;
-    [SerializeField]
-    private GameObject topPanel;
-    [SerializeField]
-    private GameObject nextDayGameObject;
-    [SerializeField]
-    private GameObject pausePanel;
+    public GameObject topPanel;
+    public GameObject nextDayGameObject;
+    public GameObject pausePanel;
+    public GameObject citationPrefab;
 
-    [SerializeField]
-    private TMP_Text dateText;
-    [SerializeField]
-    private Text introDateText;
-    [SerializeField]
-    private Text citationText;
+    public TMP_Text dateText;
+    public Text introDateText;
     public Text fieldCheckerText;
+    private TextMeshProUGUI[] allTexts;
 
     private PlayableDirector director;
     public AudioSource source;
@@ -49,6 +43,19 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public void Init(DateTime day, IScenario scenario)
     {
         director = GetComponent<PlayableDirector>();
+        gamegeneralViews = new List<IGameGeneralView>();
+
+        gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
+        var generalViews = GetComponentsInChildren<IGameGeneralView>();
+
+        allTexts = GetComponentsInChildren<TextMeshProUGUI>();
+        allImages = GetComponentsInChildren<Image>();
+
+        dateText.gameObject.transform.SetAsLastSibling();
+        topPanel.transform.SetAsLastSibling();
+        nextDayGameObject.transform.parent.SetAsLastSibling();
+
+        foreach (var view in generalViews) { gamegeneralViews.Add(view); }
 
         if (director != null)
         {
@@ -64,18 +71,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             director.Play();
         }
 
-        gameScenarioViews = GetComponentsInChildren<IGameScenarioView>();
-        gamegeneralViews = GetComponentsInChildren<IGameGeneralView>();
-
-        allTexts = GetComponentsInChildren<TextMeshProUGUI>();
-        allImages = GetComponentsInChildren<Image>();
-
         ShowScenario(scenario);
         dateText.text = day.ToString("yyyy/MM/dd");
-
-        dateText.gameObject.transform.SetAsLastSibling();
-        topPanel.transform.SetAsLastSibling();
-        nextDayGameObject.transform.parent.SetAsLastSibling();
 
         TextWriterHelper.instance.AddWriter(introDateText, day.ToString("MMMM dd, yyyy"), 0.08f);
     }
@@ -85,7 +82,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         fieldCheckerText.text = value;
         fieldCheckerText.color = ColorHelper.instance.NormalModeColor;
 
-        Invoke("TurnOffFieldText", 1f);
+        Invoke("TurnOffFieldText", 1.5f);
     }
 
     public void TurnOffFieldText()
@@ -103,60 +100,47 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
     public void EnableCitation(string citation)
     {
-        citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
-        citationText.transform.parent.gameObject.SetActive(true);
-        Invoke("DisableCitation", 5f);
-    }
+        var go = Instantiate(citationPrefab, transform.GetChild(0).transform);
+        go?.transform.SetSiblingIndex(transform.GetChild(0).childCount - 5);
 
-    private void DisableCitation()
-    {
-        citationText.transform.parent.gameObject.SetActive(false);
+        gamegeneralViews.Add(go.GetComponent<IGameGeneralView>());
+
+        var citationText = go.GetComponentInChildren<Text>();
+        citationText.text = "PROTOCOL VIOLATION\n\n" + citation;
     }
 
     public void TurnOnInspectorMode()
     {
+        SwitchModes(true, ColorHelper.instance.InspectorModeColor);
+
         foreach (var view in gamegeneralViews)
         {
             view.TurnOnInspectorMode();
-            dateText.raycastTarget = true;
-            dateText.color = ColorHelper.instance.InspectorModeColor;
-        }
-
-        foreach(var img in allImages)
-        {
-            img.raycastTarget = false;
-
-            if(img.color.a > 0.8f)
-            {
-                img.color = ColorHelper.instance.InspectorModeColor;
-            }
-        }
-
-        foreach(var txt in allTexts)
-        {
-            if(txt.color.a > 0.8f)
-            {
-                txt.color = ColorHelper.instance.InspectorModeColor;
-            }
         }
     }
 
     public void TurnOffInspectorMode()
     {
+        SwitchModes(false, ColorHelper.instance.NormalModeColor);
+
         foreach (var view in gamegeneralViews)
         {
             view.TurnOffInspectorMode();
-            dateText.raycastTarget = false;
-            dateText.color = ColorHelper.instance.NormalModeColor;
         }
+    }
+
+    private void SwitchModes(bool value, Color color)
+    {
+        dateText.raycastTarget = value;
+        dateText.color = color;
 
         foreach (var img in allImages)
         {
-            img.raycastTarget = true;
+            img.raycastTarget = !value;
 
             if (img.color.a > 0.8f)
             {
-                img.color = ColorHelper.instance.NormalModeColor;
+                img.color = color;
             }
         }
 
@@ -164,7 +148,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         {
             if (txt.color.a > 0.8f)
             {
-                txt.color = ColorHelper.instance.NormalModeColor;
+                txt.color = color;
             }
         }
     }
@@ -222,7 +206,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                var eventArgs = new MouseHoldEventArgs();
+                var eventArgs = new MouseHoldEventArgs(leftPanel.rect.width);
                 OnMouseHold(this, eventArgs);
             }
         }
@@ -290,47 +274,5 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     {
         OnPause.Invoke(false);
         App.instance.Load();
-    }
-
-    public void UpdateGameObjectPosition(Vector3 offset, bool offsetSet, GameObject selectedGO)
-    {
-        if (selectedGO != null)
-        {
-            if (offsetSet == false)
-            {
-                offset = Input.mousePosition - selectedGO.transform.localPosition;
-
-                var offsetValueEventArgs = new OffsetValueEventArgs(offset);
-                OnOffsetChanged(this, offsetValueEventArgs);
-
-                var offsetEventArgs = new OffsetSetEventArgs(true);
-                OnOffsetSet(this, offsetEventArgs);
-            }
-
-            Vector3 mousePos = Vector3.zero;
-
-            if(Input.mousePosition.x > Screen.width - 1200f)
-            {
-                var yMax = Screen.height - 300f;
-                var xMax = Screen.width;
-
-                mousePos.y = Mathf.Clamp(Input.mousePosition.y, 0f, yMax);
-                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
-            }
-            else
-            {
-                var yMax = Screen.height - 300f;
-                var yMin = 200f;
-                var xMax = Screen.width;
-
-                mousePos.y = Mathf.Clamp(Input.mousePosition.y, yMin, yMax);
-                mousePos.x = Mathf.Clamp(Input.mousePosition.x, 0f, xMax);
-            }
-
-            selectedGO.transform.localPosition = mousePos - offset;
-
-            var eventArgs = new DragRightEventArgs(leftPanel.rect.width, selectedGO.GetComponent<GameGeneralView>());
-            OnDragRight(this, eventArgs);
-        }
     }
 }

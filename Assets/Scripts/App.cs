@@ -18,6 +18,7 @@ public class App : MonoBehaviour
     {
         //PlayerPrefs.DeleteAll();
         Init();
+        Export();
     }
 
     private void Init()
@@ -26,6 +27,20 @@ public class App : MonoBehaviour
         storyGameFactory = new StoryGameFactory();
         menuFactory = new MenuFactory();
         menuFactory.Load(menuPrefab);
+    }
+
+    private void Export()
+    {
+        DataExportHelper dataExportHelper = new DataExportHelper();
+
+        dataExportHelper.AppendToReport(
+    new string[4]
+    {
+                Random.Range(0, 11).ToString(),
+                Random.Range(0, 11).ToString(),
+                Random.Range(0, 11).ToString(),
+                Random.Range(0, 11).ToString()
+    });
     }
 
     public void Load()
