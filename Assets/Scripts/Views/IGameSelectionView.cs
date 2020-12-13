@@ -7,7 +7,7 @@ public interface IGameSelectionView : IOffsetView
 {
     GameObject SelectGameObject(bool mode);
     void UnSelectGameObject(GameObject go, bool returned, bool inspector);
-    void ActivateSelectable();
+    void ActivateSelectable(int count);
     void ChangeMode(bool value);
 
     event EventHandler<GameObjectSelectedEventArgs> OnGameObjectSelected;

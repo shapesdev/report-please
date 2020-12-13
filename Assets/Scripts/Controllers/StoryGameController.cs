@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class StoryGameController
@@ -16,7 +12,6 @@ public class StoryGameController
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
-    private StatsSerializeHelper statsHelper;
 
     public static event Action<int> OnGameInitialized;
     public static event Action<int> OnInspectorMode;
@@ -35,7 +30,6 @@ public class StoryGameController
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
-        statsHelper = new StatsSerializeHelper();
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
         view.OnMousePressed += View_OnMousePressed;
@@ -45,6 +39,7 @@ public class StoryGameController
         view.OnSpaceBarPressed += View_OnSpaceBarPressed;
         view.OnOffsetChanged += View_OnOffsetChanged;
         view.OnTabPressed += View_OnTabPressed;
+        view.OnStartScenarioShowing += View_OnStartScenarioShowing;
 
         model.OnHighlight += Model_OnHighlight;
 
@@ -71,46 +66,41 @@ public class StoryGameController
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
             model.CurrentStamp);
 
-        int score = 0;
-
         if(citation.Item1 == true)
         {
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
 
-            if(model.DiscrepancyFound == true) { score = 5; }
+            if(model.DiscrepancyFound == true) { model.UpdateScenarioData(citation.Item2, 5); }
         }
         else
         {
-            score = 10;
+            model.UpdateScenarioData(citation.Item2, 10);
         }
 
-        model.CurrentScore += score;
+        ShowNextScenario();
+    }
 
-        statsHelper.AddLevel(new ScenarioStats(model.CurrentDay.ToString("MMMM dd, yyyy"), model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetCaseID(),
-            model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTitle(), citation.Item2, score));
-
-        model.DiscrepancyFound = false;
-        model.CurrentStamp = Stamp.Empty;
-
+    private void ShowNextScenario()
+    {
         if (model.CurrentScenario + 1 < model.DaysWithScenarios[model.CurrentDay].Count)
         {
             model.CurrentScenario += 1;
             stampView.Reset();
-            view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
-            selectionView.ActivateSelectable();
+            DisplayDataForView();
         }
         else
         {
-            statsHelper.SaveLevels();
             view.ShowEndDay(model.CurrentDay.Day, model.CurrentScore, model.MaxScore);
+            model.SaveScenarioData();
 
-            if(model.CurrentDay.Day != 13)
+            if (model.CurrentDay.Day != 14)
             {
                 model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
             }
         }
     }
+
     private void SelectionView_OnOffsetSet(object sender, OffsetSetEventArgs e) { model.OffsetSet = e.offsetSet; }
     private void SelectionView_OnGameObjectSelected(object sender, GameObjectSelectedEventArgs e)
     {
@@ -144,6 +134,16 @@ public class StoryGameController
     #endregion
 
     #region GameView Callbacks
+    
+    private void DisplayDataForView()
+    {
+        view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
+    model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()], model.CurrentScenario + 1,
+    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay);
+    }
+
+    private void View_OnStartScenarioShowing(object sender, StartScenarioShowingEventArgs e) { DisplayDataForView(); }
+
     private void View_OnTabPressed(object sender, TabPressedEventArgs e) { stampView.ActivateStampPanel(model.InspectorMode); }
 
     private void View_OnOffsetChanged(object sender, OffsetValueEventArgs e) { model.Offset = e.offset; }

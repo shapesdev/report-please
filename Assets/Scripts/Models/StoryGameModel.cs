@@ -82,11 +82,16 @@ public class StoryGameModel: IStoryGameModel
         }
     }
     public List<Vector3> WorldEdgePositions { get; set; }
+    public Sprite[] StoryCharacters { get; set; }
+
+    private LevelStats levelStats;
     #endregion
 
-    public StoryGameModel(RuleBookSO ruleBook)
+    public StoryGameModel(RuleBookSO ruleBook, Sprite[] sprites)
     {
         RuleBook = ruleBook;
+        StoryCharacters = sprites;
+
         DataInitialization dataInitialization = new DataInitialization();
         WorldEdgePositions = new List<Vector3>();
 
@@ -96,8 +101,26 @@ public class StoryGameModel: IStoryGameModel
         CurrentDay = new DateTime(2020, 11, PlayerPrefs.GetInt("CurrentDay"));
         DiscrepancyFound = false;
         MaxScore = DaysWithScenarios[CurrentDay].Count * 10;
+
+        levelStats = new LevelStats(CurrentDay.ToString("MMMM dd, yyyy"), new List<ScenarioStats>());
     }
 
+    public void UpdateScenarioData(string citation, int score)
+    {
+        CurrentScore += score;
+        DiscrepancyFound = false;
+        CurrentStamp = Stamp.Empty;
+
+        levelStats.scenarios.Add(new ScenarioStats(DaysWithScenarios[currentDay][CurrentScenario].GetCaseID(), DaysWithScenarios[currentDay][CurrentScenario].GetTitle(
+            ), citation, score));
+    }
+
+    public void SaveScenarioData()
+    {
+        PlayFabHelper.instance.SaveScenarioData(levelStats);
+    }
+
+    #region GameObject Position Data
     public void UpdateSelectedGameObjectPosition(float width)
     {
         CurrentPanelWidth = width;
@@ -111,11 +134,6 @@ public class StoryGameModel: IStoryGameModel
                     Offset = Input.mousePosition - SelectedGameObject.transform.localPosition;
                     OffsetSet = true;
                     CurrentGeneralView = SelectedGameObject.GetComponent<GameGeneralView>();
-/*                    var offsetValueEventArgs = new OffsetValueEventArgs(offset);
-                    OnOffsetChanged(this, offsetValueEventArgs);
-
-                    var offsetEventArgs = new OffsetSetEventArgs(true);
-                    OnOffsetSet(this, offsetEventArgs);*/
                 }
 
                 Vector3 mousePos = Vector3.zero;
@@ -147,6 +165,9 @@ public class StoryGameModel: IStoryGameModel
             }
         }
     }
+    #endregion
+
+    #region LineRenderer Data
 
     public void AddSelectionEdgesToList()
     {
@@ -243,4 +264,5 @@ public class StoryGameModel: IStoryGameModel
 
         return allPositions;
     }
+    #endregion
 }

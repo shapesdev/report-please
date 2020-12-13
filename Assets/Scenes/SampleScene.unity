@@ -230,7 +230,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2075586957}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &303815159
 GameObject:
@@ -434,7 +434,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2075586957}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &975103717
 AudioListener:
@@ -568,6 +568,49 @@ Transform:
   m_Father: {fileID: 2075586957}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1867168280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1867168281}
+  - component: {fileID: 1867168282}
+  m_Layer: 0
+  m_Name: PlayFabHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1867168281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867168280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2075586957}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1867168282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867168280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab33355be15fa38469635e381ceac159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2075586956
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +643,7 @@ Transform:
   - {fileID: 553799374}
   - {fileID: 1533293263}
   - {fileID: 108956675}
+  - {fileID: 1867168281}
   - {fileID: 115460758}
   - {fileID: 975103716}
   m_Father: {fileID: 0}
@@ -620,6 +664,35 @@ MonoBehaviour:
   storyGamePrefab: {fileID: 6143270259566252243, guid: bb47da4d12ef41242b4a64f9a600ea57, type: 3}
   menuPrefab: {fileID: 9059454969076846072, guid: b4081e77f1cf3d8498afbf27d437cac5, type: 3}
   ruleBook: {fileID: 11400000, guid: f29a2105f0a8a5f458baff66732c50ee, type: 2}
+  allCharacterSprites:
+  - {fileID: 21300000, guid: a86c20632c4d29d45ab40cf8caaeb011, type: 3}
+  - {fileID: 21300000, guid: 2dc6bceaa81f2274086631c9728944e6, type: 3}
+  - {fileID: 21300000, guid: 685dd09ebe9973440b501f2bd1948266, type: 3}
+  - {fileID: 21300000, guid: 56538ebb376792f46999587b0fea6817, type: 3}
+  - {fileID: 21300000, guid: 640e75fec2ebd0c468d3e716e565da67, type: 3}
+  - {fileID: 21300000, guid: f32f196477a520b408acee99eec02527, type: 3}
+  - {fileID: 21300000, guid: d502c7da8bf654e43a6faca730105a98, type: 3}
+  - {fileID: 21300000, guid: eb0c258a89fed1542a56b5df741f066a, type: 3}
+  - {fileID: 21300000, guid: 5b6e87be90384da488e1a5e9287ab891, type: 3}
+  - {fileID: 21300000, guid: f47c4625c0a3e7645858cc91fccba58a, type: 3}
+  - {fileID: 21300000, guid: 337dfbd9cf984e34e983cf2294981333, type: 3}
+  - {fileID: 21300000, guid: 2db4f75a33396e448bea0a7ed6f79152, type: 3}
+  - {fileID: 21300000, guid: 93f062cca2cbd094bbedbcd318ff588a, type: 3}
+  - {fileID: 21300000, guid: 0659701892652494b97a8ebb89bcbe61, type: 3}
+  - {fileID: 21300000, guid: 19093bc58c775c749a0c81c15b417b2c, type: 3}
+  - {fileID: 21300000, guid: 54e6fcf5dc42daa40af74a08be97935d, type: 3}
+  - {fileID: 21300000, guid: 0f4fec794f393e44b8ba6d416fe99fc5, type: 3}
+  storyCharacterSprites:
+  - {fileID: 21300000, guid: f32f196477a520b408acee99eec02527, type: 3}
+  - {fileID: 21300000, guid: 640e75fec2ebd0c468d3e716e565da67, type: 3}
+  - {fileID: 21300000, guid: 93f062cca2cbd094bbedbcd318ff588a, type: 3}
+  - {fileID: 21300000, guid: 19093bc58c775c749a0c81c15b417b2c, type: 3}
+  - {fileID: 21300000, guid: a86c20632c4d29d45ab40cf8caaeb011, type: 3}
+  - {fileID: 21300000, guid: 0f4fec794f393e44b8ba6d416fe99fc5, type: 3}
+  - {fileID: 21300000, guid: 54e6fcf5dc42daa40af74a08be97935d, type: 3}
+  - {fileID: 21300000, guid: 2db4f75a33396e448bea0a7ed6f79152, type: 3}
+  - {fileID: 21300000, guid: 5b6e87be90384da488e1a5e9287ab891, type: 3}
+  - {fileID: 21300000, guid: 0659701892652494b97a8ebb89bcbe61, type: 3}
 --- !u!1 &2090507014
 GameObject:
   m_ObjectHideFlags: 0

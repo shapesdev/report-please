@@ -13,14 +13,48 @@ MonoBehaviour:
   m_Name: Rule Book
   m_EditorClassIdentifier: 
   basicRules:
-  - Reports are closed as Not Qualified after 7 days from the last reply
-  - Versions lower than 2018.4 are not supported
-  - Only 1 empty line between paragraphs
-  - No double spaces between letters
-  - Bug report is filled in correct order
-  - All bug reports are public
-  - Bug report is tested on all latest versions
-  - Tester has a valid Employee ID
+  - day: 10
+    rules:
+    - Only 1 empty line between paragraphs
+    - No double spaces between letters
+    - No double spaces between letters
+    - No double spaces between letters
+    - No double spaces between letters
+    - No double spaces between letters
+    - No double spaces between letters
+    - Valid ID
+  - day: 11
+    rules:
+    - Only 1 empty line between paragraphs
+    - No double spaces between letters
+    - Tester has a valid Employee ID
+    - Reports are closed as Not Qualified after 7 days from the last reply
+  - day: 12
+    rules:
+    - Only 1 empty line between paragraphs
+    - No double spaces between letters
+    - Tester has a valid Employee ID
+    - Reports are closed as Not Qualified after 7 days from the last reply
+  - day: 13
+    rules:
+    - Only 1 empty line between paragraphs
+    - No double spaces between letters
+    - Tester has a valid Employee ID
+    - Reports are closed as Not Qualified after 7 days from the last reply
+    - Versions lower than 2018.4 are not supported
+    - Bug report is filled in correct order
+    - Bug report is tested on all latest versions
+    - All bug reports are public
+  - day: 14
+    rules:
+    - Only 1 empty line between paragraphs
+    - No double spaces between letters
+    - Tester has a valid Employee ID
+    - Reports are closed as Not Qualified after 7 days from the last reply
+    - Versions lower than 2018.4 are not supported
+    - Bug report is filled in correct order
+    - Bug report is tested on all latest versions
+    - All bug reports are public
   areas:
   - area: WebGL
     grabbag: WebGL Grabbag

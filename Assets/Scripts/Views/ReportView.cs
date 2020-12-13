@@ -41,7 +41,7 @@ public class ReportView : GameGeneralView, IGameScenarioView
     public override void TurnOffInspectorMode()
     {
         gameObject.GetComponent<Image>().raycastTarget = true;
-        gameObject.GetComponent<Image>().color = ColorHelper.instance.InspectorModeColor;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.NormalModeColor;
 
         foreach (var displayer in generalDisplayers)
         {
@@ -52,7 +52,7 @@ public class ReportView : GameGeneralView, IGameScenarioView
     public override void TurnOnInspectorMode()
     {
         gameObject.GetComponent<Image>().raycastTarget = false;
-        gameObject.GetComponent<Image>().color = ColorHelper.instance.NormalModeColor;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.InspectorModeColor;
 
         foreach (var displayer in generalDisplayers)
         {

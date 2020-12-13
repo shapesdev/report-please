@@ -110,4 +110,10 @@ public abstract class Bug : IScenario
     {
         return tester;
     }
+
+    public bool IsEmployeeIdMissing()
+    {
+        return (discrepancy.firstTag == "ValidID" && discrepancy.secondTag == "ValidIDRule") || (discrepancy.firstTag == "ValidIDRule" && discrepancy.secondTag == "ValidID")
+        ? true : false;
+    }
 }

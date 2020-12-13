@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class ResponseDisplayer : GeneralDisplayer
@@ -15,6 +13,8 @@ public class ResponseDisplayer : GeneralDisplayer
     private TMP_Text lastReplyDate;
     [SerializeField]
     private TMP_Text emailSentFrom;
+    [SerializeField]
+    private TMP_Text emailSentFromLabel;
     [SerializeField]
     private TMP_Text status;
     [SerializeField]
@@ -35,6 +35,10 @@ public class ResponseDisplayer : GeneralDisplayer
             dateSent.text = response.GetDateSent().ToString("yyyy/MM/dd");
             lastReplyDate.text = response.GetLastReplyDate().ToString("yyyy/MM/dd");
             emailSentFrom.text = response.GetEmailSentFrom();
+
+            if(response.GetEmailSentFrom() == null) { emailSentFromLabel.text = ""; }
+            else { emailSentFromLabel.text = "Email sent from:"; }
+
             if (response.GetCloseType() == CloseType.Empty)
             {
                 status.text = "";
@@ -74,6 +78,8 @@ public class ResponseDisplayer : GeneralDisplayer
 
     public override void TurnOnRaycast()
     {
+
+
         foreach(var txt in allTexts)
         {
             txt.raycastTarget = true;

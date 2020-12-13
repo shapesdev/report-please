@@ -47,6 +47,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             }
             else if(inspectorMode == true)
             {
+                Debug.Log(results[0].gameObject);
                 return results[0].gameObject;
             }
         }
@@ -88,7 +89,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             }
         }
 
-        if (selectableGameObjects[0].activeInHierarchy == false && selectableGameObjects[1].activeInHierarchy == false)
+        if (selectableGameObjects[0].activeInHierarchy == false && selectableGameObjects[1].activeInHierarchy == false && canBeReturned)
         {
             var paperReturnedEventArgs = new PapersReturnedEventArgs();
             OnPapersReturned(this, paperReturnedEventArgs);
@@ -114,14 +115,12 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         return false;
     }
 
-    public void ActivateSelectable() { Invoke("ActivateSelectableGameObjects", 1.5f); }
-
-    private void ActivateSelectableGameObjects()
+    public void ActivateSelectable(int count)
     {
-        foreach (var go in selectableGameObjects)
+        for(int i = 0; i < count; i++)
         {
-            go.transform.localPosition = new Vector3(-600, -320, 0);
-            go.SetActive(true);
+            selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
+            selectableGameObjects[i].SetActive(true);
         }
     }
 

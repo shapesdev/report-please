@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class CitationCheckController
 {
@@ -76,7 +73,7 @@ public class CitationCheckController
             string citation = "Wrong Email Address";
             return Tuple.Create(true, citation);
         }
-        if (response.GetCloseType() == CloseType.NotQualified && (response.GetDateSent().Day - response.GetLastReplyDate().Day) >= 7)
+        if (response.GetCloseType() == CloseType.NotQualified && ((response.GetDateSent().Day - response.GetLastReplyDate().Day) < 7 ))
         {
             string citation = "Closed as Not Qualified too early";
             return Tuple.Create(true, citation);
@@ -93,8 +90,8 @@ public class CitationCheckController
         }
         if (response.GetEmail().Contains("issuetracker"))
         {
-            if (!response.GetEmail().Contains(response.GetCaseID().ToString()) && response.GetCloseType() != CloseType.Duplicate
-                || (response.GetEmail().Contains(response.GetCaseID().ToString()) && response.GetCloseType() == CloseType.Duplicate))
+            if ((response.GetEmail().Contains(response.GetCaseID().ToString()) && response.GetCloseType() != CloseType.Duplicate)
+                || (!response.GetEmail().Contains(response.GetCaseID().ToString()) && response.GetCloseType() == CloseType.Duplicate))
             {
                 string citation = "Wrong Issue Tracker Link";
                 return Tuple.Create(true, citation);

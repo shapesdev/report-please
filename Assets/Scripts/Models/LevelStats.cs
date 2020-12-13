@@ -6,10 +6,12 @@ using UnityEngine;
 [System.Serializable]
 public class LevelStats
 {
-    public List<ScenarioStats> levels;
+    public string day;
+    public List<ScenarioStats> scenarios;
 
-    public LevelStats()
+    public LevelStats(string day, List<ScenarioStats> scenarios)
     {
-        levels = new List<ScenarioStats>();
+        this.day = day;
+        this.scenarios = scenarios;
     }
 }

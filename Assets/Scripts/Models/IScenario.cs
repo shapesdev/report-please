@@ -9,4 +9,5 @@ public interface IScenario
     Discrepancy GetDiscrepancy();
     int GetCaseID();
     string GetTitle();
+    bool IsEmployeeIdMissing();
 }

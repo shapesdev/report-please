@@ -41,7 +41,11 @@ public class LineView : MonoBehaviour, ILineView
         if (text == null)
         {
             var img = selection.GetComponent<Image>();
-            img.color = color;
+
+            if(img != null)
+            {
+                img.color = color;
+            }
         }
         else
         {

@@ -20,11 +20,11 @@ public struct ReportFieldInfo
 [CreateAssetMenu(fileName = "New Rule Book", menuName = "Rule Book")]
 public class RuleBookSO : ScriptableObject
 {
-    public List<string> basicRules;
+    public List<Rules> basicRules;
     public List<AreasNGrabbags> areas;
     public List<ReportFieldInfo> reportFields;
     public List<Versions> versionInfo;
-    public List<Packages> packagesInfo;
+    public List<PackageInfo> packagesInfo;
 }
 
 [System.Serializable]
@@ -42,8 +42,15 @@ public class Versions
 }
 
 [System.Serializable]
-public class Packages
+public class PackageInfo
 {
     public string packageName;
     public string[] versions;
+}
+
+[System.Serializable]
+public class Rules
+{
+    public int day;
+    public List<string> rules;
 }

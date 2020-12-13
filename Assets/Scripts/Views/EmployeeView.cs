@@ -47,8 +47,9 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
     public override void TurnOnInspectorMode()
     {
         gameObject.GetComponent<Image>().raycastTarget = false;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.InspectorModeColor;
 
-        foreach(var txt in allTexts)
+        foreach (var txt in allTexts)
         {
             txt.raycastTarget = true;
             txt.color = ColorHelper.instance.InspectorModeColor;
@@ -58,6 +59,7 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
     public override void TurnOffInspectorMode()
     {
         gameObject.GetComponent<Image>().raycastTarget = true;
+        gameObject.GetComponent<Image>().color = ColorHelper.instance.NormalModeColor;
 
         foreach (var txt in allTexts)
         {

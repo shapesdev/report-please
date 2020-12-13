@@ -10,6 +10,10 @@ public class App : MonoBehaviour
     private GameObject menuPrefab;
     [SerializeField]
     private RuleBookSO ruleBook;
+    [SerializeField]
+    private Sprite[] allCharacterSprites;
+    [SerializeField]
+    private Sprite[] storyCharacterSprites;
 
     private StoryGameFactory storyGameFactory;
     private MenuFactory menuFactory;
@@ -18,7 +22,6 @@ public class App : MonoBehaviour
     {
         //PlayerPrefs.DeleteAll();
         Init();
-        Export();
     }
 
     private void Init()
@@ -48,7 +51,7 @@ public class App : MonoBehaviour
         if(menuFactory.IsLoaded())
         {
             menuFactory.Unload();
-            storyGameFactory.Load(storyGamePrefab, ruleBook);
+            storyGameFactory.Load(storyGamePrefab, ruleBook, storyCharacterSprites);
         }
         else if (storyGameFactory.IsLoaded())
         {
@@ -59,10 +62,10 @@ public class App : MonoBehaviour
 
     public void LoadNextDay()
     {
-        if (PlayerPrefs.GetInt("CurrentDay") < 14)
+        if (PlayerPrefs.GetInt("CurrentDay") < 15)
         {
             storyGameFactory.Unload();
-            storyGameFactory.Load(storyGamePrefab, ruleBook);
+            storyGameFactory.Load(storyGamePrefab, ruleBook, storyCharacterSprites);
         }
         else
         {
