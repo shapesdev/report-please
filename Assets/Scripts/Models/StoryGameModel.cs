@@ -84,7 +84,7 @@ public class StoryGameModel: IStoryGameModel
     public List<Vector3> WorldEdgePositions { get; set; }
     public Sprite[] StoryCharacters { get; set; }
 
-    private LevelStats levelStats;
+    private List<ScenarioStats> scenarioStats;
     #endregion
 
     public StoryGameModel(RuleBookSO ruleBook, Sprite[] sprites)
@@ -102,7 +102,8 @@ public class StoryGameModel: IStoryGameModel
         DiscrepancyFound = false;
         MaxScore = DaysWithScenarios[CurrentDay].Count * 10;
 
-        levelStats = new LevelStats(CurrentDay.ToString("MMMM dd, yyyy"), new List<ScenarioStats>());
+        scenarioStats = new List<ScenarioStats>();
+
     }
 
     public void UpdateScenarioData(string citation, int score)
@@ -111,13 +112,13 @@ public class StoryGameModel: IStoryGameModel
         DiscrepancyFound = false;
         CurrentStamp = Stamp.Empty;
 
-        levelStats.scenarios.Add(new ScenarioStats(DaysWithScenarios[currentDay][CurrentScenario].GetCaseID(), DaysWithScenarios[currentDay][CurrentScenario].GetTitle(
+        scenarioStats.Add(new ScenarioStats(DaysWithScenarios[currentDay][CurrentScenario].GetCaseID(), DaysWithScenarios[currentDay][CurrentScenario].GetTitle(
             ), citation, score));
     }
 
     public void SaveScenarioData()
     {
-        PlayFabHelper.instance.SaveScenarioData(levelStats);
+        PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("MMMM dd, yyyy"), scenarioStats));
     }
 
     #region GameObject Position Data

@@ -161,7 +161,7 @@ public class DataInitialization
         Tester tester2 = new Tester(2, "Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
         Tester tester3 = new Tester(3, "Dante", "Romanov", "Ramoj@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
 
-        Response response0 = new Response("UnityWebRequest fails when Managed Stripping Level is enabled", 1122778, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response0 = new Response("UnityWebRequest fails when Managed Stripping Level is enabled", 1122112, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
         "After further resolution with developers, we have decided that this issue is By Design due to the following reasons:\n" +
         "Using higher stripping settings some overridden method get stripped.\n\n" +
@@ -170,7 +170,7 @@ public class DataInitialization
         tester3.GetName() +
         "\nDiversity QA Team", tester3, new Discrepancy("ValidID", "ValidIDRule"));
 
-        Response response1 = new Response("2017.4 Diversity keeps crashing when opened", 1122778, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response1 = new Response("2017.4 Diversity keeps crashing when opened", 1122113, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for getting in touch!\n\n" +
         "We no longer support Diversity versions lower than Diversity 2019.4 except for Diversity 2018.4 LTS (long - term support) version.\n\n" +
         "Please update to the newest stable version here: https://diversity.com/get-diversity/update\n\n" +
@@ -179,7 +179,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, null);
 
-        Response response2 = new Response("Diversity stopped working", 1122779, new DateTime(2020, 11, 8), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response2 = new Response("Diversity stopped working", 1122114, new DateTime(2020, 11, 8), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for reporting the issue.\n\n" +
         "Could you please give us more details by doing the following steps:\n\n" +
         "1. Attach an example project\n" +
@@ -190,7 +190,7 @@ public class DataInitialization
         "Petras\n" +
         "Diversity QA Team\n", tester1.GetEmail(), tester1, new Discrepancy("Reply", "Name"));
 
-        Response response3 = new Response("Please add more tutorials in Diversity", 1122780, new DateTime(2020, 11, 7), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response3 = new Response("Please add more tutorials in Diversity", 1122118, new DateTime(2020, 11, 7), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
         "Unfortunately, feature requests are no longer being handled via bug reports. Now our primary feedback channel is Diversity Forums, https://forum.diversity.com/. The forums are a great place for discussion, ideation, and inspiration between community members and Diversity team members.\n\n" +
         "If you have any further questions, feel free to contact our team.\n\n" +
@@ -198,7 +198,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, new Discrepancy("Reply", "EmptyLineRule"));
 
-        Response response4 = new Response("Builder 3D Pack is broken when imported in Diversity", 1122781, new DateTime(2020, 11, 8), new DateTime(2020, 11, 11), "Hi,\n\n" +
+        Response response4 = new Response("Builder 3D Pack is broken when imported in Diversity", 1122542, new DateTime(2020, 11, 8), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
@@ -279,7 +279,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded, new Discrepancy("Reply", "Status"));
 
-        Response response5 = new Response("Diversity just crashed, fix pls", 1212957, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
+        Response response5 = new Response("Diversity just crashed, fix pls", 1212978, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +

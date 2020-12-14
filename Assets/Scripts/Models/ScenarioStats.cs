@@ -18,10 +18,4 @@ public class ScenarioStats
         this.citation = citation;
         this.score = score;
     }
-
-    public void UpdateScenarioStats(string citation, int score)
-    {
-        this.citation = citation;
-        this.score = score;
-    }
 }

@@ -71,7 +71,14 @@ public class StoryGameController
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
 
-            if(model.DiscrepancyFound == true) { model.UpdateScenarioData(citation.Item2, 5); }
+            if(model.DiscrepancyFound == true)
+            {
+                model.UpdateScenarioData(citation.Item2, 5);
+            }
+            else
+            {
+                model.UpdateScenarioData(citation.Item2, 0);
+            }
         }
         else
         {
