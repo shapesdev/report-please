@@ -12,13 +12,18 @@ public class BasicRuleDisplayer : MonoBehaviour
 
     public void DisplayRules(List<string> rulesList)
     {
-        if(rules.Length == rulesList.Count)
+        int lastIteration = 0;
+
+        for (int i = 0; i < rulesList.Count; i++)
         {
-            for(int i = 0; i < rules.Length; i++)
-            {
-                rules[i].text = rulesList[i];
-            }
+            rules[i].text = rulesList[i];
+            lastIteration = i;
         }
+        for(int i = lastIteration + 1; i < rules.Length; i++)
+        {
+            rules[i].text = "";
+        }
+
         gameObject.SetActive(true);
     }
 

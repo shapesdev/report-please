@@ -56,7 +56,14 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     public void OpenBasicRules()
     {
         DeactiveAllChildren();
-        basicRuleDisplayer.DisplayRules(ruleBook.basicRules);
+
+        for(int i = 0; i < ruleBook.basicRules.Count; i++)
+        {
+            if(ruleBook.basicRules[i].day == PlayerPrefs.GetInt("CurrentDay"))
+            {
+                basicRuleDisplayer.DisplayRules(ruleBook.basicRules[i].rules);
+            }
+        }
         OnTurnPage?.Invoke();
     }
 

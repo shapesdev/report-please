@@ -16,6 +16,17 @@ public class Response : IScenario
     private CloseType testerClosedType;
     private Discrepancy discrepancy;
 
+    public Response(string title, int id, DateTime userReply, DateTime testerSent, string email, Tester tester, Discrepancy discrepancy)
+    {
+        this.title = title;
+        caseID = id;
+        lastUserReply = userReply;
+        dateSent = testerSent;
+        this.email = email;
+        this.discrepancy = discrepancy;
+        this.tester = tester;
+    }
+
     public Response(string title, int id, DateTime userReply, DateTime testerSent, string email, string emailFrom, Tester tester, Discrepancy discrepancy)
     {
         this.title = title;
@@ -100,5 +111,18 @@ public class Response : IScenario
     public string GetTitle()
     {
         return title;
+    }
+
+    public bool IsEmployeeIdMissing()
+    {
+        if(discrepancy == null)
+        {
+            return false;
+        }
+        else
+        {
+            return (discrepancy.firstTag == "ValidID" && discrepancy.secondTag == "ValidIDRule") ||
+                (discrepancy.firstTag == "ValidIDRule" && discrepancy.secondTag == "ValidID") ? true : false;
+        }
     }
 }

@@ -25,10 +25,13 @@ public interface IStoryGameModel
     GameObject FirstSelection { get; set; }
     GameObject SecondSelection { get; set; }
     List<Vector3> WorldEdgePositions { get; set; }
+    Sprite[] StoryCharacters { get; set; }
 
     void UpdateSelectedGameObjectPosition(float width);
     void AddSelectionEdgesToList();
     List<Vector3> GetAllLinePositions();
+    void UpdateScenarioData(string citation, int score);
+    void SaveScenarioData();
 
     event EventHandler<HighlightEventArgs> OnHighlight;
 }

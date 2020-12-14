@@ -9,7 +9,7 @@ public class StoryGameFactory
 
     private GameObject instance;
 
-    public void Load(GameObject gamePrefab, RuleBookSO ruleBook)
+    public void Load(GameObject gamePrefab, RuleBookSO ruleBook, Sprite[] sprites)
     {
         instance = GameObject.Instantiate(gamePrefab);
 
@@ -18,7 +18,7 @@ public class StoryGameFactory
         var stampView = instance.GetComponentInChildren<GameStampView>();
         var lineView = instance.GetComponentInChildren<LineView>();
 
-        model = new StoryGameModel(ruleBook);
+        model = new StoryGameModel(ruleBook, sprites);
         controller = new StoryGameController(model, view, selectionView, stampView, lineView);
     }
 

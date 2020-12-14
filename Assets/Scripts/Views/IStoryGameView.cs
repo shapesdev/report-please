@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
-    void ShowScenario(IScenario scenario);
+    void ShowScenario(IScenario scenario, Sprite sprite, int current, int last, IGameSelectionView selectionView, DateTime day);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
@@ -20,4 +20,5 @@ public interface IStoryGameView : IOffsetView
     event EventHandler<MouseReleasedEventArgs> OnMouseReleased;
     event EventHandler<MouseHoldEventArgs> OnMouseHold;
     event EventHandler<OffsetValueEventArgs> OnOffsetChanged;
+    event EventHandler<StartScenarioShowingEventArgs> OnStartScenarioShowing;
 }
