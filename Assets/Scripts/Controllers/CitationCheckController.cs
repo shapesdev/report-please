@@ -67,12 +67,6 @@ public class CitationCheckController
             string citation = "Double  Spaces  Between  Letters";
             return Tuple.Create(true, citation);
         }
-
-        if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
-        {
-            string citation = "Wrong Email Address";
-            return Tuple.Create(true, citation);
-        }
         if (response.GetCloseType() == CloseType.NotQualified && ((response.GetDateSent().Day - response.GetLastReplyDate().Day) < 7 ))
         {
             string citation = "Closed as Not Qualified too early";
@@ -83,10 +77,24 @@ public class CitationCheckController
             string citation = "Closed Incorrectly";
             return Tuple.Create(true, citation);
         }
-        if (!response.GetEmail().Contains(response.GetTester().GetName()))
+        if(response.GetTester().GetName() != null)
         {
-            string citation = "Wrong Tester Name";
-            return Tuple.Create(true, citation);
+            if (!response.GetEmail().Contains(response.GetTester().GetName()))
+            {
+                string citation = "Wrong Tester Name";
+                return Tuple.Create(true, citation);
+            }
+            if (response.GetTester().GetExpiryDate() < response.GetDateSent())
+            {
+                string citation = "Employee ID Expired";
+                return Tuple.Create(true, citation);
+            }
+
+            if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
+            {
+                string citation = "Wrong Email Address";
+                return Tuple.Create(true, citation);
+            }
         }
         if (response.GetEmail().Contains("issuetracker"))
         {
@@ -97,12 +105,6 @@ public class CitationCheckController
                 return Tuple.Create(true, citation);
             }
         }
-        if (response.GetTester().GetExpiryDate() < response.GetDateSent())
-        {
-            string citation = "Employee ID Expired";
-            return Tuple.Create(true, citation);
-        }
-
         string noCitation = "No Citation";
         return Tuple.Create(false, noCitation);
     }

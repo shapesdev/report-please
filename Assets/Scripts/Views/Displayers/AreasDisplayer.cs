@@ -24,6 +24,7 @@ public class AreasDisplayer : MonoBehaviour
 
     public void DisplayAreasPageOne(List<AreasNGrabbags> areas)
     {
+        Debug.Log("ha");
         gameObject.SetActive(true);
 
         this.areas = areas;

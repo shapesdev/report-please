@@ -8,6 +8,10 @@ public class PlayerData : MonoBehaviour
 
     private List<LevelsStats> levelStats;
 
+    public int citationsReceived = 0;
+    public int correctReports = 0;
+    public int currentHighScore = 0;
+
     private void Awake()
     {
         instance = this;
@@ -22,16 +26,16 @@ public class PlayerData : MonoBehaviour
     public void AddPlayerData(LevelsStats level)
     {
         levelStats.Add(level);
-        PlayFabHelper.instance.SaveScenarioData(PlayerData.instance.GetPlayerData());
-    }
-
-    public List<LevelsStats> GetPlayerData()
-    {
-        return levelStats;
+        PlayFabHelper.instance.SaveScenarioData(levelStats);
+        PlayFabHelper.instance.UpdateCloudStatistics();
     }
 
     public void ClearPlayerData()
     {
         levelStats.Clear();
+        citationsReceived = 0;
+        correctReports = 0;
+        currentHighScore = 0;
+        PlayFabHelper.instance.SaveScenarioData(levelStats);
     }
 }

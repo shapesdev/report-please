@@ -32,20 +32,6 @@ public class App : MonoBehaviour
         menuFactory.Load(menuPrefab);
     }
 
-    private void Export()
-    {
-        DataExportHelper dataExportHelper = new DataExportHelper();
-
-        dataExportHelper.AppendToReport(
-    new string[4]
-    {
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString()
-    });
-    }
-
     public void Load()
     {
         if(menuFactory.IsLoaded())

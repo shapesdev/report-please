@@ -31,7 +31,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     private PlayableDirector introDirector;
     public PlayableDirector characterWalkInDirector;
     public PlayableDirector characterWalkingDirector;
-    public PlayableDirector characterWalkOutdirector;
+    public PlayableDirector characterWalkOutDirector;
     public AudioSource source;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
@@ -43,6 +43,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
     public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
     public event EventHandler<StartScenarioShowingEventArgs> OnStartScenarioShowing = (sender, e) => { };
+    public event EventHandler<ExportPressedEventArgs> OnExport = (sender, e) => { };
 
     public static event Action<int> OnEndDay;
     public static event Action<bool> OnPause;
@@ -160,27 +161,28 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         }
 
         var currentSprite = characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite;
-        currentScenarioText.text = "Current Report: " + current + "/" + last;
 
         if (currentSprite == null)
         {
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
-            characterWalkOutdirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
+            characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
 
-            StartCoroutine(DisplayCharacter(true, false, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(true, false, selectionView, day, scenario, sprite));
         }
         else if(currentSprite != sprite)
         {
-            StartCoroutine(DisplayCharacter(true, true, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(true, true, selectionView, day, scenario, sprite));
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
         }
         else
         {
-            StartCoroutine(DisplayCharacter(false, false, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(false, false, selectionView, day, scenario, sprite));
         }
+
+        currentScenarioText.text = "Current Report: " + current + "/" + last;
     }
 
-    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView, DateTime day, IScenario scenario)
+    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView, DateTime day, IScenario scenario, Sprite sprite)
     {
         while(true)
         {
@@ -188,11 +190,12 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             {
                 if(walkOut)
                 {
-                    characterWalkOutdirector.Play();
                     characterWalkInDirector.transform.GetChild(0).gameObject.SetActive(false);
+                    characterWalkOutDirector.Play();
                     yield return new WaitForSeconds(1.2f);
-                    characterWalkOutdirector.transform.GetChild(0).gameObject.SetActive(false);
+                    characterWalkOutDirector.transform.GetChild(0).gameObject.SetActive(false);
                     yield return new WaitForSeconds(0.8f);
+                    characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
                 }
 
                 var animator = characterWalkInDirector.gameObject.GetComponentInChildren<Animator>(true);
@@ -301,19 +304,33 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             if (day == 14)
             {
                 nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
-                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             }
             else
             {
                 nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
-                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             }
+            nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
+            nextDayGameObject.transform.GetChild(3).gameObject.SetActive(true);
             break;
         }
     }
     #endregion
 
     #region Extra methods
+    public void Export()
+    {
+        DataExportController dataExportHelper = new DataExportController();
+
+        dataExportHelper.AppendToReport(
+    new string[4]
+    {
+                UnityEngine.Random.Range(0, 11).ToString(),
+                UnityEngine.Random.Range(0, 11).ToString(),
+                UnityEngine.Random.Range(0, 11).ToString(),
+                UnityEngine.Random.Range(0, 11).ToString()
+    });
+    }
+
     public void OpenClosePausePanel()
     {
         if (pausePanel.activeInHierarchy == false)

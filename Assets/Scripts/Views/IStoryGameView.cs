@@ -21,4 +21,5 @@ public interface IStoryGameView : IOffsetView
     event EventHandler<MouseHoldEventArgs> OnMouseHold;
     event EventHandler<OffsetValueEventArgs> OnOffsetChanged;
     event EventHandler<StartScenarioShowingEventArgs> OnStartScenarioShowing;
+    event EventHandler<ExportPressedEventArgs> OnExport;
 }

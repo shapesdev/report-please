@@ -104,7 +104,10 @@ public class StoryGameModel: IStoryGameModel
 
         scenarioStats = new List<ScenarioStats>();
 
+        CheckStatistics();
     }
+
+    #region Cloud Data
 
     public void UpdateScenarioData(string citation, int score)
     {
@@ -118,8 +121,27 @@ public class StoryGameModel: IStoryGameModel
 
     public void SaveScenarioData()
     {
+        PlayerData.instance.currentHighScore += CurrentScore;
         PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("MMMM dd, yyyy"), scenarioStats));
     }
+
+    private void CheckStatistics()
+    {
+        if(currentDay.Day == 10)
+        {
+            int totalReports = 0;
+            int totalHighScore = 0;
+
+            foreach(var report in DaysWithScenarios)
+            {
+                totalReports += report.Value.Count;
+                totalHighScore += report.Value.Count * 10;
+            }
+
+            PlayFabHelper.instance.AddCloudStatistics(0, 0, 0, totalReports, totalHighScore);
+        }
+    }
+    #endregion
 
     #region GameObject Position Data
     public void UpdateSelectedGameObjectPosition(float width)

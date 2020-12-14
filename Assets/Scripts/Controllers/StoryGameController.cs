@@ -12,6 +12,7 @@ public class StoryGameController
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
+    private DataExportController dataExportController;
 
     public static event Action<int> OnGameInitialized;
     public static event Action<int> OnInspectorMode;
@@ -30,6 +31,7 @@ public class StoryGameController
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
+        dataExportController = new DataExportController();
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
         view.OnMousePressed += View_OnMousePressed;
@@ -40,6 +42,7 @@ public class StoryGameController
         view.OnOffsetChanged += View_OnOffsetChanged;
         view.OnTabPressed += View_OnTabPressed;
         view.OnStartScenarioShowing += View_OnStartScenarioShowing;
+        view.OnExport += View_OnExport;
 
         model.OnHighlight += Model_OnHighlight;
 
@@ -70,6 +73,7 @@ public class StoryGameController
         {
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
+            PlayerData.instance.citationsReceived += 1;
 
             if(model.DiscrepancyFound == true)
             {
@@ -83,6 +87,7 @@ public class StoryGameController
         else
         {
             model.UpdateScenarioData(citation.Item2, 10);
+            PlayerData.instance.correctReports += 1;
         }
 
         ShowNextScenario();
@@ -148,6 +153,8 @@ public class StoryGameController
     model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()], model.CurrentScenario + 1,
     model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay);
     }
+
+    private void View_OnExport(object sender, ExportPressedEventArgs e) {  }
 
     private void View_OnStartScenarioShowing(object sender, StartScenarioShowingEventArgs e) { DisplayDataForView(); }
 

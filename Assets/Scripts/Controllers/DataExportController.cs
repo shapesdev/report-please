@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class DataExportHelper
+public class DataExportController
 {
     private string folderName = "Report";
-    private string fileName = "Report.csv";
+    private string fileName = "Report.xlsx";
     private string reportSeparator = ",";
     private string[] reportHeaders = new string[4] { "Case ID", "Case Title", "Citation", "Score" };
     private string timeStampHeader = "Time stamp";

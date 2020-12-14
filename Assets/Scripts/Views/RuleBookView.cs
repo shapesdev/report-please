@@ -34,6 +34,13 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
         reportFieldsDisplayer.OnPageBack += AreasDisplayer_OnPageBack;
     }
 
+    private void OnDisable()
+    {
+        areasDisplayer.OnPageBack -= AreasDisplayer_OnPageBack;
+        basicRuleDisplayer.OnPageBack -= AreasDisplayer_OnPageBack;
+        reportFieldsDisplayer.OnPageBack -= AreasDisplayer_OnPageBack;
+    }
+
     private void AreasDisplayer_OnPageBack(object sender, PageClosedEventArgs e)
     {
         DeactiveAllChildren();
@@ -50,7 +57,10 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     public override void ChangeSizeToRight()
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
-        homePage.SetActive(true);
+        if(homePage.activeInHierarchy == false)
+        {
+            homePage.SetActive(true);
+        }
     }
 
     public void OpenBasicRules()

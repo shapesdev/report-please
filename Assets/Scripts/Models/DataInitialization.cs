@@ -299,7 +299,7 @@ public class DataInitialization
         "We highly appreciate your contribution. If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Active, CloseType.Active, new Discrepancy("Reply", "CaseID"));
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Empty, CloseType.Empty, new Discrepancy("Reply", "CaseID"));
 
         Response response8 = new Response("Starter Pack 3D Ultimate errors in Diversity", 1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
