@@ -30,6 +30,11 @@ public class PlayerData : MonoBehaviour
         PlayFabHelper.instance.UpdateCloudStatistics();
     }
 
+    public List<LevelsStats> GetPlayerData()
+    {
+        return levelStats;
+    }
+
     public void ClearPlayerData()
     {
         levelStats.Clear();

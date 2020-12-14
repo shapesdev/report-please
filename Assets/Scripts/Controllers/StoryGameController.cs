@@ -12,7 +12,6 @@ public class StoryGameController
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
-    private DataExportController dataExportController;
 
     public static event Action<int> OnGameInitialized;
     public static event Action<int> OnInspectorMode;
@@ -31,7 +30,6 @@ public class StoryGameController
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
-        dataExportController = new DataExportController();
 
         view.Init(model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario]);
         view.OnMousePressed += View_OnMousePressed;
@@ -154,7 +152,7 @@ public class StoryGameController
     model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay);
     }
 
-    private void View_OnExport(object sender, ExportPressedEventArgs e) {  }
+    private void View_OnExport(object sender, ExportPressedEventArgs e) { DataExportHelper.instance.Export(); }
 
     private void View_OnStartScenarioShowing(object sender, StartScenarioShowingEventArgs e) { DisplayDataForView(); }
 

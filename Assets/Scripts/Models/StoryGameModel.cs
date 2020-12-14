@@ -122,7 +122,7 @@ public class StoryGameModel: IStoryGameModel
     public void SaveScenarioData()
     {
         PlayerData.instance.currentHighScore += CurrentScore;
-        PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("MMMM dd, yyyy"), scenarioStats));
+        PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("yyyy-MM-dd"), scenarioStats));
     }
 
     private void CheckStatistics()

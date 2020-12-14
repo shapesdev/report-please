@@ -111,7 +111,7 @@ public class DataInitialization
         "Thanks,\n" +
         "Diversity QA Team", tester1, null);
 
-        Response response2 = new Response("postProcesssing not work me, but why?", 1122778, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response2 = new Response("postProcesssing not work me but why?", 1122778, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
         "After further resolution with developers, we have decided that this issue is By Design due to the following reasons:\n" +
         "Post Processing GameObject and Camera GameObject has to be on the same layer in order for it to work properly.\n\n" +
@@ -135,7 +135,7 @@ public class DataInitialization
         "Thanks,\n" +
         "Diversity QA Team", tester1, new Discrepancy("Reply", "EmptyLineRule"));
 
-        Response response5 = new Response("Shader Graph window can't drag sometime", 1122781, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response5 = new Response("Can't login to my account", 1122781, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for reporting your issue.\n\n" +
         "Diversity QA team is only handling issues related to the Diversity Engine and its tools.\n\n" +
         "For issues related to Diversity Services, please submit a request to our Services Support team and they will provide more information about Accounts, Licenses, Assets Shop, and other non-technical issues." +
@@ -254,7 +254,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, null);
 
-        Response response2 = new Response("Diversity just crashed, fix pls", 1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 12), "Hi,\n\n" +
+        Response response2 = new Response("Diversity just crashed fix pls", 1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
@@ -279,7 +279,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded, new Discrepancy("Reply", "Status"));
 
-        Response response5 = new Response("Diversity just crashed, fix pls", 1212978, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
+        Response response5 = new Response("Diversity freezes when in Play Mode", 1212978, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +

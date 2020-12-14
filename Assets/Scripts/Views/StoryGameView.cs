@@ -304,13 +304,13 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             if (day == 14)
             {
                 nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
+                nextDayGameObject.transform.GetChild(3).gameObject.SetActive(true);
             }
             else
             {
                 nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
             }
             nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
-            nextDayGameObject.transform.GetChild(3).gameObject.SetActive(true);
             break;
         }
     }
@@ -319,16 +319,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     #region Extra methods
     public void Export()
     {
-        DataExportController dataExportHelper = new DataExportController();
-
-        dataExportHelper.AppendToReport(
-    new string[4]
-    {
-                UnityEngine.Random.Range(0, 11).ToString(),
-                UnityEngine.Random.Range(0, 11).ToString(),
-                UnityEngine.Random.Range(0, 11).ToString(),
-                UnityEngine.Random.Range(0, 11).ToString()
-    });
+        var eventArgs = new ExportPressedEventArgs();
+        OnExport(this, eventArgs);
     }
 
     public void OpenClosePausePanel()

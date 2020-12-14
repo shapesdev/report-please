@@ -83,6 +83,7 @@ public class MenuView : MonoBehaviour, IMenuView
     {
         PlayerPrefs.DeleteAll();
         PlayerData.instance.ClearPlayerData();
+        DataExportHelper.instance.ResetFile();
         App.instance.Load();
     }
 
