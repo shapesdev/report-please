@@ -102,7 +102,7 @@ public class DataInitialization
     {
         tempScenarioList = new List<IScenario>();
 
-        Tester tester1 = new Tester(0);
+        Tester tester1 = new Tester(0, "Here you go");
 
         Response response1 = new Response("Cursor visible during pley mode", 1122777, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
@@ -111,7 +111,7 @@ public class DataInitialization
         "Thanks,\n" +
         "Diversity QA Team", tester1, null);
 
-        Response response2 = new Response("postProcesssing not work me, but why?", 1122778, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response2 = new Response("postProcesssing not work me but why?", 1122778, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
         "After further resolution with developers, we have decided that this issue is By Design due to the following reasons:\n" +
         "Post Processing GameObject and Camera GameObject has to be on the same layer in order for it to work properly.\n\n" +
@@ -125,7 +125,7 @@ public class DataInitialization
         "If you can  describe your  issue in English or send us a video that illustrates the problem you're facing, we'll be able to investigate further.\n\n" +
         "That said, if you have  further questions, please  feel  free to  contact us.\n\n" +
         "Thanks,\n" +
-        "Diversity QA Team", tester1, new Discrepancy("Reply", "DoubleSpacesRule"));
+        "Diversity QA Team", tester1, new Discrepancy("Reply", "DoubleSpacesRule", new Dialogue("There are double spaces in this Report", "What do you mean?")));
 
         Response response4 = new Response("Shader Graph window can't drag sometime", 1122780, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for submitting a bug to Diversity.\n\n" +
@@ -133,9 +133,9 @@ public class DataInitialization
         " so we have resolved this bug as postponed.\n\n\n\n" +
         "That said, if you have  further questions, please  feel  free to  contact us.\n\n" +
         "Thanks,\n" +
-        "Diversity QA Team", tester1, new Discrepancy("Reply", "EmptyLineRule"));
+        "Diversity QA Team", tester1, new Discrepancy("Reply", "EmptyLineRule", new Dialogue("I can see empty lines in your Report", "There is none")));
 
-        Response response5 = new Response("Shader Graph window can't drag sometime", 1122781, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
+        Response response5 = new Response("Can't login to my account", 1122781, new DateTime(2020, 11, 10), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for reporting your issue.\n\n" +
         "Diversity QA team is only handling issues related to the Diversity Engine and its tools.\n\n" +
         "For issues related to Diversity Services, please submit a request to our Services Support team and they will provide more information about Accounts, Licenses, Assets Shop, and other non-technical issues." +
@@ -157,9 +157,9 @@ public class DataInitialization
     {
         tempScenarioList = new List<IScenario>();
 
-        Tester tester1 = new Tester(1, "Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25));
-        Tester tester2 = new Tester(2, "Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
-        Tester tester3 = new Tester(3, "Dante", "Romanov", "Ramoj@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25));
+        Tester tester1 = new Tester(1, "Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25), "I hope they are correct");
+        Tester tester2 = new Tester(2, "Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25), "It's finally my turn");
+        Tester tester3 = new Tester(3, "Dante", "Romanov", "Ramoj@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25), "Just put the plus stamp, I'm in a hurry");
 
         Response response0 = new Response("UnityWebRequest fails when Managed Stripping Level is enabled", 1122112, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
@@ -168,7 +168,7 @@ public class DataInitialization
         "That said, if you have further questions, please feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester3.GetName() +
-        "\nDiversity QA Team", tester3, new Discrepancy("ValidID", "ValidIDRule"));
+        "\nDiversity QA Team", tester3, new Discrepancy("ValidID", "ValidIDRule", new Dialogue("Where is your Employee ID?", "Oh, I have it right here")));
 
         Response response1 = new Response("2017.4 Diversity keeps crashing when opened", 1122113, new DateTime(2020, 11, 9), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for getting in touch!\n\n" +
@@ -188,7 +188,7 @@ public class DataInitialization
         "4. Describe the expected and actual results\n\n" +
         "Thanks,\n" +
         "Petras\n" +
-        "Diversity QA Team\n", tester1.GetEmail(), tester1, new Discrepancy("Reply", "Name"));
+        "Diversity QA Team\n", tester1.GetEmail(), tester1, new Discrepancy("Reply", "Name", new Dialogue("You have put a wrong tester name in the Report", "Oh, sorry it was a mistake")));
 
         Response response3 = new Response("Please add more tutorials in Diversity", 1122118, new DateTime(2020, 11, 7), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for submitting this feature request. We really appreciate it when our users contribute to how Diversity should look in the future.\n\n" +
@@ -196,7 +196,7 @@ public class DataInitialization
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n\n\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, new Discrepancy("Reply", "EmptyLineRule"));
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, new Discrepancy("Reply", "EmptyLineRule", new Dialogue("I can see an empty line in your Report", "Is there?")));
 
         Response response4 = new Response("Builder 3D Pack is broken when imported in Diversity", 1122542, new DateTime(2020, 11, 8), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
@@ -211,14 +211,14 @@ public class DataInitialization
         "If you're still facing this problem, could you please provide us with more information - project and the exact steps needed to reproduce on our side?\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "DoubleSpacesRule"));
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, new Discrepancy("Reply", "DoubleSpacesRule", new Dialogue("There are double spaces in your Report", "There is not, are you alright?")));
 
         Response response6 = new Response("Particles are broken", 1244582, new DateTime(2020, 11, 6), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thanks for getting in touch!\n\n" +
         "Could you please attach a small project with step - by - step directions ? We can then reproduce it on our side for further investigation.\n\n" +
         "Thanks,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2, new Discrepancy("Email", "Email"));
+        "\nDiversity QA Team", tester2.GetName() + "." + tester2.GetSurname() + "@store.diversity.com", tester2, new Discrepancy("Email", "Email", new Dialogue("I can see your Email is wrong in the Report", "Oh, yeah. Forgot that")));
 
         Response response7 = new Response("My project crashed when I was browsing Internet Explorer", 1244583, new DateTime(2020, 11, 7), new DateTime(2020, 11, 11), "Hi,\n\n" +
         "Thank you for contacting Diversity about your issue.\n\n" +
@@ -244,8 +244,8 @@ public class DataInitialization
     {
         tempScenarioList = new List<IScenario>();
 
-        Tester tester1 = new Tester(4, "Justinas", "Paulauskas", "j.paulauskas@diversity.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25));
-        Tester tester2 = new Tester(5, "Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10));
+        Tester tester1 = new Tester(4, "Justinas", "Paulauskas", "j.paulauskas@diversity.com", new DateTime(2019, 5, 25), new DateTime(2021, 5, 25), "Sure, here you go");
+        Tester tester2 = new Tester(5, "Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10), "Hope everything is okay");
 
         Response response1 = new Response("Input system actions not detected", 1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.diversity.com/1212956\n\n" +
@@ -254,7 +254,7 @@ public class DataInitialization
         tester1.GetName() +
         "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Duplicate, null);
 
-        Response response2 = new Response("Diversity just crashed, fix pls", 1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 12), "Hi,\n\n" +
+        Response response2 = new Response("Diversity just crashed fix pls", 1212957, new DateTime(2020, 11, 4), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
@@ -277,15 +277,17 @@ public class DataInitialization
         "If you have any further questions, feel free to contact our team.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded, new Discrepancy("Reply", "Status"));
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Duplicate, CloseType.Responded,
+        new Discrepancy("Reply", "Status", new Dialogue("You closed the Report incorrectly", "What do you mean?")));
 
-        Response response5 = new Response("Diversity just crashed, fix pls", 1212978, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
+        Response response5 = new Response("Diversity freezes when in Play Mode", 1212978, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "We haven't received a response from you on the issue.\n\n" +
         "Please let us know if you have more information.\n\n" +
         "For now, this case will be closed. If we hear from you in the future, we'll reopen it for further investigation.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified, new Discrepancy("Status", "NotQualifiedRule"));
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.NotQualified, CloseType.NotQualified,
+        new Discrepancy("Status", "NotQualifiedRule", new Dialogue("You closed this Report too soon as Not Qualified", "I'm sure 7 days have passed")));
 
         Response response6 = new Response("ProKitchen 4.4.0 is totally broken !!!!?!", 1244585, new DateTime(2020, 11, 9), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "Thanks for reporting the issue. We have fixed this problem and it should not appear in ProKitchen 4.5.0 and above. This package version is available in Diversity 2019.4.12f1 and above.\n\n" +
@@ -299,14 +301,16 @@ public class DataInitialization
         "We highly appreciate your contribution. If you have further questions, feel free to contact us.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
-        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Active, CloseType.Active, new Discrepancy("Reply", "CaseID"));
+        "\nDiversity QA Team", tester1.GetEmail(), tester1, CloseType.Empty, CloseType.Empty,
+        new Discrepancy("Reply", "CaseID", new Dialogue("There is a wrong Case ID in the Report", "Yeah, thought you wouldn't notice it")));
 
         Response response8 = new Response("Starter Pack 3D Ultimate errors in Diversity", 1212145, new DateTime(2020, 11, 11), new DateTime(2020, 11, 12), "Hi,\n\n" +
         "Thank you for contacting us.\n\n" +
         "The issue is related to the 3rd party package. Currently, Diversity does not support 3rd party packages, thus, we recommend contacting the developer of that package for further assistance.\n\n" +
         "Regards,\n" +
         tester2.GetName() +
-        "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded, new Discrepancy("ExpireDate", "ExpireDate"));
+        "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded,
+        new Discrepancy("ExpireDate", "ExpireDate", new Dialogue("Your Employee ID is expired", "Is it really?")));
 
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
@@ -324,8 +328,8 @@ public class DataInitialization
     {
         tempScenarioList = new List<IScenario>();
 
-        Tester tester1 = new Tester(6, "Donny", "Vaichio", "d.vaichio@diversity.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9));
-        Tester tester2 = new Tester(7, "Nicholas", "Creator", "n.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10));
+        Tester tester1 = new Tester(6, "Donny", "Vaichio", "d.vaichio@diversity.com", new DateTime(2018, 1, 19), new DateTime(2022, 6, 9), "Long day today, huh?");
+        Tester tester2 = new Tester(7, "Nicholas", "Creator", "n.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2022, 7, 10), "Take look, thanks");
 
         EditorBug editor1 = new EditorBug("Particles are not visible in WebGL Build", 1230101, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
         "How to reproduce:\n" +
@@ -470,8 +474,8 @@ public class DataInitialization
     {
         tempScenarioList = new List<IScenario>();
 
-        Tester tester1 = new Tester(8, "Joachim", "Creator", "j.creator@diversity.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27));
-        Tester tester2 = new Tester(9, "David", "Creator", "d.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10));
+        Tester tester1 = new Tester(8, "Joachim", "Creator", "j.creator@diversity.com", new DateTime(2019, 4, 18), new DateTime(2020, 12, 27), "Just a moment");
+        Tester tester2 = new Tester(9, "David", "Creator", "d.creator@diversity.com", new DateTime(2020, 8, 18), new DateTime(2021, 1, 10), "Here you go, sir");
 
         EditorBug editor1 = new EditorBug("Build fails with an Exception when IL2CPP Scripting Backend is selected", 1679012, tester1.GetName(), new AreasNGrabbags { area = "IL2CPP", grabbag = "VM-IL2CPP Grabbag" },
         "How to reproduce:\n" +
@@ -611,12 +615,12 @@ public class DataInitialization
         tempScenarioList.Add(editor2);
         tempScenarioList.Add(editor3);
         tempScenarioList.Add(package1);
+        tempScenarioList.Add(package2);
         tempScenarioList.Add(editor4);
         tempScenarioList.Add(editor5);
-        tempScenarioList.Add(package2);
         tempScenarioList.Add(editor6);
         tempScenarioList.Add(package3);
-        tempScenarioList.Add(package3);
+        tempScenarioList.Add(package4);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }

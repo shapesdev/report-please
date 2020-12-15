@@ -11,13 +11,15 @@ public class Tester
     private string email;
     private DateTime dateStarted;
     private DateTime dateOfExpiry;
+    private string walkInWords;
 
-    public Tester(int id)
+    public Tester(int id, string walkInWords)
     {
         this.id = id;
+        this.walkInWords = walkInWords;
     }
 
-    public Tester(int id, string name, string surname, string email, DateTime dateStart, DateTime expiry)
+    public Tester(int id, string name, string surname, string email, DateTime dateStart, DateTime expiry, string walkInWords)
     {
         this.id = id;
         this.name = name;
@@ -25,6 +27,7 @@ public class Tester
         this.email = email;
         dateStarted = dateStart;
         dateOfExpiry = expiry;
+        this.walkInWords = walkInWords;
     }
 
     public int GetId()
@@ -60,5 +63,10 @@ public class Tester
     public DateTime GetExpiryDate()
     {
         return dateOfExpiry;
+    }
+
+    public string GetWalkInWords()
+    {
+        return walkInWords;
     }
 }

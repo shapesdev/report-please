@@ -12,7 +12,7 @@ public class FieldCheckController
 
         foreach(var disc in discrepancies)
         {
-            if((disc.firstTag == field1.tag && disc.secondTag == field2.tag) || (disc.firstTag == field2.tag && disc.secondTag == field1.tag))
+            if((disc.GetFirstTag() == field1.tag && disc.GetSecondTag() == field2.tag) || (disc.GetFirstTag() == field2.tag && disc.GetSecondTag() == field1.tag))
             {
                 if (field1.tag == "Areas" || field2.tag == "Areas")
                 {
@@ -42,7 +42,7 @@ public class FieldCheckController
                     break;
                 }
             }
-            else if (disc.firstTag == "FAV" || disc.secondTag == "FAV" && discrepancy != null)
+            else if (disc.GetFirstTag() == "FAV" || disc.GetSecondTag() == "FAV" && discrepancy != null)
             {
                 if ((field1.tag == "FAV" && field2.tag == "ReproWith") || (field2.tag == "FAV" && field1.tag == "ReproWith") ||
                     (field1.tag == "Regression" && field2.tag == "ReproWith") || (field1.tag == "ReproWith" && field2.tag == "Regression"))
@@ -55,8 +55,8 @@ public class FieldCheckController
 
         if(correlation && discrepancy != null)
         {
-            if ((discrepancy.firstTag == field1.tag && discrepancy.secondTag == field2.tag) ||
-                (discrepancy.firstTag == field2.tag && discrepancy.secondTag == field1.tag))
+            if ((discrepancy.GetFirstTag() == field1.tag && discrepancy.GetSecondTag() == field2.tag) ||
+                (discrepancy.GetFirstTag() == field2.tag && discrepancy.GetSecondTag() == field1.tag))
             {
                 discrepancyFound = true;
             }

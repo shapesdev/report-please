@@ -36,6 +36,9 @@ public class AudioHelper : MonoBehaviour
 
         StoryGameView.OnEndDay += PlayMusic;
         StoryGameView.OnPause += MuteUnMuteMusic;
+        StoryGameView.OnAnnounce += PlayAnnounceSound;
+        StoryGameView.OnTesterSpeak += PlayTesterSound;
+        StoryGameView.OnInspectorSpeak += PlayInspectorSound;
     }
 
     private void OnDisable()
@@ -62,6 +65,8 @@ public class AudioHelper : MonoBehaviour
 
         StoryGameView.OnEndDay -= PlayMusic;
         StoryGameView.OnPause -= MuteUnMuteMusic;
+        StoryGameView.OnTesterSpeak -= PlayTesterSound;
+        StoryGameView.OnInspectorSpeak -= PlayInspectorSound;
     }
 
     private void MuteUnMuteMusic(bool value)
@@ -174,6 +179,24 @@ public class AudioHelper : MonoBehaviour
     private void PlayTextWriteSound()
     {
         soundSource.clip = soundEffects.textWriteSound;
+        soundSource.Play();
+    }
+
+    private void PlayAnnounceSound()
+    {
+        soundSource.clip = soundEffects.announceSound;
+        soundSource.Play();
+    }
+
+    private void PlayTesterSound()
+    {
+        soundSource.clip = soundEffects.testerSound;
+        soundSource.Play();
+    }
+
+    private void PlayInspectorSound()
+    {
+        soundSource.clip = soundEffects.inspectorSound;
         soundSource.Play();
     }
 }

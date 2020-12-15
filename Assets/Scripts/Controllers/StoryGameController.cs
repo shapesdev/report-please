@@ -40,6 +40,7 @@ public class StoryGameController
         view.OnOffsetChanged += View_OnOffsetChanged;
         view.OnTabPressed += View_OnTabPressed;
         view.OnStartScenarioShowing += View_OnStartScenarioShowing;
+        view.OnExport += View_OnExport;
 
         model.OnHighlight += Model_OnHighlight;
 
@@ -64,12 +65,13 @@ public class StoryGameController
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
-            model.CurrentStamp);
+            model.CurrentStamp, model.DiscrepancyFound);
 
         if(citation.Item1 == true)
         {
             OnCitation?.Invoke();
             view.EnableCitation(citation.Item2);
+            PlayerData.instance.citationsReceived += 1;
 
             if(model.DiscrepancyFound == true)
             {
@@ -83,6 +85,7 @@ public class StoryGameController
         else
         {
             model.UpdateScenarioData(citation.Item2, 10);
+            PlayerData.instance.correctReports += 1;
         }
 
         ShowNextScenario();
@@ -125,29 +128,16 @@ public class StoryGameController
     private void StampView_OnReturned(object sender, CanBeReturnedEventArgs e) { model.CanBeReturned = e.canBeReturned; }
     #endregion
 
-    #region LineView Callbacks
-    private void LineView_OnTwoFieldsSelected(object sender, TwoFieldsSelectedEventArgs e)
-    {
-        var fieldValues = fieldCheckController.CheckFields(e.firstField, e.secondField, model.Discrepancies, model.DaysWithScenarios[model.CurrentDay]
-            [model.CurrentScenario].GetDiscrepancy());
-
-        model.DiscrepancyFound = fieldValues.Item2;
-        OnDiscrepancy?.Invoke();
-
-        if (fieldValues.Item1 == true && fieldValues.Item2 == true) { view.DisplayFieldText("Discrepancy found"); }
-        else if (fieldValues.Item1 == true) { view.DisplayFieldText("Matching Data"); }
-        else { view.DisplayFieldText("No correlation"); }
-    }
-    #endregion
-
     #region GameView Callbacks
     
     private void DisplayDataForView()
     {
         view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
     model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()], model.CurrentScenario + 1,
-    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay);
+    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy());
     }
+
+    private void View_OnExport(object sender, ExportPressedEventArgs e) { DataExportHelper.instance.Export(); }
 
     private void View_OnStartScenarioShowing(object sender, StartScenarioShowingEventArgs e) { DisplayDataForView(); }
 
@@ -167,6 +157,11 @@ public class StoryGameController
 
     private void View_OnSpaceBarPressed(object sender, SpaceBarPressedEventArgs e)
     {
+        CheckInspectorMode();
+    }
+
+    private void CheckInspectorMode()
+    {
         model.InspectorMode = !model.InspectorMode;
 
         if (model.InspectorMode == true)
@@ -174,7 +169,7 @@ public class StoryGameController
             view.TurnOnInspectorMode();
             OnInspectorMode?.Invoke(0);
         }
-        else if(model.InspectorMode == false)
+        else if (model.InspectorMode == false)
         {
             view.TurnOffInspectorMode();
             ClearLine(true);
@@ -246,9 +241,22 @@ public class StoryGameController
         model.DiscrepancyFound = fieldValues.Item2;
         OnDiscrepancy?.Invoke();
 
-        if (fieldValues.Item1 == true && fieldValues.Item2 == true) { view.DisplayFieldText("Discrepancy found"); }
+        if (fieldValues.Item1 == true && fieldValues.Item2 == true)
+        {
+            view.DisplayFieldText("Discrepancy found");
+
+            view.ShowDiscrepancyDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
+                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords());
+
+            if (model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].IsEmployeeIdMissing() == true &&
+                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetFullName() != null)
+            {
+                selectionView.ActivateSelectable(3.5f, 2);
+            }
+        }
         else if (fieldValues.Item1 == true) { view.DisplayFieldText("Matching Data"); }
         else { view.DisplayFieldText("No correlation"); }
     }
+
     #endregion
 }

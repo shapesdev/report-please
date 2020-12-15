@@ -6,13 +6,15 @@ using UnityEngine;
 public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
-    void ShowScenario(IScenario scenario, Sprite sprite, int current, int last, IGameSelectionView selectionView, DateTime day);
+    void ShowScenario(IScenario scenario, Sprite sprite, int current, int last,
+        IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();
     void EnableCitation(string text);
     void ShowEndDay(int day, int curScore, int maxScore);
     void DisplayFieldText(string value);
     void TurnOffFieldText();
+    void ShowDiscrepancyDialogue(string inspector, string tester);
 
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;
     event EventHandler<TabPressedEventArgs> OnTabPressed;
@@ -21,4 +23,5 @@ public interface IStoryGameView : IOffsetView
     event EventHandler<MouseHoldEventArgs> OnMouseHold;
     event EventHandler<OffsetValueEventArgs> OnOffsetChanged;
     event EventHandler<StartScenarioShowingEventArgs> OnStartScenarioShowing;
+    event EventHandler<ExportPressedEventArgs> OnExport;
 }

@@ -4,6 +4,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections.Generic;
 using System;
+using PlayFab.Json;
 
 public class PlayFabHelper : MonoBehaviour
 {
@@ -52,10 +53,84 @@ public class PlayFabHelper : MonoBehaviour
         }
     }
 
+    public void AddCloudStatistics(int citationsReceived, int correctReportCount, int currentHighScore,
+        int totalReportCount, int totalHighScore)
+    {
+        PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+        {
+            FunctionName = "AddPlayerStats",
+            FunctionParameter = new
+            {
+                citations = citationsReceived,
+                correctReports = correctReportCount,
+                highscore = currentHighScore,
+                totalReports = totalReportCount,
+                totalscore = totalHighScore
+            },
+            GeneratePlayStreamEvent = true,
+        }, OnCloudUpdateStats, OnErrorShared);
+    }
+
+    public void UpdateCloudStatistics()
+    {
+        PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+        {
+            FunctionName = "UpdatePlayerStats",
+            FunctionParameter = new
+            {
+                citations = PlayerData.instance.citationsReceived,
+                correctReports = PlayerData.instance.correctReports,
+                highscore = PlayerData.instance.currentHighScore,
+            },
+            GeneratePlayStreamEvent = true,
+        }, OnCloudUpdateStats, OnErrorShared);
+    }
+    public void GetCloudStatistics()
+    {
+        PlayFabClientAPI.GetPlayerStatistics(
+            new GetPlayerStatisticsRequest(),
+            OnGetStatistics,
+            error => Debug.LogError(error.GenerateErrorReport())
+            );
+    }
+
+    void OnGetStatistics(GetPlayerStatisticsResult result)
+    {
+        foreach (var eachStat in result.Statistics)
+        {
+            switch (eachStat.StatisticName)
+            {
+                case "CitationsReceived":
+                    PlayerData.instance.citationsReceived = eachStat.Value;
+                    break;
+                case "CorrectReports":
+                    PlayerData.instance.correctReports = eachStat.Value;
+                    break;
+                case "CurrentHighScore":
+                    PlayerData.instance.currentHighScore = eachStat.Value;
+                    break;
+            }
+        }
+    }
+
+    private void OnCloudUpdateStats(ExecuteCloudScriptResult result)
+    {
+        JsonObject jsonResult = (JsonObject)result.FunctionResult;
+        object messageValue;
+        jsonResult.TryGetValue("messageValue", out messageValue);
+    }
+
+    private void OnErrorShared(PlayFabError error)
+    {
+        Debug.Log(error.GenerateErrorReport());
+        Debug.Log("COULDNT UPDATE CLOUD");
+    }
+
     private void OnSuccess(LoginResult obj)
     {
         Debug.Log("Successful Login");
         GetScenarioData();
+        GetCloudStatistics();
     }
 
     private void OnError(PlayFabError obj)

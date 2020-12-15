@@ -4,6 +4,10 @@ public class App : MonoBehaviour
 {
     public static App instance;
 
+    float timer = 1.0f;
+    float waitTime = 0f;
+    bool connected = false;
+
     [SerializeField]
     private GameObject storyGamePrefab;
     [SerializeField]
@@ -14,6 +18,8 @@ public class App : MonoBehaviour
     private Sprite[] allCharacterSprites;
     [SerializeField]
     private Sprite[] storyCharacterSprites;
+    [SerializeField]
+    private GameObject connectionPanel;
 
     private StoryGameFactory storyGameFactory;
     private MenuFactory menuFactory;
@@ -32,18 +38,25 @@ public class App : MonoBehaviour
         menuFactory.Load(menuPrefab);
     }
 
-    private void Export()
+    void Update()
     {
-        DataExportHelper dataExportHelper = new DataExportHelper();
-
-        dataExportHelper.AppendToReport(
-    new string[4]
-    {
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString(),
-                Random.Range(0, 11).ToString()
-    });
+        timer += Time.deltaTime;
+        if (timer > waitTime && connected == false)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                Debug.Log("IS INTERNET");
+                connected = true;
+                connectionPanel.SetActive(false);
+            }
+            timer = 0f;
+        }
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            connected = false;
+            connectionPanel.SetActive(true);
+            Debug.Log("NO INTERNET");
+        }
     }
 
     public void Load()
@@ -71,5 +84,10 @@ public class App : MonoBehaviour
         {
             Load();
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

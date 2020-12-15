@@ -21,6 +21,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public GameObject pausePanel;
     public GameObject citationPrefab;
     public GameObject startScenariosButton;
+    public GameObject inspectorWordsGO;
+    public GameObject testerWordsGO;
 
     public TMP_Text dateText;
     public Text introDateText;
@@ -31,7 +33,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     private PlayableDirector introDirector;
     public PlayableDirector characterWalkInDirector;
     public PlayableDirector characterWalkingDirector;
-    public PlayableDirector characterWalkOutdirector;
+    public PlayableDirector characterWalkOutDirector;
     public AudioSource source;
 
     public event EventHandler<DragRightEventArgs> OnDragRight = (sender, e) => { };
@@ -43,9 +45,13 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public event EventHandler<OffsetSetEventArgs> OnOffsetSet = (sender, e) => { };
     public event EventHandler<OffsetValueEventArgs> OnOffsetChanged = (sender, e) => { };
     public event EventHandler<StartScenarioShowingEventArgs> OnStartScenarioShowing = (sender, e) => { };
+    public event EventHandler<ExportPressedEventArgs> OnExport = (sender, e) => { };
 
     public static event Action<int> OnEndDay;
     public static event Action<bool> OnPause;
+    public static event Action OnAnnounce;
+    public static event Action OnTesterSpeak;
+    public static event Action OnInspectorSpeak;
     #endregion
 
     public void Init(DateTime day, IScenario scenario)
@@ -126,7 +132,10 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         Invoke("TurnOffFieldText", 1.5f);
     }
 
-    public void TurnOffFieldText() { fieldCheckerText.text = ""; }
+    public void TurnOffFieldText()
+    { 
+        fieldCheckerText.text = "";
+    }
 
     public void EnableCitation(string citation)
     {
@@ -140,14 +149,48 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     }
     #endregion
 
+    #region Dialogue display
+
+    public void ShowDiscrepancyDialogue(string inspectorWords, string testerWords)
+    {
+        StartCoroutine(DisplayDialogue(2f, inspectorWords, testerWords));
+    }
+
+    IEnumerator DisplayDialogue(float delay, string inspector, string tester)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(delay);
+            if(inspector != "")
+            {
+                inspectorWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = inspector;
+                inspectorWordsGO.SetActive(true);
+                OnInspectorSpeak?.Invoke();
+            }
+            yield return new WaitForSeconds(1f);
+            testerWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = tester;
+            testerWordsGO.SetActive(true);
+            OnTesterSpeak?.Invoke();
+            yield return new WaitForSeconds(3f);
+            inspectorWordsGO.SetActive(false);
+            testerWordsGO.SetActive(false);
+
+            break;
+        }
+    }
+
+    #endregion
+
     #region Report display
     public void StartShowingScenarios()
     {
+        OnAnnounce?.Invoke();
         var eventArgs = new StartScenarioShowingEventArgs();
         OnStartScenarioShowing(this, eventArgs);
     }
 
-    public void ShowScenario(IScenario scenario, Sprite sprite, int current, int last, IGameSelectionView selectionView, DateTime day)
+    public void ShowScenario(IScenario scenario, Sprite sprite, int current, int last,
+        IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy)
     {
         foreach (var view in gameScenarioViews)
         {
@@ -160,27 +203,29 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         }
 
         var currentSprite = characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite;
-        currentScenarioText.text = "Current Report: " + current + "/" + last;
 
         if (currentSprite == null)
         {
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
-            characterWalkOutdirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
+            characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
 
-            StartCoroutine(DisplayCharacter(true, false, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(true, false, selectionView, day, scenario, sprite));
         }
         else if(currentSprite != sprite)
         {
-            StartCoroutine(DisplayCharacter(true, true, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(true, true, selectionView, day, scenario, sprite));
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
         }
         else
         {
-            StartCoroutine(DisplayCharacter(false, false, selectionView, day, scenario));
+            StartCoroutine(DisplayCharacter(false, false, selectionView, day, scenario, sprite));
         }
+
+        currentScenarioText.text = "Current Report: " + current + "/" + last;
     }
 
-    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView, DateTime day, IScenario scenario)
+    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView,
+        DateTime day, IScenario scenario, Sprite sprite)
     {
         while(true)
         {
@@ -188,11 +233,10 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             {
                 if(walkOut)
                 {
-                    characterWalkOutdirector.Play();
                     characterWalkInDirector.transform.GetChild(0).gameObject.SetActive(false);
-                    yield return new WaitForSeconds(1.2f);
-                    characterWalkOutdirector.transform.GetChild(0).gameObject.SetActive(false);
-                    yield return new WaitForSeconds(0.8f);
+                    characterWalkOutDirector.Play();
+                    yield return new WaitForSeconds(1.3f);
+                    characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
                 }
 
                 var animator = characterWalkInDirector.gameObject.GetComponentInChildren<Animator>(true);
@@ -203,12 +247,19 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
                 characterWalkInDirector.Play();
                 yield return new WaitForSeconds(2f);
                 animator.enabled = false;
+
+                StartCoroutine(DisplayDialogue(0f, "Reports, Please", scenario.GetTester().GetWalkInWords()));
+            }
+
+            if (characterWalkOutDirector.transform.GetChild(0).gameObject.activeInHierarchy)
+            {
+                characterWalkOutDirector.transform.GetChild(0).gameObject.SetActive(false);
             }
 
             yield return new WaitForSeconds(2f);
 
-            if(day.Day == 10 || scenario.IsEmployeeIdMissing() == true) { selectionView.ActivateSelectable(1); }
-            else { selectionView.ActivateSelectable(2); }
+            if(day.Day == 10 || scenario.IsEmployeeIdMissing() == true) { selectionView.ActivateSelectable(0, 1); }
+            else { selectionView.ActivateSelectable(0, 2); }
 
             break;
         }
@@ -301,19 +352,25 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             if (day == 14)
             {
                 nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
-                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
+                nextDayGameObject.transform.GetChild(3).gameObject.SetActive(true);
             }
             else
             {
                 nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
-                nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             }
+            nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             break;
         }
     }
     #endregion
 
     #region Extra methods
+    public void Export()
+    {
+        var eventArgs = new ExportPressedEventArgs();
+        OnExport(this, eventArgs);
+    }
+
     public void OpenClosePausePanel()
     {
         if (pausePanel.activeInHierarchy == false)
