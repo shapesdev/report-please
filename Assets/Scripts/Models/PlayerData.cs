@@ -11,6 +11,8 @@ public class PlayerData : MonoBehaviour
     public int citationsReceived = 0;
     public int correctReports = 0;
     public int currentHighScore = 0;
+    public int maxHighScore = 0;
+    public int maxReports = 0;
 
     private void Awake()
     {

@@ -25,6 +25,8 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     [SerializeField]
     private Text[] buttonsTexts;
 
+    private bool iCanBeOpened = true;
+
     public static event Action OnTurnPage;
 
     public void OnEnable()
@@ -52,22 +54,26 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = paperLeft;
         DeactiveAllChildren();
+        iCanBeOpened = true;
     }
 
     public override void ChangeSizeToRight()
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = paperRight;
-        if(homePage.activeInHierarchy == false)
+
+        if(homePage.activeInHierarchy == false && iCanBeOpened)
         {
             homePage.SetActive(true);
+            iCanBeOpened = false;
         }
     }
 
     public void OpenBasicRules()
     {
         DeactiveAllChildren();
+        iCanBeOpened = false;
 
-        for(int i = 0; i < ruleBook.basicRules.Count; i++)
+        for (int i = 0; i < ruleBook.basicRules.Count; i++)
         {
             if(ruleBook.basicRules[i].day == PlayerPrefs.GetInt("CurrentDay"))
             {
@@ -79,12 +85,14 @@ public class RuleBookView : GameGeneralView, IGameGeneralView
 
     public void OpenAreas()
     {
+        iCanBeOpened = false;
         DeactiveAllChildren();
         areasDisplayer.DisplayAreasPageOne(ruleBook.areas);
     }
 
     public void OpenFieldsInfo()
     {
+        iCanBeOpened = false;
         DeactiveAllChildren();
         reportFieldsDisplayer.DisplayReportFields(ruleBook.reportFields);
         OnTurnPage?.Invoke();

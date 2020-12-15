@@ -39,6 +39,12 @@ public class DataExportHelper : MonoBehaviour
                 AppendToReport(arr);
             }
         }
+        AppendToReport(new string[2] { "Total Reports: ", PlayerData.instance.maxReports.ToString() });
+        AppendToReport(new string[2] { "Correct Reports: ", PlayerData.instance.correctReports.ToString() });
+        AppendToReport(new string[2] { "Citations Received: ", PlayerData.instance.citationsReceived.ToString() });
+        AppendToReport(new string[2] { "Current HighScore: ", PlayerData.instance.currentHighScore.ToString() });
+        AppendToReport(new string[2] { "Possible HighScore: ", PlayerData.instance.maxHighScore.ToString() });
+        AppendToReport(new string[2] { "Your Win Rate: ", PlayerData.instance.correctReports * 100 / PlayerData.instance.maxReports + "%" });
     }
 
     public void ResetFile()

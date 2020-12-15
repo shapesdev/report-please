@@ -2,13 +2,13 @@
 
 public class CitationCheckController
 {
-    public Tuple<bool, string> CheckForCitations(IScenario curScenario, RuleBookSO ruleBook, Stamp stampType)
+    public Tuple<bool, string> CheckForCitations(IScenario curScenario, RuleBookSO ruleBook, Stamp stampType, bool discrepancyFound)
     {
         Tuple<bool, string> isScenarioWithDiscrepancy = new Tuple<bool, string>(false, "");
 
         if (curScenario.GetReportType() == ReportType.Response)
         {
-            isScenarioWithDiscrepancy = ResponseChecker(curScenario, stampType);
+            isScenarioWithDiscrepancy = ResponseChecker(curScenario, stampType, discrepancyFound);
         }
         else if (curScenario.GetReportType() == ReportType.EditorBug)
         {
@@ -21,7 +21,7 @@ public class CitationCheckController
         return isScenarioWithDiscrepancy;
     }
 
-    private Tuple<bool, string> ResponseChecker(IScenario curScenario, Stamp stamp)
+    private Tuple<bool, string> ResponseChecker(IScenario curScenario, Stamp stamp, bool discrepancyFound)
     {
         var response = (Response)curScenario;
         var chars = response.GetEmail().ToCharArray();
@@ -52,8 +52,16 @@ public class CitationCheckController
             }
             else if (curScenario.GetDiscrepancy() != null)
             {
-                string citation = "No Citation";
-                return Tuple.Create(false, citation);
+                if(curScenario.IsEmployeeIdMissing() == true && discrepancyFound == false)
+                {
+                    string citation = "Employee ID not requested/Correct Report";
+                    return Tuple.Create(true, citation);
+                }
+                else
+                {
+                    string citation = "No Citation";
+                    return Tuple.Create(false, citation);
+                }
             }
         }
         if (response.GetEmail().Contains("\n\n\n") || response.GetEmail().Contains("\n\n\n\n"))
@@ -90,7 +98,7 @@ public class CitationCheckController
                 return Tuple.Create(true, citation);
             }
 
-            if (response.GetEmailSentFrom() != response.GetTester().GetEmail())
+            if (response.GetEmailSentFrom() != response.GetTester().GetEmail() && response.GetEmailSentFrom() != null)
             {
                 string citation = "Wrong Email Address";
                 return Tuple.Create(true, citation);
@@ -104,6 +112,11 @@ public class CitationCheckController
                 string citation = "Wrong Issue Tracker Link";
                 return Tuple.Create(true, citation);
             }
+        }
+        if(discrepancyFound == false && response.IsEmployeeIdMissing() == true)
+        {
+            string citation = "No valid Employee ID";
+            return Tuple.Create(true, citation);
         }
         string noCitation = "No Citation";
         return Tuple.Create(false, noCitation);

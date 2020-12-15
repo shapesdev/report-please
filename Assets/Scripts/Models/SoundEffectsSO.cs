@@ -14,4 +14,7 @@ public class SoundEffectsSO : ScriptableObject
     public AudioClip discrepancySound;
     public AudioClip turnPageSound;
     public AudioClip textWriteSound;
+    public AudioClip announceSound;
+    public AudioClip testerSound;
+    public AudioClip inspectorSound;
 }

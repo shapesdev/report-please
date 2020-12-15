@@ -47,7 +47,6 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             }
             else if(inspectorMode == true)
             {
-                Debug.Log(results[0].gameObject);
                 return results[0].gameObject;
             }
         }
@@ -115,12 +114,34 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         return false;
     }
 
-    public void ActivateSelectable(int count)
+    public void ActivateSelectable(float delay, int count)
     {
-        for(int i = 0; i < count; i++)
+        if(delay == 0)
         {
-            selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
-            selectableGameObjects[i].SetActive(true);
+            for (int i = 0; i < count; i++)
+            {
+                if (selectableGameObjects[i].activeInHierarchy == false)
+                {
+                    selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
+                    selectableGameObjects[i].SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            Invoke("ActivateSelectableWithDelay", delay);
+        }
+    }
+
+    private void ActivateSelectableWithDelay()
+    {
+        for (int i = 0; i < selectableGameObjects.Length; i++)
+        {
+            if (selectableGameObjects[i].activeInHierarchy == false)
+            {
+                selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
+                selectableGameObjects[i].SetActive(true);
+            }
         }
     }
 

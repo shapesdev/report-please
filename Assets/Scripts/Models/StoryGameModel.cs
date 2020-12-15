@@ -122,6 +122,11 @@ public class StoryGameModel: IStoryGameModel
     public void SaveScenarioData()
     {
         PlayerData.instance.currentHighScore += CurrentScore;
+        foreach (var report in DaysWithScenarios)
+        {
+            PlayerData.instance.maxReports = report.Value.Count;
+            PlayerData.instance.maxHighScore = report.Value.Count * 10;
+        }
         PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("yyyy-MM-dd"), scenarioStats));
     }
 
@@ -137,7 +142,6 @@ public class StoryGameModel: IStoryGameModel
                 totalReports += report.Value.Count;
                 totalHighScore += report.Value.Count * 10;
             }
-
             PlayFabHelper.instance.AddCloudStatistics(0, 0, 0, totalReports, totalHighScore);
         }
     }

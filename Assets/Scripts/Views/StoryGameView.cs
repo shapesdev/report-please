@@ -21,6 +21,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     public GameObject pausePanel;
     public GameObject citationPrefab;
     public GameObject startScenariosButton;
+    public GameObject inspectorWordsGO;
+    public GameObject testerWordsGO;
 
     public TMP_Text dateText;
     public Text introDateText;
@@ -47,6 +49,9 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
 
     public static event Action<int> OnEndDay;
     public static event Action<bool> OnPause;
+    public static event Action OnAnnounce;
+    public static event Action OnTesterSpeak;
+    public static event Action OnInspectorSpeak;
     #endregion
 
     public void Init(DateTime day, IScenario scenario)
@@ -127,7 +132,10 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         Invoke("TurnOffFieldText", 1.5f);
     }
 
-    public void TurnOffFieldText() { fieldCheckerText.text = ""; }
+    public void TurnOffFieldText()
+    { 
+        fieldCheckerText.text = "";
+    }
 
     public void EnableCitation(string citation)
     {
@@ -141,14 +149,48 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     }
     #endregion
 
+    #region Dialogue display
+
+    public void ShowDiscrepancyDialogue(string inspectorWords, string testerWords)
+    {
+        StartCoroutine(DisplayDialogue(2f, inspectorWords, testerWords));
+    }
+
+    IEnumerator DisplayDialogue(float delay, string inspector, string tester)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(delay);
+            if(inspector != "")
+            {
+                inspectorWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = inspector;
+                inspectorWordsGO.SetActive(true);
+                OnInspectorSpeak?.Invoke();
+            }
+            yield return new WaitForSeconds(1f);
+            testerWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = tester;
+            testerWordsGO.SetActive(true);
+            OnTesterSpeak?.Invoke();
+            yield return new WaitForSeconds(3f);
+            inspectorWordsGO.SetActive(false);
+            testerWordsGO.SetActive(false);
+
+            break;
+        }
+    }
+
+    #endregion
+
     #region Report display
     public void StartShowingScenarios()
     {
+        OnAnnounce?.Invoke();
         var eventArgs = new StartScenarioShowingEventArgs();
         OnStartScenarioShowing(this, eventArgs);
     }
 
-    public void ShowScenario(IScenario scenario, Sprite sprite, int current, int last, IGameSelectionView selectionView, DateTime day)
+    public void ShowScenario(IScenario scenario, Sprite sprite, int current, int last,
+        IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy)
     {
         foreach (var view in gameScenarioViews)
         {
@@ -182,7 +224,8 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         currentScenarioText.text = "Current Report: " + current + "/" + last;
     }
 
-    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView, DateTime day, IScenario scenario, Sprite sprite)
+    IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView,
+        DateTime day, IScenario scenario, Sprite sprite)
     {
         while(true)
         {
@@ -192,9 +235,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
                 {
                     characterWalkInDirector.transform.GetChild(0).gameObject.SetActive(false);
                     characterWalkOutDirector.Play();
-                    yield return new WaitForSeconds(1.2f);
-                    characterWalkOutDirector.transform.GetChild(0).gameObject.SetActive(false);
-                    yield return new WaitForSeconds(0.8f);
+                    yield return new WaitForSeconds(1.3f);
                     characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
                 }
 
@@ -206,12 +247,19 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
                 characterWalkInDirector.Play();
                 yield return new WaitForSeconds(2f);
                 animator.enabled = false;
+
+                StartCoroutine(DisplayDialogue(0f, "Reports, Please", scenario.GetTester().GetWalkInWords()));
+            }
+
+            if (characterWalkOutDirector.transform.GetChild(0).gameObject.activeInHierarchy)
+            {
+                characterWalkOutDirector.transform.GetChild(0).gameObject.SetActive(false);
             }
 
             yield return new WaitForSeconds(2f);
 
-            if(day.Day == 10 || scenario.IsEmployeeIdMissing() == true) { selectionView.ActivateSelectable(1); }
-            else { selectionView.ActivateSelectable(2); }
+            if(day.Day == 10 || scenario.IsEmployeeIdMissing() == true) { selectionView.ActivateSelectable(0, 1); }
+            else { selectionView.ActivateSelectable(0, 2); }
 
             break;
         }

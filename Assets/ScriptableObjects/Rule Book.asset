@@ -17,12 +17,6 @@ MonoBehaviour:
     rules:
     - Only 1 empty line between paragraphs
     - No double spaces between letters
-    - No double spaces between letters
-    - No double spaces between letters
-    - No double spaces between letters
-    - No double spaces between letters
-    - No double spaces between letters
-    - Valid ID
   - day: 11
     rules:
     - Only 1 empty line between paragraphs

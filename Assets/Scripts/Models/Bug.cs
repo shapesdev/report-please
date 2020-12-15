@@ -113,7 +113,14 @@ public abstract class Bug : IScenario
 
     public bool IsEmployeeIdMissing()
     {
-        return (discrepancy.firstTag == "ValidID" && discrepancy.secondTag == "ValidIDRule") || (discrepancy.firstTag == "ValidIDRule" && discrepancy.secondTag == "ValidID")
-        ? true : false;
+        if (discrepancy == null)
+        {
+            return false;
+        }
+        else
+        {
+            return (discrepancy.GetFirstTag() == "ValidID" && discrepancy.GetSecondTag() == "ValidIDRule") ||
+                (discrepancy.GetFirstTag() == "ValidIDRule" && discrepancy.GetSecondTag() == "ValidID") ? true : false;
+        }
     }
 }

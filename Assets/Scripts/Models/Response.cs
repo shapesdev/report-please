@@ -121,8 +121,8 @@ public class Response : IScenario
         }
         else
         {
-            return (discrepancy.firstTag == "ValidID" && discrepancy.secondTag == "ValidIDRule") ||
-                (discrepancy.firstTag == "ValidIDRule" && discrepancy.secondTag == "ValidID") ? true : false;
+            return (discrepancy.GetFirstTag() == "ValidID" && discrepancy.GetSecondTag() == "ValidIDRule") ||
+                (discrepancy.GetFirstTag() == "ValidIDRule" && discrepancy.GetSecondTag() == "ValidID") ? true : false;
         }
     }
 }
