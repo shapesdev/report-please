@@ -47,14 +47,13 @@ public class ResponseDisplayer : GeneralDisplayer
             {
                 if(response.GetCloseType() == CloseType.PendingInformation)
                 {
-                    status.text = "Status: Pending Information";
+                    status.text = "Status: Active (Pending Information)";
                 }
-                if(response.GetCloseType() == CloseType.Active)
+                else if(response.GetCloseType() == CloseType.Active)
                 {
                     status.text = "Status: Active (New)";
                 }
-
-                if (response.GetCloseType() == CloseType.NotQualified)
+                else if (response.GetCloseType() == CloseType.NotQualified)
                 {
                     status.text = "Status: Closed (Not Qualified)";
                 }

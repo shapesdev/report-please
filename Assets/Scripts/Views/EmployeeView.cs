@@ -10,7 +10,6 @@ public class EmployeeView : GameGeneralView, IGameScenarioView
     public TMP_Text email;
     public TMP_Text dateStarted;
     public TMP_Text dateOfExpiry;
-    public Image picture;
 
     public TMP_Text[] allTexts;
 

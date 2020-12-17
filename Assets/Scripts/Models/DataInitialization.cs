@@ -248,7 +248,7 @@ public class DataInitialization
         Tester tester2 = new Tester(5, "Kristijonas", "Dadutis", "k.dadutis@diversity.com", new DateTime(2020, 3, 15), new DateTime(2020, 11, 10), "Hope everything is okay");
 
         Response response1 = new Response("Input system actions not detected", 1212956, new DateTime(2020, 11, 9), new DateTime(2020, 11, 12), "Hi,\n\n" +
-        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.diversity.com/1212956\n\n" +
+        "Thanks for getting in touch, we actually know about this issue and are tracking progress here: https://issuetracker.diversity.com/1212940\n\n" +
         "Please reach out to me if I can answer any questions or be of further help.\n\n" +
         "Thanks,\n" +
         tester1.GetName() +
