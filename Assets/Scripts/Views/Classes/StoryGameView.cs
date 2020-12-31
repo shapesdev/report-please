@@ -150,7 +150,7 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         OnStartScenarioShowing(this, eventArgs);
     }
 
-    public void ShowScenario(IScenario scenario, Sprite sprite, int current, int last,
+    public void ShowScenario(IScenario scenario, int current, int last,
         IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy)
     {
         foreach (var view in gameScenarioViews)

@@ -138,9 +138,13 @@ public class StoryGameController
     
     private void DisplayDataForView()
     {
-        view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
-    model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()], model.CurrentScenario + 1,
-    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy());
+        view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.CurrentScenario + 1,
+    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay,
+    model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy());
+
+        characterView.ShowTesterCharacter(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
+            model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()],
+            selectionView, dialogueView, model.CurrentDay);
     }
 
     private void View_OnExport(object sender, ExportPressedEventArgs e) { DataExportHelper.instance.Export(); }
@@ -251,8 +255,8 @@ public class StoryGameController
         {
             view.DisplayFieldText("Discrepancy found");
 
-            dialogueView.ShowDiscrepancyDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
-                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords());
+            dialogueView.ShowDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
+                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords(), 2f);
 
             if (model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].IsEmployeeIdMissing() == true &&
                 model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetFullName() != null)

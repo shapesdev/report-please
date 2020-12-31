@@ -11,12 +11,12 @@ public class DialogueView : MonoBehaviour, IDialogueView
     public static event Action OnInspectorSpeak;
     public static event Action OnTesterSpeak;
 
-    public void ShowDiscrepancyDialogue(string inspectorWords, string testerWords)
+    public void ShowDialogue(string inspectorWords, string testerWords, float delay)
     {
-        StartCoroutine(DisplayDialogue(2f, inspectorWords, testerWords));
+        StartCoroutine(DisplayDialogue(inspectorWords, testerWords, delay));
     }
 
-    IEnumerator DisplayDialogue(float delay, string inspector, string tester)
+    IEnumerator DisplayDialogue(string inspector, string tester, float delay)
     {
         while (true)
         {

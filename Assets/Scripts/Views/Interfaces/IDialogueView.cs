@@ -2,5 +2,5 @@
 
 public interface IDialogueView
 {
-    void ShowDiscrepancyDialogue(string inspectorWords, string testerWords);
+    void ShowDialogue(string inspectorWords, string testerWords, float delay);
 }

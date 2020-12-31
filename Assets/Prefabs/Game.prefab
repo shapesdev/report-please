@@ -13714,15 +13714,10 @@ MonoBehaviour:
   pausePanel: {fileID: 1862453959}
   citationPrefab: {fileID: 6719772100799519036, guid: b9ce0d429ac0ad34eb5fc66ec3e1d177, type: 3}
   startScenariosButton: {fileID: 1415061473}
-  inspectorWordsGO: {fileID: 554122374}
-  testerWordsGO: {fileID: 464123257}
   dateText: {fileID: 6143270258859515210}
   introDateText: {fileID: 1973703086}
   fieldCheckerText: {fileID: 719436471}
   currentScenarioText: {fileID: 1125489810}
-  characterWalkInDirector: {fileID: 358902165}
-  characterWalkingDirector: {fileID: 332891487737802509}
-  characterWalkOutDirector: {fileID: 1459304762}
   source: {fileID: 2144021857}
 --- !u!1 &6143270259578444470
 GameObject:
@@ -14517,7 +14512,6 @@ MonoBehaviour:
   email: {fileID: 6143270259803078954}
   dateStarted: {fileID: 6143270260784516610}
   dateOfExpiry: {fileID: 6143270260294642714}
-  picture: {fileID: 0}
   allTexts:
   - {fileID: 6143270259224491359}
   - {fileID: 6143270259755804406}
@@ -21296,6 +21290,7 @@ GameObject:
   - component: {fileID: 6143270260358064176}
   - component: {fileID: 6942930658216827324}
   - component: {fileID: 1704557628}
+  - component: {fileID: 9102100926741896931}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Finish
@@ -21424,6 +21419,21 @@ MonoBehaviour:
   stampPanelAnimator: {fileID: 2067134850}
   sirenAnimator: {fileID: 639091607933992970}
   plusAnimator: {fileID: 639091607933992972}
+--- !u!114 &9102100926741896931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143270260358064178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f10eaade16f964da80d530008ef2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterWalkInDirector: {fileID: 358902165}
+  characterWalkingDirector: {fileID: 332891487737802509}
+  characterWalkOutDirector: {fileID: 1459304762}
 --- !u!1 &6143270260367442609
 GameObject:
   m_ObjectHideFlags: 0
@@ -26401,6 +26411,7 @@ GameObject:
   - component: {fileID: 6143270260962274050}
   - component: {fileID: 6143270260962274048}
   - component: {fileID: 6143270260962274049}
+  - component: {fileID: 3863692876295754355}
   m_Layer: 5
   m_Name: LeftPanel
   m_TagString: Untagged
@@ -26474,3 +26485,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3863692876295754355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143270260962274051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8355447e7e054684e8f85c351dc26238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inspectorWordsGO: {fileID: 554122374}
+  testerWordsGO: {fileID: 464123257}

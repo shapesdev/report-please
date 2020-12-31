@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IStoryGameView : IOffsetView
 {
     void Init(DateTime date, IScenario scenario);
-    void ShowScenario(IScenario scenario, Sprite sprite, int current, int last,
+    void ShowScenario(IScenario scenario, int current, int last,
         IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy);
     void TurnOnInspectorMode();
     void TurnOffInspectorMode();

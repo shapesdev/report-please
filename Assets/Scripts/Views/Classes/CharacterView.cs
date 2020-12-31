@@ -10,8 +10,8 @@ public class CharacterView : MonoBehaviour, ICharacterView
     public PlayableDirector characterWalkingDirector;
     public PlayableDirector characterWalkOutDirector;
 
-    public void ShowTesterCharacter(IScenario scenario, Sprite sprite, int current, int last,
-        IGameSelectionView selectionView, DateTime day, Discrepancy discrepancy)
+    public void ShowTesterCharacter(IScenario scenario, Sprite sprite,
+        IGameSelectionView selectionView, IDialogueView dialogueView, DateTime day)
     {
         var currentSprite = characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite;
 
@@ -20,21 +20,21 @@ public class CharacterView : MonoBehaviour, ICharacterView
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
             characterWalkOutDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
 
-            StartCoroutine(DisplayCharacter(true, false, selectionView, day, scenario, sprite));
+            StartCoroutine(DisplayCharacter(true, false, selectionView, dialogueView, day, scenario, sprite));
         }
         else if (currentSprite != sprite)
         {
-            StartCoroutine(DisplayCharacter(true, true, selectionView, day, scenario, sprite));
+            StartCoroutine(DisplayCharacter(true, true, selectionView, dialogueView, day, scenario, sprite));
             characterWalkInDirector.gameObject.GetComponentInChildren<Image>(true).sprite = sprite;
         }
         else
         {
-            StartCoroutine(DisplayCharacter(false, false, selectionView, day, scenario, sprite));
+            StartCoroutine(DisplayCharacter(false, false, selectionView, dialogueView, day, scenario, sprite));
         }
     }
 
     IEnumerator DisplayCharacter(bool walkIn, bool walkOut, IGameSelectionView selectionView,
-    DateTime day, IScenario scenario, Sprite sprite)
+    IDialogueView dialogueView, DateTime day, IScenario scenario, Sprite sprite)
     {
         while (true)
         {
@@ -56,6 +56,8 @@ public class CharacterView : MonoBehaviour, ICharacterView
                 characterWalkInDirector.Play();
                 yield return new WaitForSeconds(2f);
                 animator.enabled = false;
+
+                dialogueView.ShowDialogue("Report, Please", scenario.GetTester().GetWalkInWords(), 0f);
             }
 
             if (characterWalkOutDirector.transform.GetChild(0).gameObject.activeInHierarchy)
