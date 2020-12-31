@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -129,19 +130,24 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
         }
         else
         {
-            Invoke("ActivateSelectableWithDelay", delay);
+            StartCoroutine(ActivateSelectables(delay));
         }
     }
 
-    private void ActivateSelectableWithDelay()
+    IEnumerator ActivateSelectables(float delay)
     {
-        for (int i = 0; i < selectableGameObjects.Length; i++)
+        while(true)
         {
-            if (selectableGameObjects[i].activeInHierarchy == false)
+            yield return new WaitForSeconds(delay);
+            for (int i = 0; i < selectableGameObjects.Length; i++)
             {
-                selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
-                selectableGameObjects[i].SetActive(true);
+                if (selectableGameObjects[i].activeInHierarchy == false)
+                {
+                    selectableGameObjects[i].transform.localPosition = new Vector3(-600, -320, 0);
+                    selectableGameObjects[i].SetActive(true);
+                }
             }
+            break;
         }
     }
 

@@ -14,7 +14,6 @@ public interface IStoryGameView : IOffsetView
     void ShowEndDay(int day, int curScore, int maxScore);
     void DisplayFieldText(string value);
     void TurnOffFieldText();
-    void ShowDiscrepancyDialogue(string inspector, string tester);
 
     event EventHandler<SpaceBarPressedEventArgs> OnSpaceBarPressed;
     event EventHandler<TabPressedEventArgs> OnTabPressed;

@@ -17,9 +17,11 @@ public class StoryGameFactory
         var selectionView = instance.GetComponentInChildren<GameSelectionView>();
         var stampView = instance.GetComponentInChildren<GameStampView>();
         var lineView = instance.GetComponentInChildren<LineView>();
+        var dialogueView = instance.GetComponentInChildren<DialogueView>();
+        var characterView = instance.GetComponentInChildren<CharacterView>();
 
         model = new StoryGameModel(ruleBook, sprites);
-        controller = new StoryGameController(model, view, selectionView, stampView, lineView);
+        controller = new StoryGameController(model, view, selectionView, stampView, lineView, dialogueView, characterView);
     }
 
     public void Unload()
