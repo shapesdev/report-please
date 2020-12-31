@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EditorBug : Bug
 {
-    public EditorBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps, string expectActual, string reproWith,
-        bool regression, string FAV, bool publicField, int severity, int platform, int user, Tester tester, Discrepancy discrepancy, int correctSeverity, int correctPlatform)
+    public EditorBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps,
+        string expectActual, string reproWith,
+        bool regression, string FAV, bool publicField, int severity, int platform, int user,
+        Tester tester, Discrepancy discrepancy, int correctSeverity, int correctPlatform)
     {
         this.title = title;
         this.caseID = caseID;

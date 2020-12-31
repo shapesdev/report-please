@@ -9,6 +9,8 @@ public class StoryGameController
     private readonly IGameSelectionView selectionView;
     private readonly IGameStampView stampView;
     private readonly ILineView lineView;
+    private readonly IDialogueView dialogueView;
+    private readonly ICharacterView characterView;
 
     private FieldCheckController fieldCheckController;
     private CitationCheckController citationCheckController;
@@ -20,13 +22,17 @@ public class StoryGameController
     public static event Action OnCitation;
     #endregion
 
-    public StoryGameController(IStoryGameModel model, IStoryGameView view, IGameSelectionView selectionView, IGameStampView stampView, ILineView lineView)
+    public StoryGameController(IStoryGameModel model, IStoryGameView view,
+        IGameSelectionView selectionView, IGameStampView stampView, ILineView lineView,
+        IDialogueView dialogueView, ICharacterView characterView)
     {
         this.model = model;
         this.view = view;
         this.selectionView = selectionView;
         this.stampView = stampView;
         this.lineView = lineView;
+        this.dialogueView = dialogueView;
+        this.characterView = characterView;
 
         fieldCheckController = new FieldCheckController();
         citationCheckController = new CitationCheckController();
@@ -132,9 +138,13 @@ public class StoryGameController
     
     private void DisplayDataForView()
     {
-        view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
-    model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()], model.CurrentScenario + 1,
-    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay, model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy());
+        view.ShowScenario(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.CurrentScenario + 1,
+    model.DaysWithScenarios[model.CurrentDay].Count, selectionView, model.CurrentDay,
+    model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy());
+
+        characterView.ShowTesterCharacter(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario],
+            model.StoryCharacters[model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetId()],
+            selectionView, dialogueView, model.CurrentDay);
     }
 
     private void View_OnExport(object sender, ExportPressedEventArgs e) { DataExportHelper.instance.Export(); }
@@ -245,8 +255,11 @@ public class StoryGameController
         {
             view.DisplayFieldText("Discrepancy found");
 
-            view.ShowDiscrepancyDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
-                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords());
+            if(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue() != null)
+            {
+                dialogueView.ShowDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
+    model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords(), 2f);
+            }
 
             if (model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].IsEmployeeIdMissing() == true &&
                 model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetFullName() != null)

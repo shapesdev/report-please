@@ -15,11 +15,25 @@ public class Dialogue
 
     public string GetInspectorWords()
     {
-        return inspectorWords;
+        if(inspectorWords != null)
+        {
+            return inspectorWords;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     public string GetTesterWords()
     {
-        return testerWords;
+        if (testerWords != null)
+        {
+            return testerWords;
+        }
+        else
+        {
+            return "";
+        }
     }
 }

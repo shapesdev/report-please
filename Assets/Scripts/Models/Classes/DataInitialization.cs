@@ -366,7 +366,7 @@ public class DataInitialization
         "Actual result: Focus is no longer on the Repro window\n",
         "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Could not test with: 2018.4.27f1 (UIElements are not supported)",
-        false, "FAV:\n2018.4.27f1, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester1, new Discrepancy("FAV", "Regression"), 3, 3);
+        false, "FAV:\n2018.4.27f1, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester1, new Discrepancy("FAV", "Regression", new Dialogue("2018.4.27f1 is in FAV field?", "Oh, my bad")), 3, 3);
 
         EditorBug editor4 = new EditorBug("Selection pop-up windows are not focused when opened",
         1675467, tester1.GetName(), new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" },
@@ -377,7 +377,7 @@ public class DataInitialization
         "3. When dropdown is opened enter any text and click outside the window\n",
         "Expected result: The entered text is selected and the window is focused\n" +
         "Actual result: The entered text is not selected and the window is not focused",
-        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 4, 3, 3, tester1, new Discrepancy("ReproSteps", "OrderRule"), 4, 3);
+        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 4, 3, 3, tester1, new Discrepancy("ReproSteps", "OrderRule", new Dialogue("There is wrong order in your Report", "No, it's fine")), 4, 3);
 
         EditorBug editor5 = new EditorBug("Keyboard input is not detected in the Input Field when built on WebGL",
         1467154, tester1.GetName(), new AreasNGrabbags { area = "WebGL", grabbag = "WebGL Grabbag" },
@@ -390,7 +390,7 @@ public class DataInitialization
         "Expected result: Text appears in the Input Field, keyboard input (eg. CTRL+V) is registered\n" +
         "Actual result: No text appears in the Input Field, keyboard input (eg.CTRL + V) is not registered\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 4, 2, tester1, new Discrepancy("Title", "Platform"), 3, 1);
+        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 4, 2, tester1, new Discrepancy("Title", "Platform", new Dialogue("Platform Importance seems to be wrong", "WebGL is in all platforms")), 3, 1);
 
         EditorBug editor6 = new EditorBug("NullReferenceException error is thrown if a sample in package.json does not exist",
          1644567, tester2.GetName(), new AreasNGrabbags { area = "Packman", grabbag = "Packman Grabbag" },
@@ -430,7 +430,7 @@ public class DataInitialization
          "Expected result: Correct collision geometry is applied to the Tilemap\n" +
          "Actual result: Two colliders appear on the Tilemap\n",
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Area", "Areas"), 3, 3);
+         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Area", "Areas", new Dialogue("There is a mismatch in Area and Grabbag", "Physics Area belongs to Desktop")), 3, 3);
 
         EditorBug editor9 = new EditorBug("ScriptableObjects are shown as MonoBehaviours in the Inspector's Narrow Selection section",
          1670414, tester2.GetName(), new AreasNGrabbags { area = "Asset Import Pipeline", grabbag = "Asset Pipeline V2 Grabbag" },
@@ -441,7 +441,7 @@ public class DataInitialization
          "Expected result: '4 Scriptable Objects' are in the Narrow the Selection section\n" +
          "Actual result: '4 Mono Behaviours' are in the Narrow the Selection section\n",
          "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 1, 3, 2, tester2, new Discrepancy("Expected", "Severity"), 4, 3);
+         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 1, 3, 2, tester2, new Discrepancy("Expected", "Severity", new Dialogue("Issue seems to be minor, but you marked it as a crash", "Forgot to fix it..")), 4, 3);
 
         EditorBug editor10 = new EditorBug("OnApplicationQuit method is called before Application.wantsToQuit event is raised", 1785123, tester2.GetName(),
         new AreasNGrabbags { area = "Scripting", grabbag = "Scripting Grabbag" },
@@ -454,7 +454,7 @@ public class DataInitialization
         "Expected result: Application.wantsToQuit event is raised before OnApplicationQuit\n" +
         "Actual result: OnApplicationQuit is called before Application.wantsToQuit event is raised\n\n\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1, 2020.2.0b3",
-        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("EmptyLineRule", "Expected"), 3, 3);
+        false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("EmptyLineRule", "Expected", new Dialogue("There is an empty line in your Report", "No, there is not..")), 3, 3);
 
         tempScenarioList.Add(editor1);
         tempScenarioList.Add(editor2);
@@ -499,7 +499,7 @@ public class DataInitialization
         "Expected result: Box Collider Component was removed from all Prefab instances and from the original Prefab\n" +
         "Actual result: On some Prefab instances and on the original Prefab, the Box Collider Component was not removed\n",
         "Reproducible with: 2018.4.27f1, 2019.4.11f1, 2020.1.6f1",
-        false, "FAV:\n2018.4, 2019.4, 2020.1", true, 3, 3, 2, tester1, new Discrepancy("ReproWith", "NotAllVersionRule"), 3, 3);
+        false, "FAV:\n2018.4, 2019.4, 2020.1", true, 3, 3, 2, tester1, new Discrepancy("ReproWith", "NotAllVersionRule", new Dialogue("You didn't test on all versions", "But I did")), 3, 3);
 
         EditorBug editor3 = new EditorBug("Multiple ListView's TextField items inherit the selected TextField's text when scrolling down/up in the window", 1874123, tester1.GetName(),
          new AreasNGrabbags { area = "UI Toolkit", grabbag = "UI Toolkit Grabbag" },
@@ -527,7 +527,7 @@ public class DataInitialization
         "Actual result: The lighting on GameObjects is distorted in the Player\n",
         "Reproducible with: 4.4.0 (2019.4.11f1), 4.5.0 (2020.1.6f1), 4.6.0 (2020.2.0b3)\n" +
         "Not reproducible with: 4.2.0 (2018.4.27f1), 4.3.0 (2019.4.11f1)",
-        true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.4.0", tester1, new Discrepancy("Public", "PublicRule"), 2, 2);
+        true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.4.0", tester1, new Discrepancy("Public", "PublicRule", new Dialogue("Your Report is marked as Private", "It's supposed to be Private..")), 2, 2);
 
         PackageBug package2 = new PackageBug("Shader breaks when % is added to an Enum keyword Entry's display name", 1781245, "",
           new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" },
@@ -541,7 +541,7 @@ public class DataInitialization
          "Actual result: 'shader is not supported on this GPU' warning message is thrown in the Inspector\n",
          "Reproducible with: 7.0.0 (2019.4.11f1), 8.0.0 (2020.1.6f1), 10.0.0 (2020.2.0b3)\n" +
          "Could not test with: 4.0.0 (2018.4.27f1) - Enum keyword not supported",
-         false, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0", tester1, new Discrepancy("Name", "Name"), 3, 3);
+         false, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "Shader Graph", "10.0.0", tester1, new Discrepancy("Name", "Name", new Dialogue("There is a mismatch between names", "That can't be true")), 3, 3);
 
         EditorBug editor4 = new EditorBug("Tooltip and certain buttons in the Editor cause loss of focus on top level windows when VS or VS Code", 1578978, tester1.GetName(),
          new AreasNGrabbags { area = "IMGUI", grabbag = "Editor-External Grabbag" },
@@ -568,7 +568,7 @@ public class DataInitialization
         "Actual result: ListView has 3 items while the bound SerializeRefence List has only 2 items\n",
         "Reproducible with: 2019.4.11f1, 2020.1.6f1, 2020.2.0b3\n" +
         "Could not test with: 2018.4.27f1 (UIElements are not supported)",
-        true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Regression", "FAV"), 3, 3);
+        true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("Regression", "FAV", new Dialogue("Your marked the Report as Regression, when there is none", "Oops")), 3, 3);
 
         PackageBug package3 = new PackageBug("InvalidCastException when a project is built with Windows/Mac Player", 1785354, tester2.GetName(),
           new AreasNGrabbags { area = "Addressables Assets", grabbag = "Addressables Grabbag" },
@@ -609,7 +609,7 @@ public class DataInitialization
          "Actual result: 'Hide Mobile Input' value is true\n",
          "Reproducible with: 2.0.0 (2019.4.11f1), 3.0.0 (2020.1.6f1, 2020.2.0b3)\n" +
          "Not reproducible with: 1.0.0 (2018.4.27f1)",
-         true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.0", tester2, new Discrepancy("PackageFound", "ReproWith"), 3, 3);
+         true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.0", tester2, new Discrepancy("PackageFound", "ReproWith", new Dialogue("Wrong Package Found Version is entered", "You are incorrect")), 3, 3);
 
         tempScenarioList.Add(editor1);
         tempScenarioList.Add(editor2);
