@@ -7,8 +7,10 @@ public class PackageBug : Bug
     private string package;
     private string packageVersion;
 
-    public PackageBug(string title, int caseID, string testerName, AreasNGrabbags area, string reproSteps, string expectActual, string reproWith,
-    bool regression, string FAV, bool publicField, int severity, int platform, int user, string package, string packageVersion, Tester tester, Discrepancy discrepancy, int correctSeverity,
+    public PackageBug(string title, int caseID, string testerName, AreasNGrabbags area,
+        string reproSteps, string expectActual, string reproWith,
+    bool regression, string FAV, bool publicField, int severity, int platform, int user,
+    string package, string packageVersion, Tester tester, Discrepancy discrepancy, int correctSeverity,
     int correctPlatform)
     {
         this.title = title;
