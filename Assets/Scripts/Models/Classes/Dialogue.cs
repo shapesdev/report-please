@@ -21,7 +21,7 @@ public class Dialogue
         }
         else
         {
-            return null;
+            return "";
         }
     }
 
@@ -33,7 +33,7 @@ public class Dialogue
         }
         else
         {
-            return null;
+            return "";
         }
     }
 }

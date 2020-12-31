@@ -255,8 +255,11 @@ public class StoryGameController
         {
             view.DisplayFieldText("Discrepancy found");
 
-            dialogueView.ShowDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
-                model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords(), 2f);
+            if(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue() != null)
+            {
+                dialogueView.ShowDialogue(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetInspectorWords(),
+    model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetDiscrepancy().GetDialogue().GetTesterWords(), 2f);
+            }
 
             if (model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].IsEmployeeIdMissing() == true &&
                 model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario].GetTester().GetFullName() != null)
