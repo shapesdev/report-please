@@ -2,7 +2,8 @@
 
 public class CitationCheckController
 {
-    public Tuple<bool, string> CheckForCitations(IScenario curScenario, RuleBookSO ruleBook, Stamp stampType, bool discrepancyFound)
+    public Tuple<bool, string> CheckForCitations(IScenario curScenario,
+        RuleBookSO ruleBook, Stamp stampType, bool discrepancyFound)
     {
         Tuple<bool, string> isScenarioWithDiscrepancy = new Tuple<bool, string>(false, "");
 

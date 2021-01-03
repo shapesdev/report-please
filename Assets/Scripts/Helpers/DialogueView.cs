@@ -21,14 +21,14 @@ public class DialogueView : MonoBehaviour, IDialogueView
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            if (inspector != "")
+            if (inspector != "" && tester != null)
             {
                 inspectorWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = inspector;
                 inspectorWordsGO.SetActive(true);
                 OnInspectorSpeak?.Invoke();
             }
             yield return new WaitForSeconds(1f);
-            if(tester != "")
+            if(tester != null)
             {
                 testerWordsGO.transform.GetChild(0).gameObject.GetComponent<Text>().text = tester;
                 testerWordsGO.SetActive(true);

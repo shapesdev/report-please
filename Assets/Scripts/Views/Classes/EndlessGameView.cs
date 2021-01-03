@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine.Playables;
 using System.Collections.Generic;
 
-public class StoryGameView : MonoBehaviour, IStoryGameView
+public class EndlessGameView : MonoBehaviour, IEndlessGameView
 {
     #region Properties
     private IGameScenarioView[] gameScenarioViews;
@@ -233,21 +233,10 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
             nextDayGameObject.SetActive(true);
             OnEndDay?.Invoke(0);
             yield return new WaitForSeconds(1.5f);
-            if (day == 14)
-            {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "You finished the last day " + day +
-                    "\n\n" + "SCORE: " + score + "/" + maxScore, 0.08f);
-                yield return new WaitForSeconds(2f);
-                nextDayGameObject.transform.GetChild(2).transform.position = nextDayGameObject.transform.GetChild(1).transform.position;
-                nextDayGameObject.transform.GetChild(3).gameObject.SetActive(true);
-            }
-            else
-            {
-                TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day
-                    + "\n\nSCORE: " + score + "/" + maxScore, 0.08f);
-                yield return new WaitForSeconds(2f);
-                nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
-            }
+            TextWriterHelper.instance.AddWriter(nextDayGameObject.GetComponentInChildren<Text>(), "End of day " + day
+                + "\n\nSCORE: " + score + "/" + maxScore, 0.08f);
+            yield return new WaitForSeconds(2f);
+            nextDayGameObject.transform.GetChild(1).gameObject.SetActive(true);
             nextDayGameObject.transform.GetChild(2).gameObject.SetActive(true);
             break;
         }
@@ -255,11 +244,6 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     #endregion
 
     #region Extra methods
-    public void Export()
-    {
-        var eventArgs = new ExportPressedEventArgs();
-        OnExport(this, eventArgs);
-    }
 
     public void OpenClosePausePanel()
     {
@@ -283,12 +267,12 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
         OnTabPressed(this, eventArgs);
     }
 
-    public void PlayNextDay() { App.instance.LoadNextDay(); }
+    public void PlayAgain() { App.instance.LoadEndlessGame(true); }
 
     public void GoBackToMainMenu()
     {
         OnPause.Invoke(false);
-        App.instance.LoadStoryGame();
+        App.instance.LoadEndlessGame(false);
     }
     #endregion
 }

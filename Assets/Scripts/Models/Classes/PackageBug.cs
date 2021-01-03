@@ -57,4 +57,14 @@ public class PackageBug : Bug
     {
         return discrepancy;
     }
+
+    public void SetPackageVersion(string version)
+    {
+        packageVersion = version;
+    }
+
+    public void SetPackageName(string package)
+    {
+        this.package = package;
+    }
 }

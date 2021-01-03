@@ -8,4 +8,5 @@ public interface IMenuView
     void ShowContinuePanel(DateTime time);
 
     event EventHandler<StoryButtonPressedEventArgs> OnStoryButtonPressed;
+    event EventHandler<EndlessButtonPressedEventArgs> OnEndlessButtonPressed;
 }

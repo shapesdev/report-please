@@ -22,7 +22,6 @@ MonoBehaviour:
     - Only 1 empty line between paragraphs
     - No double spaces between letters
     - Tester has a valid Employee ID
-    - Reports are closed as Not Qualified after 7 days from the last reply
   - day: 12
     rules:
     - Only 1 empty line between paragraphs

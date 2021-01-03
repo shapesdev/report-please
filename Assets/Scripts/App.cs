@@ -13,6 +13,8 @@ public class App : MonoBehaviour
     [SerializeField]
     private GameObject menuPrefab;
     [SerializeField]
+    private GameObject endlessGamePrefab;
+    [SerializeField]
     private RuleBookSO ruleBook;
     [SerializeField]
     private Sprite[] allCharacterSprites;
@@ -23,6 +25,7 @@ public class App : MonoBehaviour
 
     private StoryGameFactory storyGameFactory;
     private MenuFactory menuFactory;
+    private EndlessGameFactory endlessGameFactory;
 
     private void Awake()
     {
@@ -35,6 +38,7 @@ public class App : MonoBehaviour
         instance = this;
         storyGameFactory = new StoryGameFactory();
         menuFactory = new MenuFactory();
+        endlessGameFactory = new EndlessGameFactory();
         menuFactory.Load(menuPrefab);
     }
 
@@ -59,7 +63,7 @@ public class App : MonoBehaviour
         }
     }
 
-    public void Load()
+    public void LoadStoryGame()
     {
         if(menuFactory.IsLoaded())
         {
@@ -73,6 +77,28 @@ public class App : MonoBehaviour
         }
     }
 
+    public void LoadEndlessGame(bool playAgain)
+    {
+        if(playAgain)
+        {
+            endlessGameFactory.Unload();
+            endlessGameFactory.Load(endlessGamePrefab, ruleBook, allCharacterSprites);
+        }
+        else
+        {
+            if (menuFactory.IsLoaded())
+            {
+                menuFactory.Unload();
+                endlessGameFactory.Load(endlessGamePrefab, ruleBook, allCharacterSprites);
+            }
+            else if (endlessGameFactory.IsLoaded())
+            {
+                endlessGameFactory.Unload();
+                menuFactory.Load(menuPrefab);
+            }
+        }
+    }
+
     public void LoadNextDay()
     {
         if (PlayerPrefs.GetInt("CurrentDay") < 15)
@@ -82,12 +108,7 @@ public class App : MonoBehaviour
         }
         else
         {
-            Load();
+            LoadStoryGame();
         }
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }

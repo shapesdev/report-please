@@ -29,6 +29,7 @@ public class MenuView : MonoBehaviour, IMenuView
     private Slider musicSlider;
 
     public event EventHandler<StoryButtonPressedEventArgs> OnStoryButtonPressed = (sender, e) => { };
+    public event EventHandler<EndlessButtonPressedEventArgs> OnEndlessButtonPressed = (sender, e) => { };
 
     private void Start()
     {
@@ -58,6 +59,12 @@ public class MenuView : MonoBehaviour, IMenuView
         OnStoryButtonPressed(this, eventArgs);
     }
 
+    public void PlayEndless()
+    {
+        var eventArgs = new EndlessButtonPressedEventArgs();
+        OnEndlessButtonPressed(this, eventArgs);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -84,12 +91,12 @@ public class MenuView : MonoBehaviour, IMenuView
         PlayerPrefs.DeleteAll();
         PlayerData.instance.ClearPlayerData();
         DataExportHelper.instance.ResetFile();
-        App.instance.Load();
+        App.instance.LoadStoryGame();
     }
 
     public void Continue()
     {
-        App.instance.Load();
+        App.instance.LoadStoryGame();
     }
 
     public void CloseContinuePanel()
