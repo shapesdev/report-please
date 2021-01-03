@@ -19,6 +19,11 @@ public class Tester
         this.walkInWords = walkInWords;
     }
 
+    public Tester(int id)
+    {
+        this.id = id;
+    }
+
     public Tester(int id, string name, string surname, string email, DateTime dateStart, DateTime expiry, string walkInWords)
     {
         this.id = id;
@@ -30,9 +35,26 @@ public class Tester
         this.walkInWords = walkInWords;
     }
 
+    public Tester(string name, string surname, string email, DateTime dateStart, DateTime expiry, string walkInWords)
+    {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        dateStarted = dateStart;
+        dateOfExpiry = expiry;
+        this.walkInWords = walkInWords;
+    }
+
     public int GetId()
     {
-        return id;
+        if(id != 0)
+        {
+            return id;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public string GetName()
@@ -67,6 +89,13 @@ public class Tester
 
     public string GetWalkInWords()
     {
-        return walkInWords;
+        if(walkInWords != null)
+        {
+            return walkInWords;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

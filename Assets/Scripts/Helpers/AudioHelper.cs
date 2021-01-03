@@ -19,6 +19,11 @@ public class AudioHelper : MonoBehaviour
         StoryGameController.OnDiscrepancy += PlayDiscrepancySound;
         StoryGameController.OnCitation += PlayCitationSound;
 
+        EndlessGameController.OnGameInitialized += PlayMusic;
+        EndlessGameController.OnInspectorMode += PlayInspectorSound;
+        EndlessGameController.OnDiscrepancy += PlayDiscrepancySound;
+        EndlessGameController.OnCitation += PlayCitationSound;
+
         MenuController.OnMenuInitialized += PlayMusic;
 
         GameStampView.OnStampPanelOpen += PlayStampPanelSound;
@@ -37,6 +42,11 @@ public class AudioHelper : MonoBehaviour
         StoryGameView.OnEndDay += PlayMusic;
         StoryGameView.OnPause += MuteUnMuteMusic;
         StoryGameView.OnAnnounce += PlayAnnounceSound;
+
+        EndlessGameView.OnEndDay += PlayMusic;
+        EndlessGameView.OnPause += MuteUnMuteMusic;
+        EndlessGameView.OnAnnounce += PlayAnnounceSound;
+
         DialogueView.OnTesterSpeak += PlayTesterSound;
         DialogueView.OnInspectorSpeak += PlayInspectorSound;
     }

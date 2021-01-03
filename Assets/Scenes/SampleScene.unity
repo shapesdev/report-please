@@ -693,6 +693,50 @@ MonoBehaviour:
   currentHighScore: 0
   maxHighScore: 0
   maxReports: 0
+--- !u!1 &1219736785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1219736786}
+  - component: {fileID: 1219736787}
+  m_Layer: 0
+  m_Name: FieldRandomizeHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1219736786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219736785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1508240966}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1219736787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219736785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02793ff5e5416aa46bf41ca980140697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rulebook: {fileID: 11400000, guid: f29a2105f0a8a5f458baff66732c50ee, type: 2}
 --- !u!1 &1306100592
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +847,7 @@ Transform:
   - {fileID: 108956675}
   - {fileID: 1894832840}
   - {fileID: 1867168281}
+  - {fileID: 1219736786}
   m_Father: {fileID: 2075586957}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1302,6 +1347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyGamePrefab: {fileID: 6143270259566252243, guid: bb47da4d12ef41242b4a64f9a600ea57, type: 3}
   menuPrefab: {fileID: 9059454969076846072, guid: b4081e77f1cf3d8498afbf27d437cac5, type: 3}
+  endlessGamePrefab: {fileID: 6143270259566252243, guid: abfa632ebdc34e943b0fa07617532822, type: 3}
   ruleBook: {fileID: 11400000, guid: f29a2105f0a8a5f458baff66732c50ee, type: 2}
   allCharacterSprites:
   - {fileID: 21300000, guid: a86c20632c4d29d45ab40cf8caaeb011, type: 3}

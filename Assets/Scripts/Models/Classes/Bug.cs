@@ -123,4 +123,63 @@ public abstract class Bug : IScenario
                 (discrepancy.GetFirstTag() == "ValidIDRule" && discrepancy.GetSecondTag() == "ValidID") ? true : false;
         }
     }
+
+    public void SetTester(Tester tester)
+    {
+        this.tester = tester;
+    }
+
+    public void SetSeverity(int severity)
+    {
+        this.severity = severity;
+    }
+
+    public void SetFirstAffected(string FAV)
+    {
+        this.FAV = FAV;
+    }
+
+    public void SetPlatFormImportance(int importance)
+    {
+        platformImportance = importance;
+    }
+
+    public void SetRegression(bool value)
+    {
+        regression = value;
+    }
+
+    public void SetArea(AreasNGrabbags area)
+    {
+        this.area = area;
+    }
+
+    public void SetReportToPrivate()
+    {
+        publicField = false;
+    }
+
+    public void SetTesterName(string name)
+    {
+        testerName = name;
+    }
+
+    public void SetDiscrepancy(Discrepancy discrepancy)
+    {
+        this.discrepancy = discrepancy;
+    }
+
+    public void SetReproSteps(string reproSteps)
+    {
+        this.reproSteps = reproSteps;
+    }
+
+    public void SetExpectedActual(string expected)
+    {
+        expectedActualResults = expected;
+    }
+    public void SetReproStepsWith(string steps)
+    {
+        reproNoReproWith = steps;
+    }
 }
