@@ -157,10 +157,10 @@ public class DataInitialization
         "Diversity QA Team", tester1, null);
 
         tempScenarioList.Add(response1);
-        tempScenarioList.Add(response2);
+       // tempScenarioList.Add(response2);
         tempScenarioList.Add(response3);
         tempScenarioList.Add(response4);
-        tempScenarioList.Add(response5);
+        //tempScenarioList.Add(response5);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
@@ -171,7 +171,7 @@ public class DataInitialization
 
         Tester tester1 = new Tester(1, "Ramunas", "Pondukas", "r.pondukas@diversity.com", new DateTime(2020, 10, 3), new DateTime(2020, 12, 25), "I hope they are correct");
         Tester tester2 = new Tester(2, "Sergej", "Aleksej", "s.aleksej@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25), "It's finally my turn");
-        Tester tester3 = new Tester(3, "Dante", "Romanov", "Ramoj@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25), "Just put the plus stamp, I'm in a hurry");
+        Tester tester3 = new Tester(3, "Dante", "Romanov", "DanteRom@diversity.com", new DateTime(2020, 5, 5), new DateTime(2020, 11, 25), "Just put the plus stamp, I'm in a hurry");
 
         Response response0 = new Response("UnityWebRequest fails when Managed Stripping Level is enabled", 1122112, new DateTime(2020, 11, 8), new DateTime(2020, 11, 10), "Hi,\n\n" +
         "Thank you for contacting Diversity.\n\n" +
@@ -243,11 +243,11 @@ public class DataInitialization
         tempScenarioList.Add(response0);
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
-        tempScenarioList.Add(response3);
-        tempScenarioList.Add(response4);
-        tempScenarioList.Add(response5);
-/*        tempScenarioList.Add(response6);
-        tempScenarioList.Add(response7);*/
+       // tempScenarioList.Add(response3);
+       // tempScenarioList.Add(response4);
+       // tempScenarioList.Add(response5);
+       tempScenarioList.Add(response6);
+       // tempScenarioList.Add(response7);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
@@ -324,13 +324,13 @@ public class DataInitialization
         "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded,
         new Discrepancy("ExpireDate", "ExpireDate", new Dialogue("Your Employee ID is expired", "Is it really?")));
 
-        tempScenarioList.Add(response1);
-        tempScenarioList.Add(response2);
-        tempScenarioList.Add(response3);
-        tempScenarioList.Add(response4);
-  /*      tempScenarioList.Add(response5);
-        tempScenarioList.Add(response6);
-        tempScenarioList.Add(response7);*/
+      //  tempScenarioList.Add(response1);
+       // tempScenarioList.Add(response2);
+       // tempScenarioList.Add(response3);
+        //tempScenarioList.Add(response4);
+        tempScenarioList.Add(response5);
+        //tempScenarioList.Add(response6);
+        tempScenarioList.Add(response7);
         tempScenarioList.Add(response8);
 
         daysWithScenarios.Add(day, tempScenarioList);
@@ -469,15 +469,15 @@ public class DataInitialization
         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("EmptyLineRule", "Expected", new Dialogue("There is an empty line in your Report", "No, there is not..")), 3, 3);
 
         tempScenarioList.Add(editor1);
-        tempScenarioList.Add(editor2);
-        tempScenarioList.Add(editor3);
+        //tempScenarioList.Add(editor2);
+        //tempScenarioList.Add(editor3);
         tempScenarioList.Add(editor4);
-        tempScenarioList.Add(editor5);
-/*        tempScenarioList.Add(editor6);
-        tempScenarioList.Add(editor7);
+       // tempScenarioList.Add(editor5);
+       // tempScenarioList.Add(editor6);
+       // tempScenarioList.Add(editor7);
         tempScenarioList.Add(editor8);
-        tempScenarioList.Add(editor9);
-        tempScenarioList.Add(editor10);*/
+        //tempScenarioList.Add(editor9);
+        //tempScenarioList.Add(editor10);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
@@ -539,7 +539,7 @@ public class DataInitialization
         "Actual result: The lighting on GameObjects is distorted in the Player\n",
         "Reproducible with: 4.4.0 (2019.4.11f1), 4.5.0 (2020.1.6f1), 4.6.0 (2020.2.0b3)\n" +
         "Not reproducible with: 4.2.0 (2018.4.27f1), 4.3.0 (2019.4.11f1)",
-        true, "FAV:\n2019.4.4f1, 2020.2", false, 2, 2, 2, "Shader Graph", "4.4.0", tester1, new Discrepancy("Public", "PublicRule", new Dialogue("Your Report is marked as Private", "It's supposed to be Private..")), 2, 2);
+        true, "FAV:\n2019.4, 2020.1, 2020.2", false, 2, 2, 2, "Probuilder", "4.4.0", tester1, new Discrepancy("Public", "PublicRule", new Dialogue("Your Report is marked as Private", "It's supposed to be Private..")), 2, 2);
 
         PackageBug package2 = new PackageBug("Shader breaks when % is added to an Enum keyword Entry's display name", 1781245, "",
           new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" },
@@ -623,11 +623,11 @@ public class DataInitialization
          "Not reproducible with: 1.0.0 (2018.4.27f1)",
          true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.0", tester2, new Discrepancy("PackageFound", "ReproWith", new Dialogue("Wrong Package Found Version is entered", "You are incorrect")), 3, 3);
 
-        tempScenarioList.Add(editor1);
+        //tempScenarioList.Add(editor1);
         tempScenarioList.Add(package1);
         tempScenarioList.Add(package2);
         tempScenarioList.Add(package3);
-        tempScenarioList.Add(package4);
+        //tempScenarioList.Add(package4);
 /*        tempScenarioList.Add(editor2);
         tempScenarioList.Add(editor3);
         tempScenarioList.Add(editor4);
@@ -805,7 +805,7 @@ public class DataInitialization
         "Actual result: The lighting on GameObjects is distorted in the Player\n",
         "Reproducible with: 4.4.0 (2019.4.11f1), 4.5.0 (2020.1.6f1), 4.6.0 (2020.2.0b3)\n" +
         "Not reproducible with: 4.2.0 (2018.4.27f1), 4.3.0 (2019.4.11f1)",
-        true, "FAV:\n2019.4.4f1, 2020.2", true, 2, 2, 2, "Shader Graph", "4.4.0", null, null, 2, 2);
+        true, "FAV:\n2019.4.4f1, 2020.2", true, 2, 2, 2, "Probuilder", "4.4.0", null, null, 2, 2);
 
         PackageBug package2 = new PackageBug("Shader breaks when % is added to an Enum keyword Entry's display name", 1781245, "",
           new AreasNGrabbags { area = "ShaderGraph", grabbag = "ShaderGraph Grabbag" },
