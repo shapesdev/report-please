@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
-  DevAccountEmail: shapesgames@gmail.com
-  DevAccountToken: hxj9bjs9n44t6yxbqs4dkstmqhz5gusecxzszota76qgbz7t5wng7m48hwgwbje65e3mn3yahdtt3n835aqbfd4t87hdk6gwdpoehx1637psdsn6hgw8unb3ifxdqmr6yja3tsisyiujwuz4ykp7ji8hjfyeeegfjnkt1ykwd479aqctm5cfoky1ej5crin7ots1y98c
-  SelectedStudio: Shapes Games
-  SdkPath: Assets/PlayFabSDK
+  DevAccountEmail: 
+  DevAccountToken: 
+  SelectedStudio: 
+  SdkPath: 
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0

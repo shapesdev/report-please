@@ -122,11 +122,15 @@ public class StoryGameModel: IStoryGameModel
     public void SaveScenarioData()
     {
         PlayerData.instance.currentHighScore += CurrentScore;
+        PlayerData.instance.maxReports = 0;
+        PlayerData.instance.maxHighScore = 0;
+
         foreach (var report in DaysWithScenarios)
         {
-            PlayerData.instance.maxReports = report.Value.Count;
-            PlayerData.instance.maxHighScore = report.Value.Count * 10;
+            PlayerData.instance.maxReports += report.Value.Count;
+            PlayerData.instance.maxHighScore += report.Value.Count * 10;
         }
+
         PlayerData.instance.AddPlayerData(new LevelsStats(CurrentDay.ToString("yyyy-MM-dd"), scenarioStats));
     }
 
