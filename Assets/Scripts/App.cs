@@ -4,6 +4,8 @@ public class App : MonoBehaviour
 {
     public static App instance;
 
+    public GameType gameType;
+
     float timer = 1.0f;
     float waitTime = 0f;
     bool connected = false;
@@ -69,6 +71,7 @@ public class App : MonoBehaviour
         {
             menuFactory.Unload();
             storyGameFactory.Load(storyGamePrefab, ruleBook, storyCharacterSprites);
+            gameType = GameType.Story;
         }
         else if (storyGameFactory.IsLoaded())
         {
@@ -83,6 +86,7 @@ public class App : MonoBehaviour
         {
             endlessGameFactory.Unload();
             endlessGameFactory.Load(endlessGamePrefab, ruleBook, allCharacterSprites);
+            gameType = GameType.Endless;
         }
         else
         {
@@ -90,6 +94,7 @@ public class App : MonoBehaviour
             {
                 menuFactory.Unload();
                 endlessGameFactory.Load(endlessGamePrefab, ruleBook, allCharacterSprites);
+                gameType = GameType.Endless;
             }
             else if (endlessGameFactory.IsLoaded())
             {

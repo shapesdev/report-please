@@ -12,3 +12,8 @@ public enum ReportType
 {
     Response, EditorBug, PackageBug
 }
+
+public enum GameType
+{
+    Story, Endless
+}
