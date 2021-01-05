@@ -73,13 +73,21 @@ public class RuleBookView : GameGeneralView
         DeactiveAllChildren();
         iCanBeOpened = false;
 
-        for (int i = 0; i < ruleBook.basicRules.Count; i++)
+        if(App.instance.gameType == GameType.Endless)
         {
-            if(ruleBook.basicRules[i].day == PlayerPrefs.GetInt("CurrentDay"))
+            basicRuleDisplayer.DisplayRules(ruleBook.basicRules[ruleBook.basicRules.Count - 1].rules);
+        }
+        else
+        {
+            for (int i = 0; i < ruleBook.basicRules.Count; i++)
             {
-                basicRuleDisplayer.DisplayRules(ruleBook.basicRules[i].rules);
+                if (ruleBook.basicRules[i].day == PlayerPrefs.GetInt("CurrentDay"))
+                {
+                    basicRuleDisplayer.DisplayRules(ruleBook.basicRules[i].rules);
+                }
             }
         }
+
         OnTurnPage?.Invoke();
     }
 
