@@ -122,12 +122,22 @@ public class StoryGameView : MonoBehaviour, IStoryGameView
     {
         fieldCheckerText.text = value;
         fieldCheckerText.color = ColorHelper.instance.NormalModeColor;
-        Invoke("TurnOffFieldText", 1.5f);
+        StartCoroutine(TurnOffFieldTextCor());
     }
 
     public void TurnOffFieldText()
-    { 
-        fieldCheckerText.text = "";
+    {
+        StartCoroutine(TurnOffFieldTextCor());
+    }
+
+    private IEnumerator TurnOffFieldTextCor()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1.5f);
+            fieldCheckerText.text = "";
+            break;
+        }
     }
 
     public void EnableCitation(string citation)

@@ -157,10 +157,10 @@ public class DataInitialization
         "Diversity QA Team", tester1, null);
 
         tempScenarioList.Add(response1);
-       // tempScenarioList.Add(response2);
+        tempScenarioList.Add(response2);
         tempScenarioList.Add(response3);
         tempScenarioList.Add(response4);
-        //tempScenarioList.Add(response5);
+        tempScenarioList.Add(response5);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
@@ -324,12 +324,12 @@ public class DataInitialization
         "\nDiversity QA Team", tester2.GetEmail(), tester2, CloseType.Responded, CloseType.Responded,
         new Discrepancy("ExpireDate", "ExpireDate", new Dialogue("Your Employee ID is expired", "Is it really?")));
 
-      //  tempScenarioList.Add(response1);
-       // tempScenarioList.Add(response2);
-       // tempScenarioList.Add(response3);
-        //tempScenarioList.Add(response4);
+        tempScenarioList.Add(response1);
+        tempScenarioList.Add(response2);
+        tempScenarioList.Add(response3);
+        tempScenarioList.Add(response4);
         tempScenarioList.Add(response5);
-        //tempScenarioList.Add(response6);
+        tempScenarioList.Add(response6);
         tempScenarioList.Add(response7);
         tempScenarioList.Add(response8);
 
@@ -469,15 +469,15 @@ public class DataInitialization
         false, "FAV:\n2018.4, 2019.4, 2020.1, 2020.2", true, 3, 3, 2, tester2, new Discrepancy("EmptyLineRule", "Expected", new Dialogue("There is an empty line in your Report", "No, there is not..")), 3, 3);
 
         tempScenarioList.Add(editor1);
-        //tempScenarioList.Add(editor2);
-        //tempScenarioList.Add(editor3);
+        tempScenarioList.Add(editor2);
+        tempScenarioList.Add(editor3);
         tempScenarioList.Add(editor4);
-       // tempScenarioList.Add(editor5);
-       // tempScenarioList.Add(editor6);
-       // tempScenarioList.Add(editor7);
+        tempScenarioList.Add(editor5);
+        tempScenarioList.Add(editor6);
+        tempScenarioList.Add(editor7);
         tempScenarioList.Add(editor8);
-        //tempScenarioList.Add(editor9);
-        //tempScenarioList.Add(editor10);
+        tempScenarioList.Add(editor9);
+        tempScenarioList.Add(editor10);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
@@ -623,16 +623,16 @@ public class DataInitialization
          "Not reproducible with: 1.0.0 (2018.4.27f1)",
          true, "FAV:\n2019.4, 2020.1, 2020.2", true, 3, 3, 2, "TextMeshPro", "3.0.0", tester2, new Discrepancy("PackageFound", "ReproWith", new Dialogue("Wrong Package Found Version is entered", "You are incorrect")), 3, 3);
 
-        //tempScenarioList.Add(editor1);
+        tempScenarioList.Add(editor1);
         tempScenarioList.Add(package1);
         tempScenarioList.Add(package2);
         tempScenarioList.Add(package3);
-        //tempScenarioList.Add(package4);
-/*        tempScenarioList.Add(editor2);
+        tempScenarioList.Add(package4);
+        tempScenarioList.Add(editor2);
         tempScenarioList.Add(editor3);
         tempScenarioList.Add(editor4);
         tempScenarioList.Add(editor5);
-        tempScenarioList.Add(editor6);*/
+        tempScenarioList.Add(editor6);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }

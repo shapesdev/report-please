@@ -16,6 +16,10 @@ public class MenuView : MonoBehaviour, IMenuView
     [SerializeField]
     private GameObject continuePanel;
     [SerializeField]
+    private GameObject continueButton;
+    [SerializeField]
+    private GameObject startButton;
+    [SerializeField]
     private Text currentDayText;
 
     [SerializeField]
@@ -72,8 +76,18 @@ public class MenuView : MonoBehaviour, IMenuView
 
     public void ShowContinuePanel(DateTime time)
     {
+        if(time.Day == 15)
+        {
+            currentDayText.text = "YOU HAVE FINISHED THE LAST DAY";
+            continueButton.SetActive(false);
+            startButton.transform.localPosition = new Vector3(0f, startButton.transform.localPosition.y, startButton.transform.localPosition.z);
+        }
+        else
+        {
+            currentDayText.text = "LAST SAVED DAY: " + time.ToString("yyyy MM dd");
+        }
+
         continuePanel.SetActive(true);
-        currentDayText.text = "LAST SAVED DAY: " + time.ToString("yyyy MM dd");
     }
 
     public void OpenOptions()

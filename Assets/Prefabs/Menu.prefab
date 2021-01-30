@@ -3560,6 +3560,8 @@ MonoBehaviour:
   mainMenuScreen: {fileID: 1073453998260885484}
   optionsPanel: {fileID: 511621312}
   continuePanel: {fileID: 1881368429}
+  continueButton: {fileID: 1577907049}
+  startButton: {fileID: 920493860}
   currentDayText: {fileID: 664578106}
   soundMixer: {fileID: 24100000, guid: 0fe1e53958d6c1342855238dfc4f726e, type: 2}
   musicMixer: {fileID: 24100000, guid: 642c674fef0980f4f84f7dc69ffee15b, type: 2}
