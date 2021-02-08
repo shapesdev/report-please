@@ -70,6 +70,8 @@ public class StoryGameController
     #region SelectionView Callbacks
     private void SelectionView_OnPapersReturned(object sender, PapersReturnedEventArgs e)
     {
+        model.CanBeReturned = false;
+
         var citation = citationCheckController.CheckForCitations(model.DaysWithScenarios[model.CurrentDay][model.CurrentScenario], model.RuleBook,
             model.CurrentStamp, model.DiscrepancyFound);
 
