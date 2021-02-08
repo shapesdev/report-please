@@ -109,11 +109,7 @@ public class StoryGameController
         {
             view.ShowEndDay(model.CurrentDay.Day, model.CurrentScore, model.MaxScore);
             model.SaveScenarioData();
-
-            if (model.CurrentDay.Day != 14)
-            {
-                model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
-            }
+            model.CurrentDay = new DateTime(model.CurrentDay.Year, model.CurrentDay.Month, model.CurrentDay.Day + 1);
         }
     }
 
