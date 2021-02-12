@@ -243,11 +243,11 @@ public class DataInitialization
         tempScenarioList.Add(response0);
         tempScenarioList.Add(response1);
         tempScenarioList.Add(response2);
-       // tempScenarioList.Add(response3);
-       // tempScenarioList.Add(response4);
-       // tempScenarioList.Add(response5);
-       tempScenarioList.Add(response6);
-       // tempScenarioList.Add(response7);
+        tempScenarioList.Add(response3);
+        tempScenarioList.Add(response4);
+        tempScenarioList.Add(response5);
+        tempScenarioList.Add(response6);
+        tempScenarioList.Add(response7);
 
         daysWithScenarios.Add(day, tempScenarioList);
     }
