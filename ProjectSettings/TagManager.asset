@@ -41,6 +41,7 @@ TagManager:
   - NotAllVersionRule
   - ValidIDRule
   - ValidID
+  - RuleBookSelectable
   layers:
   - Default
   - TransparentFX

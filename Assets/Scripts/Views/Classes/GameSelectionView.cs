@@ -40,7 +40,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
         if (results.Count > 0)
         {
-            if(results[0].gameObject.tag == "Selectable")
+            if(results[0].gameObject.tag == "Selectable" || results[0].gameObject.tag == "RuleBookSelectable")
             {
                 OnPaperDrag?.Invoke(0);
                 BringGameObjectToFront(results[0].gameObject);
@@ -80,7 +80,14 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
             {
                 if (PaperCanBeReturned(go.transform.position, go, canBeReturned))
                 {
-                    go.gameObject.SetActive(false);
+                    if (go.tag == "RuleBookSelectable")
+                    {
+                        go.transform.localPosition = new Vector3(-600, -320, 0);
+                    }
+                    else
+                    {
+                        go.gameObject.SetActive(false);
+                    }
                 }
                 else
                 {
