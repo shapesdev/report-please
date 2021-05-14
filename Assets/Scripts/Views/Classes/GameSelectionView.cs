@@ -106,7 +106,7 @@ public class GameSelectionView : MonoBehaviour, IGameSelectionView
 
     private bool PaperCanBeReturned(Vector3 pos, GameObject selectedGO, bool canBeReturned)
     {
-        if (selectedGO != null)
+        if (selectedGO != null && selectedGO.tag != "RuleBookSeletable")
         {
             for (int i = 0; i < selectedGO.transform.childCount; i++)
             {
